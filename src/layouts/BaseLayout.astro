@@ -2,6 +2,8 @@
 import { ClientRouter } from 'astro:transitions';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Analytics from '@vercel/analytics/astro';
+import SpeedInsights from '@vercel/speed-insights/astro';
 import '../styles/global.css';
 import 'katex/dist/katex.min.css';
 
@@ -572,6 +574,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'http://localhost
         }
       });
     </script>
+    <Analytics />
+    <SpeedInsights />
   </body>
 </html>
 
