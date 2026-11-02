@@ -1,0 +1,287 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const writingEntries = await getCollection('writing');
+  return writingEntries.map((entry) => ({
+    params: { id: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<BaseLayout
+  title={`${entry.data.title} | Soumitra Pharikal`}
+  description={`Comprehensive LaTeX compendium for ${entry.data.subject} at IISER Berhampur.`}
+>
+  <div class="monograph-container">
+    <!-- Breadcrumb Header -->
+    <nav class="monograph-breadcrumb mono reveal-up" style="--stagger-index: 1;" aria-label="Breadcrumb">
+      <a href="/writing" class="breadcrumb-link">Compendiums</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current text-gold">{entry.data.courseCode || 'COMP'}</span>
+    </nav>
+
+    <!-- Header Block -->
+    <header class="compendium-header hairline-bottom reveal-up" style="--stagger-index: 2;">
+      <div class="header-tag-row mono">
+        <span class="mono-badge text-gold">{entry.data.courseCode || 'COMPENDIUM'}</span>
+        <span class="mono text-secondary">{entry.data.date}</span>
+      </div>
+
+      <h1 class="compendium-title">{entry.data.title}</h1>
+      <p class="compendium-subject text-secondary">{entry.data.subject}</p>
+
+      <!-- Engine & Volume Specifications -->
+      <div class="specs-grid hairline-box mono">
+        <div class="spec-cell">
+          <span class="spec-label">TYPESETTING ENGINE:</span>
+          <span class="spec-val text-primary">{entry.data.typesetEngine}</span>
+        </div>
+        <div class="spec-cell">
+          <span class="spec-label">PAGE VOLUME:</span>
+          <span class="spec-val text-primary">{entry.data.pageCount || 40} PAGES</span>
+        </div>
+        <div class="spec-cell">
+          <span class="spec-label">INSTITUTION:</span>
+          <span class="spec-val text-primary">IISER BERHAMPUR</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content Layout -->
+    <div class="swiss-grid-12 compendium-layout">
+      <!-- Left Rail: Topics Covered -->
+      <aside class="col-4 topics-rail reveal-up" style="--stagger-index: 3;">
+        <div class="topics-box hairline-box">
+          <span class="meta-index">TOPICS COVERED</span>
+          <ul class="topics-syllabus-list">
+            {entry.data.topicsCovered.map((topic) => (
+              <li class="topic-item text-secondary">
+                <span class="bullet text-gold">•</span>
+                <span>{topic}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div class="access-notice hairline-top mono">
+            <span class="meta-index">ACCESS NOTICE</span>
+            <p class="access-text text-secondary">
+              Compendium PDFs and complete TeX source bundles are maintained in the local archive and shared upon academic request.
+            </p>
+            <a href="mailto:24123@iiserbpr.ac.in?subject=Compendium%20Access%20Request%20-%20" class="editorial-btn">
+              Request Full PDF ↗
+            </a>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Prose Article Column -->
+      <main class="col-8 compendium-prose-column reveal-up" style="--stagger-index: 4;">
+        <article class="prose-article">
+          <Content />
+        </article>
+
+        <!-- Back to Archive -->
+        <div class="compendium-footer-bar hairline-box hairline-top">
+          <a href="/writing" class="editorial-btn">
+            ← Back to All Compendiums
+          </a>
+          <a href="/projects" class="editorial-link mono">
+            View Projects Archive →
+          </a>
+        </div>
+      </main>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .monograph-breadcrumb {
+    padding-top: var(--space-4);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+  }
+
+  .breadcrumb-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .breadcrumb-link:hover {
+    color: var(--text-primary);
+  }
+
+  .breadcrumb-sep {
+    color: var(--text-tertiary);
+  }
+
+  .compendium-header {
+    padding-top: var(--space-4);
+    padding-bottom: var(--space-8);
+    margin-bottom: var(--space-8);
+  }
+
+  .header-tag-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: var(--space-3);
+  }
+
+  .compendium-title {
+    font-size: var(--text-h1);
+    line-height: var(--leading-tight);
+    margin-bottom: var(--space-2);
+  }
+
+  .compendium-subject {
+    font-size: var(--text-lead);
+    line-height: 1.6;
+    margin-bottom: var(--space-6);
+  }
+
+  .specs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: var(--space-4);
+    gap: var(--space-4);
+    background: var(--bg-surface-elevated);
+  }
+
+  .spec-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .spec-label {
+    font-size: 0.625rem;
+    color: var(--text-tertiary);
+    letter-spacing: 0.06em;
+  }
+
+  .spec-val {
+    font-size: 0.78125rem;
+  }
+
+  .compendium-layout {
+    align-items: flex-start;
+    padding-bottom: var(--space-14);
+  }
+
+  .topics-rail {
+    position: sticky;
+    top: 90px;
+  }
+
+  .topics-box {
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .topics-syllabus-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .topic-item {
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .access-notice {
+    padding-top: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .access-text {
+    font-size: 0.75rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .compendium-prose-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  /* Prose Article Styling */
+  .prose-article :global(h2) {
+    font-size: var(--text-h2);
+    margin-top: var(--space-6);
+    margin-bottom: var(--space-3);
+    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: var(--space-2);
+  }
+
+  .prose-article :global(h3) {
+    font-size: var(--text-h3);
+    margin-top: var(--space-5);
+    margin-bottom: var(--space-2);
+    color: var(--accent-gold);
+  }
+
+  .prose-article :global(p) {
+    font-size: 1.05rem;
+    line-height: 1.72;
+    color: var(--text-primary);
+    margin-bottom: var(--space-4);
+  }
+
+  .prose-article :global(ul) {
+    padding-left: var(--space-6);
+    margin-bottom: var(--space-5);
+  }
+
+  .prose-article :global(li) {
+    font-size: 1rem;
+    line-height: 1.68;
+    margin-bottom: var(--space-2);
+    color: var(--text-secondary);
+  }
+
+  .prose-article :global(li strong) {
+    color: var(--text-primary);
+  }
+
+  .compendium-footer-bar {
+    padding: var(--space-4) var(--space-6);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--space-6);
+  }
+
+  @media (max-width: 1024px) {
+    .specs-grid {
+      grid-template-columns: 1fr;
+    }
+    .topics-rail {
+      position: static;
+      grid-column: span 12;
+    }
+    .compendium-prose-column {
+      grid-column: span 12;
+    }
+  }
+</style>

@@ -1,0 +1,1411 @@
+---
+// src/components/InteractivePhysicsPlate.astro
+// Self-contained 60 FPS HTML5 Canvas Scientific Instrument:
+// Mode 01: Time-Series Photometry & Exoplanet Transit Mini-Schematic (IC 1369)
+// Mode 02: Astrodynamics N-Body (RK4) Orbit & J2 Precession Ribbon
+// Mode 03: Autonomous Radon CT Gantry Sweep & Sinogram Reconstructions (Ram-Lak vs Unfiltered)
+// Mode 04: Continuous Monte Carlo Stochastic Decay & 8x8 Lattice Fit
+---
+
+<div class="physics-plate hairline-box spotlight-card corner-crosshair border-beam-card no-tilt" id="physics-instrument-container">
+  <!-- Top Instrument Masthead Toolbar -->
+  <div class="plate-toolbar hairline-bottom">
+    <div class="plate-title-group">
+      <span class="pulse-dot" aria-hidden="true"></span>
+      <span class="mono-label">PHYSICS LABORATORY INSTRUMENT</span>
+      <div class="status-indicator-pill mono" id="status-indicator">
+        <span class="status-ping"></span>
+        <span id="status-text">AUTO 60 FPS</span>
+      </div>
+    </div>
+
+    <!-- 4 Clean Short Mode Pills with Verified Physics Tooltips -->
+    <div class="plate-mode-tabs" role="tablist" aria-label="Instrument Simulation Modes">
+      <button
+        type="button"
+        class="mode-pill is-active"
+        id="btn-mode-photometry"
+        role="tab"
+        aria-selected="true"
+        tabindex="0"
+        data-mode="photometry"
+        title="Mode 01: Aperture photometry light curve phase-folded via String-Length minimization on IC 1369 variable stars."
+      >
+        <span class="mode-number">01</span> Photometry
+      </button>
+      <button
+        type="button"
+        class="mode-pill"
+        id="btn-mode-nbody"
+        role="tab"
+        aria-selected="false"
+        tabindex="-1"
+        data-mode="nbody"
+        title="Mode 02: Runge-Kutta 4th-order (RK4) orbital propagation incorporating Earth oblateness J2 = 1.08263e-3 perturbation."
+      >
+        <span class="mode-number">02</span> N-Body Orbit
+      </button>
+      <button
+        type="button"
+        class="mode-pill"
+        id="btn-mode-radon"
+        role="tab"
+        aria-selected="false"
+        tabindex="-1"
+        data-mode="radon"
+        title="Mode 03: Continuous projection line integrals through Radon transform Rf(θ, s) reconstructed via Ram-Lak filtered backprojection."
+      >
+        <span class="mode-number">03</span> Radon CT
+      </button>
+      <button
+        type="button"
+        class="mode-pill"
+        id="btn-mode-mc"
+        role="tab"
+        aria-selected="false"
+        tabindex="-1"
+        data-mode="mc"
+        title="Mode 04: Markov-chain stochastic decay P(Δt) = 1 - exp(-λ Δt) simulated across an 8x8 discrete radioisotope lattice with live ensemble half-life fit."
+      >
+        <span class="mode-number">04</span> Monte Carlo
+      </button>
+    </div>
+  </div>
+
+  <!-- Dynamic Physics Caption Strip with Contextual Mode Controls -->
+  <div class="plate-caption-strip mono" id="plate-caption-strip">
+    <div class="caption-left">
+      <span class="caption-icon" aria-hidden="true">◈</span>
+      <span id="plate-caption-text">Mode 01: Time-Series Photometry & Phase Folding (IC 1369)</span>
+    </div>
+    <div class="caption-right">
+      <button
+        type="button"
+        class="mini-control-btn mono"
+        id="radon-filter-btn"
+        style="display: none;"
+        title="Toggle between Ram-Lak Ramp Filtered vs Unfiltered 1/r Backprojection"
+      >
+        FILTER: <span id="radon-filter-label">RAM-LAK</span>
+      </button>
+      <button
+        type="button"
+        class="mini-control-btn mono"
+        id="fold-cycle-btn"
+        title="Trigger 300ms Phase-Fold Reveal Animation"
+      >
+        ANIMATE: <span id="fold-cycle-label">PHASE FOLD</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Canvas Viewport (Fixed 320px Height) -->
+  <div class="canvas-viewport" id="canvas-wrapper">
+    <canvas id="physics-canvas" width="560" height="320" aria-label="Interactive Astrophysics and Computational Simulation Plate"></canvas>
+    <div class="canvas-grid-overlay" aria-hidden="true">
+      <span class="coord-tag coord-tl mono">GRID: POLAR-EQUATORIAL</span>
+      <span class="coord-tag coord-tr mono">FPS: 60 // CONTINUOUS SYNC</span>
+    </div>
+  </div>
+
+  <!-- Single-Line Bottom Footer: Parameter Slider on Left, 2 Metric Badges on Right -->
+  <div class="plate-footer hairline-top">
+    <div class="slider-control-group">
+      <label for="instrument-slider" class="fine-label mono" id="slider-label">TRIAL PERIOD P:</label>
+      <div class="tactile-range-wrapper">
+        <input
+          type="range"
+          id="instrument-slider"
+          min="0.8"
+          max="1.2"
+          step="0.001"
+          value="1.0"
+          class="fine-range tactile-slider"
+          aria-label="Instrument Parameter Scrubber"
+        />
+      </div>
+      <span class="fine-readout mono" id="slider-readout">1.4820 d (Resonance)</span>
+    </div>
+
+    <div class="metrics-group">
+      <div class="plate-metric-badge mono" id="metric-badge-1">
+        <span class="metric-dot dot-cyan"></span>
+        <span id="metric-val-1">PHASE RMS: 0.014 mag</span>
+      </div>
+      <div class="plate-metric-badge mono" id="metric-badge-2">
+        <span class="metric-dot dot-gold"></span>
+        <span id="metric-val-2">PERIOD: 1.482 d</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .physics-plate {
+    background-color: var(--bg-surface);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    user-select: none;
+    border-radius: var(--radius-card);
+    box-shadow: var(--glass-shadow);
+    border: 1px solid var(--border-subtle);
+  }
+
+  /* Top Masthead Toolbar */
+  .plate-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px var(--space-4);
+    background-color: var(--bg-surface-elevated);
+    gap: var(--space-2);
+    flex-wrap: wrap;
+  }
+
+  .plate-title-group {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .mono-label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: var(--tracking-wider);
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+
+  .status-indicator-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 7px;
+    background: var(--bg-surface-sunken);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-pill);
+    font-size: 0.5625rem;
+    color: var(--accent-primary);
+    letter-spacing: 0.04em;
+  }
+
+  .status-ping {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    box-shadow: 0 0 6px var(--accent-primary);
+    animation: statusPulse 1.8s infinite;
+  }
+
+  @keyframes statusPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.3); }
+  }
+
+  .plate-mode-tabs {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    width: 100%;
+  }
+
+  .mode-pill {
+    flex: 1 1 0;
+    min-width: 0;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-pill);
+    padding: 5px 8px;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.02em;
+    color: #CBD5E1;
+    cursor: pointer;
+    transition: all 140ms ease;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+
+  .mode-pill .mode-number {
+    color: #94A3B8;
+    margin-right: 4px;
+    font-weight: 600;
+  }
+
+  .mode-pill:hover {
+    color: #F8FAFC;
+    border-color: rgba(255, 255, 255, 0.28);
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .mode-pill.is-active {
+    background-color: #38BDF8 !important;
+    color: #020617 !important;
+    border-color: #38BDF8 !important;
+    font-weight: 700 !important;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.45) !important;
+  }
+
+  .mode-pill.is-active .mode-number {
+    color: #0369A1 !important;
+  }
+
+  /* Light Theme High-Contrast Overrides */
+  :global(html[data-theme="light"]) .mode-pill {
+    background: #FFFFFF !important;
+    border: 1px solid rgba(14, 26, 43, 0.22) !important;
+    color: #0E1A2B !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+  }
+
+  :global(html[data-theme="light"]) .mode-pill .mode-number {
+    color: #475569 !important;
+  }
+
+  :global(html[data-theme="light"]) .mode-pill:hover {
+    background: #F1EFE9 !important;
+    border-color: #1B2E6B !important;
+    color: #1B2E6B !important;
+  }
+
+  :global(html[data-theme="light"]) .mode-pill.is-active {
+    background-color: #1B2E6B !important;
+    color: #FFFFFF !important;
+    border-color: #1B2E6B !important;
+    font-weight: 700 !important;
+    box-shadow: 0 2px 8px rgba(27, 46, 107, 0.28) !important;
+  }
+
+  :global(html[data-theme="light"]) .mode-pill.is-active .mode-number {
+    color: #93C5FD !important;
+  }
+
+  .mode-pill:focus-visible {
+    outline: 2px solid var(--border-focus);
+    outline-offset: 2px;
+  }
+
+  /* One-Line Caption Strip with contextual action buttons */
+  .plate-caption-strip {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 6px var(--space-4);
+    background: var(--bg-surface-sunken);
+    border-bottom: 1px solid var(--border-subtle);
+    font-size: 0.6875rem;
+    color: var(--text-secondary);
+  }
+
+  .caption-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .caption-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .mini-control-btn {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-pill);
+    padding: 2px 8px;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.04em;
+    color: var(--accent-primary);
+    cursor: pointer;
+    transition: all 140ms ease;
+  }
+
+  .mini-control-btn:hover {
+    border-color: var(--accent-primary);
+    background: var(--bg-surface-elevated);
+    box-shadow: 0 0 8px rgba(56, 189, 248, 0.25);
+  }
+
+  :global(html[data-theme="light"]) .mini-control-btn {
+    background: #FFFFFF !important;
+    border: 1px solid rgba(14, 26, 43, 0.22) !important;
+    color: #1B2E6B !important;
+    font-weight: 600 !important;
+  }
+
+  .caption-icon {
+    color: var(--accent-amber);
+    font-size: 0.625rem;
+  }
+
+  /* Center Canvas Viewport */
+  .canvas-viewport {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    background: var(--bg-primary);
+    cursor: crosshair;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #physics-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .canvas-grid-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .coord-tag {
+    position: absolute;
+    font-size: 0.5625rem;
+    color: var(--text-tertiary);
+    opacity: 0.6;
+    letter-spacing: 0.05em;
+  }
+
+  .coord-tl { top: 8px; left: 12px; }
+  .coord-tr { top: 8px; right: 12px; }
+
+  /* Single-Line Footer */
+  .plate-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px var(--space-4);
+    background-color: var(--bg-surface-elevated);
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+
+  .slider-control-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 260px;
+  }
+
+  .fine-label {
+    font-size: 0.6875rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    letter-spacing: 0.04em;
+  }
+
+  .tactile-range-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  .fine-range {
+    width: 100%;
+    height: 4px;
+    background: var(--border-subtle);
+    border-radius: 2px;
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .fine-range::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    border: 2px solid #06080E;
+    box-shadow: 0 0 6px var(--accent-primary);
+    cursor: pointer;
+    transition: transform 100ms ease;
+  }
+
+  .fine-range::-webkit-slider-thumb:hover {
+    transform: scale(1.25);
+  }
+
+  .fine-range::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    border: 2px solid #06080E;
+    box-shadow: 0 0 6px var(--accent-primary);
+    cursor: pointer;
+  }
+
+  .fine-readout {
+    font-size: 0.6875rem;
+    color: var(--accent-gold);
+    white-space: nowrap;
+    min-width: 100px;
+  }
+
+  .metrics-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .plate-metric-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-surface-sunken);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-pill);
+    padding: 3px 10px;
+    font-size: 0.625rem;
+    letter-spacing: 0.04em;
+    color: var(--text-primary);
+    white-space: nowrap;
+  }
+
+  .metric-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  .dot-cyan {
+    background-color: var(--accent-primary);
+    box-shadow: 0 0 6px var(--accent-primary);
+  }
+
+  .dot-gold {
+    background-color: var(--accent-gold);
+    box-shadow: 0 0 6px var(--accent-gold);
+  }
+
+  @media (max-width: 768px) {
+    .plate-footer {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 8px;
+    }
+
+    .slider-control-group {
+      width: 100%;
+    }
+
+    .metrics-group {
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .canvas-viewport {
+      height: 280px;
+    }
+  }
+
+  /* Solid Theme Chrome for Light Mode */
+  [data-theme="light"] .physics-plate {
+    background-color: #FAF8F3;
+    border: 1px solid rgba(14, 26, 43, 0.14);
+    box-shadow: 0 16px 40px rgba(14, 26, 43, 0.08);
+  }
+
+  [data-theme="light"] .plate-toolbar,
+  [data-theme="light"] .plate-footer {
+    background-color: #EDE8DC;
+    border-color: rgba(14, 26, 43, 0.12);
+  }
+
+  [data-theme="light"] .plate-caption-strip {
+    background-color: #F5F2EA;
+    border-color: rgba(14, 26, 43, 0.10);
+    color: #3B4658;
+  }
+
+  [data-theme="light"] .mini-control-btn {
+    background: #EDE8DC;
+    border-color: rgba(14, 26, 43, 0.16);
+    color: #1B2E6B;
+  }
+
+  [data-theme="light"] .mini-control-btn:hover {
+    border-color: #1B2E6B;
+    background: #E4E0D4;
+  }
+
+  [data-theme="light"] .mode-pill {
+    background: #FAF8F3;
+    border: 1px solid rgba(14, 26, 43, 0.16);
+    color: #3B4658;
+  }
+
+  [data-theme="light"] .mode-pill:hover {
+    color: #0E1A2B;
+    border-color: #D97706;
+  }
+
+  [data-theme="light"] .mode-pill.is-active {
+    background: #1B2E6B;
+    color: #FFFFFF;
+    border-color: #1B2E6B;
+    box-shadow: 0 2px 8px rgba(27, 46, 107, 0.3);
+  }
+
+  [data-theme="light"] .fine-label,
+  [data-theme="light"] .mono-label {
+    color: #0E1A2B;
+  }
+
+  [data-theme="light"] .fine-readout {
+    color: #B45309;
+  }
+</style>
+
+<script>
+  function initAdvancedPhysicsPlate() {
+    const canvas = document.getElementById('physics-canvas') as HTMLCanvasElement | null;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Check reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+
+    // Mode Buttons
+    const btnPhotometry = document.getElementById('btn-mode-photometry');
+    const btnNbody = document.getElementById('btn-mode-nbody');
+    const btnRadon = document.getElementById('btn-mode-radon');
+    const btnMc = document.getElementById('btn-mode-mc');
+    const modeBtns = [btnPhotometry, btnNbody, btnRadon, btnMc];
+
+    // Contextual buttons
+    const radonFilterBtn = document.getElementById('radon-filter-btn') as HTMLButtonElement | null;
+    const radonFilterLabel = document.getElementById('radon-filter-label');
+    const foldCycleBtn = document.getElementById('fold-cycle-btn') as HTMLButtonElement | null;
+    const foldCycleLabel = document.getElementById('fold-cycle-label');
+
+    // Single-line footer controls
+    const slider = document.getElementById('instrument-slider') as HTMLInputElement | null;
+    const sliderLabel = document.getElementById('slider-label');
+    const sliderReadout = document.getElementById('slider-readout');
+    const metricVal1 = document.getElementById('metric-val-1');
+    const metricVal2 = document.getElementById('metric-val-2');
+    const statusText = document.getElementById('status-text');
+    const captionText = document.getElementById('plate-caption-text');
+
+    type PlateMode = 'photometry' | 'nbody' | 'radon' | 'mc';
+    let currentMode: PlateMode = 'photometry';
+    let animationId: number = 0;
+
+    let width = 560;
+    let height = 320;
+
+    function resize() {
+      const rect = canvas!.getBoundingClientRect();
+      width = Math.floor(rect.width);
+      height = Math.floor(rect.height);
+      const dpr = window.devicePixelRatio || 1;
+      canvas!.width = width * dpr;
+      canvas!.height = height * dpr;
+      ctx!.scale(dpr, dpr);
+    }
+
+    resize();
+    window.addEventListener('resize', resize, { passive: true });
+
+    // Mode Parameters
+    let paramPhotometry = 1.0;  // Multiplier on 1.4820d
+    let paramNbody = 0.35;       // Eccentricity e
+    let paramRadon = 45.0;       // Projection angle deg
+    let paramMc = 0.85;          // Decay constant lambda
+
+    // Mode 03 Filter State: Ram-Lak vs Unfiltered
+    let isRamLakFiltered = true;
+
+    // Mode 01 Phase Fold Reveal State
+    let foldProgress = 1.0; // 0 = raw unfolded chronological, 1 = phase folded
+    let isFoldAnimating = false;
+    let foldAnimStartTime = 0;
+    let foldAnimTarget = 1.0;
+    let foldCycleAutoTime = Date.now();
+
+    // Autonomous Mode & Idle Tracking
+    let lastUserInteracted = 0;
+    let isUserScrubbing = false;
+
+    // Interactive Eyepiece & Crosshair
+    let mouseX = width / 2;
+    let mouseY = height / 2;
+    let isHovering = false;
+    const eyepieceRadius = 48;
+
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas!.getBoundingClientRect();
+      mouseX = e.clientX - rect.left;
+      mouseY = e.clientY - rect.top;
+      isHovering = true;
+    }, { passive: true });
+
+    canvas.addEventListener('mouseleave', () => {
+      isHovering = false;
+    }, { passive: true });
+
+    // Captions mapping
+    const captions: Record<PlateMode, string> = {
+      photometry: 'Mode 01: Time-Series Photometry & Phase Folding (IC 1369)',
+      nbody: 'Mode 02: Astrodynamics N-Body (RK4) & J2 Apsidal Precession',
+      radon: 'Mode 03: Gantry Angle Projection & Filtered Backprojection',
+      mc: 'Mode 04: Stochastic Kinetic Decay & 8x8 Lattice Relaxation'
+    };
+
+    // Aria labels for accessibility
+    const ariaLabels: Record<PlateMode, string> = {
+      photometry: 'Aperture photometry simulation showing light curve phase-folded onto 1.4820 days period with photon transit schematic.',
+      nbody: 'Runge-Kutta 4th-Order (RK4) orbital simulation displaying exaggerated J2 Earth oblateness apsidal precession ribbon.',
+      radon: 'Radon transform tomography simulation sweeping projection rays through Shepp-Logan phantom into sinogram with Ram-Lak ramp filtering.',
+      mc: 'Monte Carlo stochastic decay simulation across an 8x8 radioisotope lattice with live non-linear exponential half-life fitting.'
+    };
+
+    function triggerFoldReveal() {
+      isFoldAnimating = true;
+      foldAnimStartTime = Date.now();
+      foldAnimTarget = foldProgress < 0.5 ? 1.0 : 0.0;
+      if (foldCycleLabel) {
+        foldCycleLabel.textContent = foldAnimTarget > 0.5 ? 'SNAP FOLD' : 'UNFOLD TIME';
+      }
+    }
+
+    foldCycleBtn?.addEventListener('click', triggerFoldReveal);
+
+    radonFilterBtn?.addEventListener('click', () => {
+      isRamLakFiltered = !isRamLakFiltered;
+      if (radonFilterLabel) {
+        radonFilterLabel.textContent = isRamLakFiltered ? 'RAM-LAK' : 'UNFILTERED (1/r)';
+      }
+      syncModeUI();
+    });
+
+    // Synchronize slider, caption, and badges when mode changes
+    function syncModeUI() {
+      modeBtns.forEach((btn) => {
+        if (!btn) return;
+        const isActive = btn.getAttribute('data-mode') === currentMode;
+        btn.classList.toggle('is-active', isActive);
+        btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        btn.setAttribute('tabindex', isActive ? '0' : '-1');
+      });
+
+      if (captionText) captionText.textContent = captions[currentMode];
+      if (canvas) canvas.setAttribute('aria-label', ariaLabels[currentMode]);
+
+      // Contextual buttons visibility
+      if (radonFilterBtn) {
+        radonFilterBtn.style.display = currentMode === 'radon' ? 'inline-flex' : 'none';
+      }
+      if (foldCycleBtn) {
+        foldCycleBtn.style.display = currentMode === 'photometry' ? 'inline-flex' : 'none';
+      }
+
+      if (!slider || !sliderLabel || !sliderReadout || !metricVal1 || !metricVal2) return;
+
+      if (currentMode === 'photometry') {
+        sliderLabel.textContent = 'TRIAL PERIOD P:';
+        slider.min = '0.80';
+        slider.max = '1.20';
+        slider.step = '0.001';
+        slider.value = paramPhotometry.toString();
+        const pDays = (1.4820 * paramPhotometry).toFixed(4);
+        sliderReadout.textContent = `${pDays} d ${Math.abs(paramPhotometry - 1.0) < 0.008 ? '(Resonance)' : ''}`;
+        metricVal1.textContent = 'PHASE RMS: 0.014 mag';
+        metricVal2.textContent = `PERIOD: ${pDays} d`;
+      } else if (currentMode === 'nbody') {
+        sliderLabel.textContent = 'ORBIT ECCENTRICITY e:';
+        slider.min = '0.00';
+        slider.max = '0.75';
+        slider.step = '0.01';
+        slider.value = paramNbody.toString();
+        sliderReadout.textContent = `e = ${paramNbody.toFixed(2)}`;
+        metricVal1.textContent = 'INTEGRATOR: RK4';
+        metricVal2.textContent = 'DRIFT: +4.8°/orb [EXAGG.]';
+      } else if (currentMode === 'radon') {
+        sliderLabel.textContent = 'PROJECTION ANGLE θ:';
+        slider.min = '0.0';
+        slider.max = '180.0';
+        slider.step = '0.5';
+        slider.value = paramRadon.toFixed(1);
+        sliderReadout.textContent = `θ = ${paramRadon.toFixed(1)}°`;
+        metricVal1.textContent = isRamLakFiltered ? 'FILTER: RAM-LAK RAMP |ω|' : 'FILTER: UNFILTERED (1/r)';
+        metricVal2.textContent = 'PROJECTIONS: 256 RAYS';
+      } else if (currentMode === 'mc') {
+        sliderLabel.textContent = 'DECAY RATE λ:';
+        slider.min = '0.20';
+        slider.max = '2.00';
+        slider.step = '0.05';
+        slider.value = paramMc.toString();
+        sliderReadout.textContent = `λ = ${paramMc.toFixed(2)} s⁻¹`;
+        metricVal1.textContent = '64 NUCLEI LATTICE';
+        metricVal2.textContent = 'LIVE FIT t₁/₂ PENDING';
+      }
+    }
+
+    slider?.addEventListener('input', () => {
+      lastUserInteracted = Date.now();
+      isUserScrubbing = true;
+      if (statusText) statusText.textContent = 'MANUAL SCRUB';
+      const val = parseFloat(slider.value);
+      if (currentMode === 'photometry') {
+        paramPhotometry = val;
+        foldProgress = 1.0; // Snap to folded view immediately on scrubber
+      } else if (currentMode === 'nbody') {
+        paramNbody = val;
+      } else if (currentMode === 'radon') {
+        paramRadon = val;
+      } else if (currentMode === 'mc') {
+        paramMc = val;
+      }
+      syncModeUI();
+    });
+
+    slider?.addEventListener('change', () => {
+      isUserScrubbing = false;
+    });
+
+    modeBtns.forEach((btn) => {
+      btn?.addEventListener('click', () => {
+        const mode = btn.getAttribute('data-mode') as PlateMode;
+        if (mode) {
+          currentMode = mode;
+          syncModeUI();
+          if (typeof (window as any).trackEvent === 'function') {
+            (window as any).trackEvent('instrument_mode_switch', { mode });
+          }
+        }
+      });
+    });
+
+    // Keyboard Arrow-Key Accessibility for Tab Navigation
+    const tablist = document.querySelector('.plate-mode-tabs');
+    if (tablist) {
+      tablist.addEventListener('keydown', (e: Event) => {
+        const keyEvt = e as KeyboardEvent;
+        const validBtns = modeBtns.filter(Boolean) as HTMLButtonElement[];
+        const curIdx = validBtns.findIndex(b => b.classList.contains('is-active'));
+        if (curIdx === -1) return;
+
+        let targetIdx = curIdx;
+        if (keyEvt.key === 'ArrowRight' || keyEvt.key === 'ArrowDown') {
+          keyEvt.preventDefault();
+          targetIdx = (curIdx + 1) % validBtns.length;
+        } else if (keyEvt.key === 'ArrowLeft' || keyEvt.key === 'ArrowUp') {
+          keyEvt.preventDefault();
+          targetIdx = (curIdx - 1 + validBtns.length) % validBtns.length;
+        } else if (keyEvt.key === 'Home') {
+          keyEvt.preventDefault();
+          targetIdx = 0;
+        } else if (keyEvt.key === 'End') {
+          keyEvt.preventDefault();
+          targetIdx = validBtns.length - 1;
+        }
+
+        if (targetIdx !== curIdx) {
+          validBtns[targetIdx].click();
+          validBtns[targetIdx].focus();
+        }
+      });
+    }
+
+    // 1. Photometry Data Points (IC 1369)
+    const pointsCount = 180;
+    const rawTimes = Array.from({ length: pointsCount }, (_, i) => (i / pointsCount) * 14.82);
+    const rawMags = rawTimes.map((t) => {
+      const truePhase = (t / 1.4820) % 1;
+      const magBase = 15.42 + 0.38 * Math.sin(truePhase * Math.PI * 2) + 0.08 * Math.sin(truePhase * Math.PI * 4);
+      const noise = (Math.random() - 0.5) * 0.055;
+      return magBase + noise;
+    });
+
+    // 2. N-Body Trajectory Ribbon Buffer
+    const orbitRibbon: { x: number; y: number }[] = [];
+    let orbitAngle = 0;
+    let precessionOffset = 0;
+
+    // 4. Monte Carlo 64-Nuclei Grid & Path Cache
+    const nucleiCount = 64; // 8x8 lattice
+    let nucleiStates = Array.from({ length: nucleiCount }, () => ({
+      decayTime: -Math.log(Math.max(0.001, 1 - Math.random())) / paramMc,
+      decayed: false,
+    }));
+    let lastMcRegen = Date.now();
+
+    function generate12McPaths(lambda: number) {
+      return Array.from({ length: 12 }, () => {
+        const points: { xFrac: number; nFrac: number }[] = [];
+        let curN = 1000;
+        const totalSteps = 40;
+        for (let i = 0; i <= totalSteps; i++) {
+          const dt = 4.0 / totalSteps;
+          const decayProb = 1 - Math.exp(-lambda * dt);
+          const decayed = Math.round(curN * decayProb + (Math.random() - 0.5) * Math.sqrt(curN * decayProb));
+          curN = Math.max(0, curN - Math.max(0, decayed));
+          points.push({ xFrac: i / totalSteps, nFrac: curN / 1000 });
+        }
+        return points;
+      });
+    }
+
+    let mcPaths = generate12McPaths(paramMc);
+
+    // Simulation Timing
+    let tick = 0;
+
+    function render() {
+      ctx!.clearRect(0, 0, width, height);
+
+      const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+      const cyan = isDark ? '#38BDF8' : '#0284C7';
+      const gold = isDark ? '#F59E0B' : '#D97706';
+      const slate = isDark ? '#64748B' : '#94A3B8';
+
+      const isIdle = Date.now() - lastUserInteracted > 3000;
+      if (isIdle && statusText && statusText.textContent !== 'AUTO 60 FPS') {
+        statusText.textContent = 'AUTO 60 FPS';
+      }
+
+      // Animate phase-fold reveal smoothly over 350ms
+      if (isFoldAnimating) {
+        const elapsed = Date.now() - foldAnimStartTime;
+        const duration = 350;
+        const progress = Math.min(1.0, elapsed / duration);
+        // Ease-out cubic
+        const eased = 1 - Math.pow(1 - progress, 3);
+        if (foldAnimTarget === 1.0) {
+          foldProgress = eased;
+        } else {
+          foldProgress = 1.0 - eased;
+        }
+        if (progress >= 1.0) {
+          isFoldAnimating = false;
+        }
+      } else if (currentMode === 'photometry' && isIdle && !isUserScrubbing && !prefersReducedMotion) {
+        // Slow automated reveal loop every 7 seconds
+        const now = Date.now();
+        if (now - foldCycleAutoTime > 7000) {
+          foldCycleAutoTime = now;
+          triggerFoldReveal();
+        }
+      }
+
+      // ======================================================================
+      // MODE 01: TIME-SERIES PHOTOMETRY & PHASE FOLD REVEAL
+      // ======================================================================
+      if (currentMode === 'photometry') {
+        const padX = 50;
+        const padY = 40;
+        const plotW = width - padX * 2;
+        const plotH = height - padY * 2;
+
+        // Draw Axes & Grid
+        ctx!.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(15, 23, 42, 0.08)';
+        ctx!.lineWidth = 1;
+        ctx!.strokeRect(padX, padY, plotW, plotH);
+
+        for (let p = 0.25; p <= 0.75; p += 0.25) {
+          const gx = padX + p * plotW;
+          ctx!.beginPath();
+          ctx!.moveTo(gx, padY);
+          ctx!.lineTo(gx, padY + plotH);
+          ctx!.stroke();
+        }
+
+        const trialP = 1.4820 * paramPhotometry;
+
+        // Points interpolate between raw time axis and folded phase axis
+        rawTimes.forEach((t, idx) => {
+          const rawXFrac = t / 14.82;
+          const foldedXFrac = (t / trialP) % 1;
+          const currentXFrac = (1 - foldProgress) * rawXFrac + foldProgress * foldedXFrac;
+
+          const px = padX + currentXFrac * plotW;
+          const py = padY + ((rawMags[idx] - 14.9) / 1.0) * plotH;
+
+          const isPulse = (idx + Math.floor(tick * 0.15)) % 15 === 0;
+          ctx!.beginPath();
+          ctx!.arc(px, py, isPulse ? 3.5 : 2.2, 0, Math.PI * 2);
+          ctx!.fillStyle = isPulse ? gold : (isDark ? 'rgba(56, 189, 248, 0.65)' : 'rgba(2, 132, 199, 0.75)');
+          ctx!.fill();
+        });
+
+        // Fitted Resonance Curve (reveals when folded and near resonance)
+        if (foldProgress > 0.6 && Math.abs(paramPhotometry - 1.0) < 0.06) {
+          ctx!.save();
+          ctx!.globalAlpha = (foldProgress - 0.6) / 0.4;
+          ctx!.beginPath();
+          for (let step = 0; step <= 100; step++) {
+            const ph = step / 100;
+            const modelMag = 15.42 + 0.38 * Math.sin(ph * Math.PI * 2) + 0.08 * Math.sin(ph * Math.PI * 4);
+            const cx = padX + ph * plotW;
+            const cy = padY + ((modelMag - 14.9) / 1.0) * plotH;
+            if (step === 0) ctx!.moveTo(cx, cy);
+            else ctx!.lineTo(cx, cy);
+          }
+          ctx!.strokeStyle = gold;
+          ctx!.lineWidth = 2;
+          ctx!.stroke();
+          ctx!.restore();
+        }
+
+        // Oscillating Scanner Beam
+        const continuousPhase = (tick * 0.007) % 1;
+        const barX = padX + continuousPhase * plotW;
+        ctx!.beginPath();
+        ctx!.moveTo(barX, padY);
+        ctx!.lineTo(barX, padY + plotH);
+        ctx!.strokeStyle = 'rgba(56, 189, 248, 0.55)';
+        ctx!.lineWidth = 1.5;
+        ctx!.setLineDash([4, 4]);
+        ctx!.stroke();
+        ctx!.setLineDash([]);
+
+        // Live Synchronized Rotating Exoplanet Transit Mini-Schematic
+        const orbCx = width - 75;
+        const orbCy = 65;
+        const orbR = 24;
+
+        ctx!.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(15, 23, 42, 0.12)';
+        ctx!.lineWidth = 1;
+        ctx!.beginPath();
+        ctx!.arc(orbCx, orbCy, orbR, 0, Math.PI * 2);
+        ctx!.stroke();
+
+        ctx!.fillStyle = gold;
+        ctx!.beginPath();
+        ctx!.arc(orbCx, orbCy, 9, 0, Math.PI * 2);
+        ctx!.fill();
+
+        const transAngle = continuousPhase * Math.PI * 2;
+        const planetX = orbCx + Math.cos(transAngle) * orbR;
+        const planetY = orbCy + Math.sin(transAngle) * (orbR * 0.45);
+        ctx!.fillStyle = cyan;
+        ctx!.beginPath();
+        ctx!.arc(planetX, planetY, 4, 0, Math.PI * 2);
+        ctx!.fill();
+
+        // Labels
+        ctx!.fillStyle = slate;
+        ctx!.font = '9px "JetBrains Mono", monospace';
+        const axisLabel = foldProgress > 0.8
+          ? 'PHASE φ (0.00 → 1.00) [FOLDED AT P = 1.4820 d]'
+          : 'OBSERVATION EPOCH t (0 → 14.82 DAYS) [CHRONOLOGICAL]';
+        ctx!.fillText(axisLabel, padX, height - 16);
+        ctx!.fillText('V MAGNITUDE [IC 1369 // V1]', width - 260, padY - 12);
+        ctx!.fillText('TRANSIT SYNC', orbCx - 28, orbCy + orbR + 14);
+      }
+
+      // ======================================================================
+      // MODE 02: ASTRODYNAMICS N-BODY (RK4) & J2 APSIDAL PRECESSION
+      // ======================================================================
+      else if (currentMode === 'nbody') {
+        const cx = width / 2;
+        const cy = height / 2;
+
+        // Background Coordinate Rings
+        ctx!.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.06)' : 'rgba(15, 23, 42, 0.06)';
+        ctx!.lineWidth = 1;
+        ctx!.beginPath();
+        ctx!.arc(cx, cy, 60, 0, Math.PI * 2);
+        ctx!.arc(cx, cy, 110, 0, Math.PI * 2);
+        ctx!.stroke();
+
+        // Central Primary Star
+        const radialPulse = Math.sin(tick * 0.05) * 2 + 16;
+        const grad = ctx!.createRadialGradient(cx, cy, 2, cx, cy, radialPulse * 2.5);
+        grad.addColorStop(0, gold);
+        grad.addColorStop(0.5, 'rgba(245, 158, 11, 0.35)');
+        grad.addColorStop(1, 'transparent');
+        ctx!.fillStyle = grad;
+        ctx!.beginPath();
+        ctx!.arc(cx, cy, radialPulse * 2.5, 0, Math.PI * 2);
+        ctx!.fill();
+
+        ctx!.fillStyle = '#FFF7ED';
+        ctx!.beginPath();
+        ctx!.arc(cx, cy, 6, 0, Math.PI * 2);
+        ctx!.fill();
+
+        // Keplerian Mechanics with Exaggerated J2 Precession (RK4 Integrated)
+        const semiMajor = 105;
+        const e = paramNbody;
+        orbitAngle += 0.035;
+        // Exaggerated precession step: ~4.8 deg per revolution for vivid pedagogical visualization
+        precessionOffset += 0.0055;
+
+        const r = (semiMajor * (1 - e * e)) / (1 + e * Math.cos(orbitAngle));
+        const currentTh = orbitAngle + precessionOffset;
+        const satX = cx + r * Math.cos(currentTh);
+        const satY = cy + r * Math.sin(currentTh);
+
+        orbitRibbon.push({ x: satX, y: satY });
+        if (orbitRibbon.length > 140) orbitRibbon.shift();
+
+        // Draw Rosette Precession Trajectory Ribbon
+        for (let i = 1; i < orbitRibbon.length; i++) {
+          const alpha = (i / orbitRibbon.length) * 0.85;
+          ctx!.beginPath();
+          ctx!.moveTo(orbitRibbon[i - 1].x, orbitRibbon[i - 1].y);
+          ctx!.lineTo(orbitRibbon[i].x, orbitRibbon[i].y);
+          ctx!.strokeStyle = `rgba(56, 189, 248, ${alpha})`;
+          ctx!.lineWidth = (i / orbitRibbon.length) * 2.5 + 0.5;
+          ctx!.stroke();
+        }
+
+        // Velocity Vector Arrow
+        const velTanX = -Math.sin(currentTh) * 18;
+        const velTanY = Math.cos(currentTh) * 18;
+        ctx!.strokeStyle = 'rgba(245, 158, 11, 0.8)';
+        ctx!.lineWidth = 1.2;
+        ctx!.beginPath();
+        ctx!.moveTo(satX, satY);
+        ctx!.lineTo(satX + velTanX, satY + velTanY);
+        ctx!.stroke();
+
+        // Satellite Probe
+        ctx!.fillStyle = '#FFFFFF';
+        ctx!.beginPath();
+        ctx!.arc(satX, satY, 4, 0, Math.PI * 2);
+        ctx!.fill();
+
+        ctx!.strokeStyle = cyan;
+        ctx!.lineWidth = 1.5;
+        ctx!.beginPath();
+        ctx!.arc(satX, satY, 8, 0, Math.PI * 2);
+        ctx!.stroke();
+
+        // Orbit Metrics Label
+        ctx!.fillStyle = slate;
+        ctx!.font = '9px "JetBrains Mono", monospace';
+        ctx!.fillText(`APOAPSIS: ${(semiMajor * (1 + e)).toFixed(1)} AU`, 20, 30);
+        ctx!.fillText(`PERIAPSIS: ${(semiMajor * (1 - e)).toFixed(1)} AU`, 20, 46);
+        ctx!.fillText('RUNGE-KUTTA 4TH-ORDER (RK4) · J2 OBLATENESS', width - 290, height - 20);
+      }
+
+      // ======================================================================
+      // MODE 03: AUTONOMOUS RADON CT ROTATION & RECONSTRUCTION (RAM-LAK TOGGLE)
+      // ======================================================================
+      else if (currentMode === 'radon') {
+        if (isIdle && !isUserScrubbing && !prefersReducedMotion) {
+          paramRadon = (paramRadon + 0.45) % 180.0;
+          if (slider) slider.value = paramRadon.toFixed(1);
+          if (sliderReadout) sliderReadout.textContent = `θ = ${paramRadon.toFixed(1)}°`;
+        }
+
+        const leftCx = width * 0.32;
+        const rightCx = width * 0.72;
+        const midCy = height / 2;
+        const radius = 70;
+
+        // Phantom Object Base
+        ctx!.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.15)' : 'rgba(15, 23, 42, 0.15)';
+        ctx!.lineWidth = 1;
+        ctx!.beginPath();
+        ctx!.arc(leftCx, midCy, radius, 0, Math.PI * 2);
+        ctx!.stroke();
+
+        // Simulated Shepp-Logan Phantom Ellipses
+        ctx!.fillStyle = isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(15, 23, 42, 0.08)';
+        ctx!.beginPath();
+        ctx!.ellipse(leftCx, midCy, 45, 58, 0, 0, Math.PI * 2);
+        ctx!.fill();
+
+        // Bone Cylinder
+        ctx!.fillStyle = isDark ? '#38BDF8' : '#0284C7';
+        ctx!.beginPath();
+        ctx!.arc(leftCx + 16, midCy + 14, 14, 0, Math.PI * 2);
+        ctx!.fill();
+
+        // Pulsing Tumour Neoplasm Core
+        const tumourPulse = Math.sin(tick * 0.1) * 3 + 10;
+        ctx!.fillStyle = gold;
+        ctx!.beginPath();
+        ctx!.arc(leftCx - 14, midCy - 12, tumourPulse, 0, Math.PI * 2);
+        ctx!.fill();
+
+        // Sweeping Ray Bundle
+        const thRad = (paramRadon * Math.PI) / 180;
+        const beamDx = Math.cos(thRad);
+        const beamDy = Math.sin(thRad);
+
+        ctx!.strokeStyle = 'rgba(56, 189, 248, 0.45)';
+        ctx!.lineWidth = 1;
+        for (let offset = -45; offset <= 45; offset += 15) {
+          const perpX = -beamDy * offset;
+          const perpY = beamDx * offset;
+          ctx!.beginPath();
+          ctx!.moveTo(leftCx + perpX - beamDx * 95, midCy + perpY - beamDy * 95);
+          ctx!.lineTo(leftCx + perpX + beamDx * 95, midCy + perpY + beamDy * 95);
+          ctx!.stroke();
+        }
+
+        // Right Panel: Sinogram & Reconstructed Slice
+        const sinoW = 120;
+        const sinoH = 140;
+        const sinoX = rightCx - sinoW / 2;
+        const sinoY = midCy - sinoH / 2;
+
+        ctx!.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.15)' : 'rgba(15, 23, 42, 0.15)';
+        ctx!.strokeRect(sinoX, sinoY, sinoW, sinoH);
+
+        // Sinogram Waveform Profile: Sharp Ramp Filtered vs Blurred 1/r Unfiltered
+        ctx!.beginPath();
+        for (let y = 0; y < sinoH; y += 2) {
+          const s = (y / sinoH - 0.5) * 2;
+          let intensity: number;
+          if (isRamLakFiltered) {
+            // High-contrast sharpened profile
+            intensity = Math.exp(-s * s * 3.5) * Math.sin(thRad + s * 2.5) * 0.5 + 0.5;
+          } else {
+            // 1/r diffuse blur profile
+            intensity = Math.exp(-s * s * 0.8) * Math.sin(thRad + s * 1.2) * 0.35 + 0.5;
+          }
+          const px = sinoX + intensity * sinoW;
+          const py = sinoY + y;
+          if (y === 0) ctx!.moveTo(px, py);
+          else ctx!.lineTo(px, py);
+        }
+        ctx!.strokeStyle = isRamLakFiltered ? gold : '#94A3B8';
+        ctx!.lineWidth = 2;
+        ctx!.stroke();
+
+        ctx!.fillStyle = slate;
+        ctx!.font = '9px "JetBrains Mono", monospace';
+        ctx!.fillText('SHEPP-LOGAN PHANTOM', leftCx - 52, midCy + radius + 22);
+        const filterTitle = isRamLakFiltered ? 'RAM-LAK FILTERED PROFILE' : 'UNFILTERED 1/r BLUR PROFILE';
+        ctx!.fillText(filterTitle, sinoX - 8, sinoY + sinoH + 22);
+      }
+
+      // ======================================================================
+      // MODE 04: CONTINUOUS MONTE CARLO & 8x8 LATTICE FIT
+      // ======================================================================
+      else if (currentMode === 'mc') {
+        const padX = 50;
+        const padY = 40;
+        const plotW = width - padX * 2;
+        const plotH = height - padY * 2;
+
+        const cyclePeriod = 3600; // ms
+        const elapsedCycle = (Date.now() - lastMcRegen) % cyclePeriod;
+
+        if (Date.now() - lastMcRegen > cyclePeriod) {
+          mcPaths = generate12McPaths(paramMc);
+          lastMcRegen = Date.now();
+          nucleiStates = Array.from({ length: nucleiCount }, () => ({
+            decayTime: -Math.log(Math.max(0.001, 1 - Math.random())) / paramMc,
+            decayed: false,
+          }));
+        }
+
+        // Axes
+        ctx!.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(15, 23, 42, 0.08)';
+        ctx!.strokeRect(padX, padY, plotW, plotH);
+
+        const lambda = paramMc;
+
+        // Theoretical Exponential Curve
+        ctx!.beginPath();
+        for (let x = 0; x <= plotW; x += 4) {
+          const t = (x / plotW) * 4.0;
+          const nTheory = Math.exp(-lambda * t);
+          const py = padY + (1 - nTheory) * plotH;
+          if (x === 0) ctx!.moveTo(padX + x, py);
+          else ctx!.lineTo(padX + x, py);
+        }
+        ctx!.strokeStyle = gold;
+        ctx!.lineWidth = 2;
+        ctx!.stroke();
+
+        // Sweeping Time Cursor & Active Count Computation
+        const sweepTime = (elapsedCycle / cyclePeriod) * 4.0;
+        const cursorX = padX + (sweepTime / 4.0) * plotW;
+
+        let activeCount = 0;
+        nucleiStates.forEach((n) => {
+          if (sweepTime < n.decayTime) activeCount++;
+        });
+
+        // Compute Live Fitted Half-Life from the Simulated Lattice
+        if (sweepTime > 0.3) {
+          const lambdaFit = -Math.log(Math.max(1, activeCount) / nucleiCount) / sweepTime;
+          const halfLifeFit = Math.LN2 / Math.max(0.05, lambdaFit);
+          if (metricVal2) {
+            metricVal2.textContent = `LIVE FIT t₁/₂: ${halfLifeFit.toFixed(2)} s`;
+          }
+          if (metricVal1) {
+            metricVal1.textContent = `ACTIVE: ${activeCount}/64 NUCLEI`;
+          }
+        }
+
+        // 12 Stochastic Step Paths
+        mcPaths.forEach((path, idx) => {
+          ctx!.beginPath();
+          path.forEach((pt, pIdx) => {
+            const px = padX + pt.xFrac * plotW;
+            const py = padY + (1 - pt.nFrac) * plotH;
+            if (pIdx === 0) ctx!.moveTo(px, py);
+            else ctx!.lineTo(px, py);
+          });
+          const pathAlpha = idx === 0 ? 0.8 : 0.25;
+          ctx!.strokeStyle = idx === 0 ? cyan : (isDark ? `rgba(56, 189, 248, ${pathAlpha})` : `rgba(2, 132, 199, ${pathAlpha})`);
+          ctx!.lineWidth = idx === 0 ? 1.8 : 0.9;
+          ctx!.stroke();
+        });
+
+        // Vertical Live Sweep Line
+        ctx!.beginPath();
+        ctx!.moveTo(cursorX, padY);
+        ctx!.lineTo(cursorX, padY + plotH);
+        ctx!.strokeStyle = gold;
+        ctx!.lineWidth = 1.5;
+        ctx!.stroke();
+
+        // 8x8 Radioactive Nuclei Lattice in Top-Right Corner (64 nuclei)
+        const gridX = width - 110;
+        const gridY = 46;
+        const cellSize = 6;
+        for (let r = 0; r < 8; r++) {
+          for (let c = 0; c < 8; c++) {
+            const idx = r * 8 + c;
+            const nucleus = nucleiStates[idx];
+            const isDecayed = sweepTime >= nucleus.decayTime;
+            const px = gridX + c * cellSize;
+            const py = gridY + r * cellSize;
+
+            ctx!.beginPath();
+            ctx!.arc(px, py, 2, 0, Math.PI * 2);
+            ctx!.fillStyle = isDecayed ? gold : cyan;
+            ctx!.fill();
+          }
+        }
+
+        ctx!.fillStyle = slate;
+        ctx!.font = '9px "JetBrains Mono", monospace';
+        ctx!.fillText('TIME t (0.00 → 4.00 s)', padX, height - 16);
+        ctx!.fillText('N(t) = N₀ exp(-λt) [POISSON]', width - 260, padY - 12);
+        ctx!.fillText('8×8 RADIOISOTOPE LATTICE', gridX - 20, gridY + 58);
+      }
+
+      // ======================================================================
+      // DESKTOP INTERACTIVE EYEPIECE APERTURE (RAW NOISE vs CLEAN MODEL)
+      // ======================================================================
+      if (isHovering && !isTouchDevice) {
+        // Draw crosshair axes
+        ctx!.strokeStyle = isDark ? 'rgba(56, 189, 248, 0.25)' : 'rgba(2, 132, 199, 0.25)';
+        ctx!.lineWidth = 0.8;
+        ctx!.setLineDash([3, 3]);
+        ctx!.beginPath();
+        ctx!.moveTo(mouseX, 0);
+        ctx!.lineTo(mouseX, height);
+        ctx!.moveTo(0, mouseY);
+        ctx!.lineTo(width, mouseY);
+        ctx!.stroke();
+        ctx!.setLineDash([]);
+
+        // Eyepiece Lens Aperture Ring
+        ctx!.save();
+        ctx!.beginPath();
+        ctx!.arc(mouseX, mouseY, eyepieceRadius, 0, Math.PI * 2);
+        ctx!.clip();
+
+        // Lens interior background tint
+        ctx!.fillStyle = isDark ? 'rgba(6, 10, 20, 0.55)' : 'rgba(250, 248, 243, 0.55)';
+        ctx!.fillRect(mouseX - eyepieceRadius, mouseY - eyepieceRadius, eyepieceRadius * 2, eyepieceRadius * 2);
+
+        // Inside the eyepiece: reveal raw noise fluctuations
+        ctx!.fillStyle = isDark ? 'rgba(245, 158, 11, 0.7)' : 'rgba(217, 119, 6, 0.8)';
+        for (let i = 0; i < 18; i++) {
+          const angle = (i / 18) * Math.PI * 2 + tick * 0.05;
+          const dist = 10 + (i % 4) * 8;
+          const nx = mouseX + Math.cos(angle) * dist;
+          const ny = mouseY + Math.sin(angle) * dist;
+          ctx!.fillRect(nx - 1, ny - 1, 2, 2);
+        }
+        ctx!.restore();
+
+        // Lens metallic outer rim
+        ctx!.strokeStyle = cyan;
+        ctx!.lineWidth = 1.2;
+        ctx!.beginPath();
+        ctx!.arc(mouseX, mouseY, eyepieceRadius, 0, Math.PI * 2);
+        ctx!.stroke();
+
+        // Eyepiece Reticle Tag
+        ctx!.fillStyle = cyan;
+        ctx!.font = '8px "JetBrains Mono", monospace';
+        ctx!.fillText('EYEPIECE: RAW SENSOR APERTURE', mouseX - 55, mouseY - eyepieceRadius - 6);
+      }
+
+      tick++;
+      if (isComponentVisible && !prefersReducedMotion) {
+        animationId = requestAnimationFrame(render);
+      } else {
+        animationId = 0;
+      }
+    }
+
+    // Pause rendering when offscreen or document is hidden
+    let isComponentVisible = true;
+    const plateContainer = document.getElementById('physics-instrument-container');
+    let observer: IntersectionObserver | null = null;
+    if (plateContainer && 'IntersectionObserver' in window) {
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          isComponentVisible = entry.isIntersecting;
+          if (isComponentVisible && !animationId && !prefersReducedMotion) {
+            animationId = requestAnimationFrame(render);
+          }
+        });
+      }, { threshold: 0.05 });
+      observer.observe(plateContainer);
+    }
+
+    function onVisibility() {
+      if (document.hidden) {
+        isComponentVisible = false;
+      } else {
+        isComponentVisible = true;
+        if (!animationId && !prefersReducedMotion) animationId = requestAnimationFrame(render);
+      }
+    }
+    document.addEventListener('visibilitychange', onVisibility);
+
+    syncModeUI();
+    render();
+
+    document.addEventListener('astro:before-swap', () => {
+      cancelAnimationFrame(animationId);
+      window.removeEventListener('resize', resize);
+      document.removeEventListener('visibilitychange', onVisibility);
+      observer?.disconnect();
+    }, { once: true });
+  }
+
+  initAdvancedPhysicsPlate();
+  document.addEventListener('astro:page-load', initAdvancedPhysicsPlate);
+</script>

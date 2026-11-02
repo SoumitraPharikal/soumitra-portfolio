@@ -1,0 +1,265 @@
+---
+const currentYear = 2026;
+---
+
+<footer class="colophon hairline-top">
+  <div class="monograph-container">
+    <div class="swiss-grid-12 colophon-inner">
+      <!-- Colophon Block 1: Academic Affiliation & Institutional Emblem -->
+      <div class="col-4 colophon-section">
+        <div class="affiliation-header">
+          <!-- Official IISER Berhampur Emblem -->
+          <div class="iiser-emblem">
+            <img
+              src="/logos/iiserbpr.png"
+              onerror="this.onerror=null; this.src='/logos/iiserbpr-crest.svg';"
+              alt="IISER Berhampur Official Emblem"
+              class="emblem-img"
+              width="36"
+              height="36"
+              loading="lazy"
+            />
+          </div>
+          <div>
+            <span class="meta-index">ACADEMIC APPOINTMENT</span>
+            <p class="colophon-title">Soumitra Pharikal</p>
+          </div>
+        </div>
+
+        <div class="colophon-text-block">
+          <p class="colophon-text affiliation-address">
+            Department of Physical Sciences<br />
+            Indian Institute of Science Education and Research (IISER) Berhampur<br />
+            Permanent Campus: Vigyanpuri, Laudigam, Konisi, Ganjam, Odisha 760003, India
+          </p>
+          <a
+            href="https://www.google.com/maps/place/19%C2%B012'00.0%22N+84%C2%B050'06.0%22E/@19.200,84.835,16z"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="maps-link editorial-link"
+          >
+            View IISER Berhampur on Google Maps <span class="arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Colophon Block 2: Verified Academic & Communication Dossier -->
+      <div class="col-4 colophon-section">
+        <span class="meta-index">ACADEMIC DIRECTORIES &amp; PROFILES</span>
+        <ul class="colophon-links mono">
+          <li>
+            <span class="link-label">ORCID:</span>
+            <a href="https://orcid.org/0009-0001-8670-0352" target="_blank" rel="noopener noreferrer">
+              0009-0001-8670-0352 ↗
+            </a>
+          </li>
+          <li>
+            <span class="link-label">RESEARCHGATE:</span>
+            <a href="https://www.researchgate.net/profile/Soumitra-Pharikal" target="_blank" rel="noopener noreferrer">
+              Soumitra-Pharikal ↗
+            </a>
+          </li>
+          <li>
+            <span class="link-label">SCHOLAR:</span>
+            <a href="https://scholar.google.com/citations?user=soumitra-pharikal" target="_blank" rel="noopener noreferrer">
+              Google Scholar Profile ↗
+            </a>
+          </li>
+          <li>
+            <span class="link-label">GITHUB:</span>
+            <a href="https://github.com/SoumitraPharikal" target="_blank" rel="noopener noreferrer">
+              github.com/SoumitraPharikal ↗
+            </a>
+          </li>
+          <li>
+            <span class="link-label">LINKEDIN:</span>
+            <a href="https://www.linkedin.com/in/soumitra-pharikal" target="_blank" rel="noopener noreferrer">
+              in/soumitra-pharikal ↗
+            </a>
+          </li>
+          <li>
+            <span class="link-label">EMAIL:</span>
+            <a href="mailto:24123@iiserbpr.ac.in">
+              24123@iiserbpr.ac.in
+            </a>
+          </li>
+          <li>
+            <span class="link-label">PHONE:</span>
+            <a href="tel:+918160785898">
+              +91 8160785898
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Colophon Block 3: Curricular Dossiers & Site Navigation -->
+      <div class="col-4 colophon-section colophon-meta">
+        <span class="meta-index">RESEARCH DOSSIERS &amp; NAVIGATION</span>
+        <ul class="colophon-links mono">
+          <li>
+            <a href="/research">Academic Research Dossier ↗</a>
+          </li>
+          <li>
+            <a href="/projects">Computational Monographs &amp; Code ↗</a>
+          </li>
+          <li>
+            <a href="/writing">Theoretical Compendiums &amp; TeX ↗</a>
+          </li>
+          <li>
+            <a href="/leadership">Campus Governance &amp; Student Service ↗</a>
+          </li>
+          <li>
+            <a href="/about">Academic Biography &amp; Inquiry ↗</a>
+          </li>
+          <li>
+            <a href="/cv">Curriculum Vitae (CV) ↗</a>
+          </li>
+        </ul>
+        <p class="copyright-text mono">
+          © {currentYear} Soumitra Pharikal · IISER Berhampur
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .colophon {
+    background-color: var(--bg-surface);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    padding-top: var(--space-10);
+    padding-bottom: var(--space-12);
+    margin-top: auto;
+    border-top: 1px solid var(--border-subtle);
+    transition: background-color var(--transition-slow), border-color var(--transition-slow);
+  }
+
+  .colophon-inner {
+    row-gap: var(--space-8);
+  }
+
+  .colophon-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .affiliation-header {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    gap: 10px;
+  }
+
+  .iiser-emblem {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .emblem-img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    border-radius: 4px;
+  }
+
+  .colophon-title {
+    font-family: var(--font-serif);
+    font-size: 1.1875rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .colophon-text-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .colophon-text {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  .affiliation-address {
+    font-size: 0.8125rem;
+  }
+
+  .maps-link {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent-gold);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .maps-link:hover {
+    color: var(--accent-primary);
+    text-decoration: underline;
+  }
+
+  .colophon-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .colophon-links li {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 0.78125rem;
+  }
+
+  .link-label {
+    font-size: 0.6875rem;
+    color: var(--text-tertiary);
+    min-width: 65px;
+  }
+
+  .colophon-links a {
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .colophon-links a:hover {
+    color: var(--accent-primary);
+    text-decoration: underline;
+  }
+
+  .mono-stamp {
+    font-size: 0.6875rem;
+    letter-spacing: 0.05em;
+    line-height: 1.7;
+    color: var(--text-tertiary);
+  }
+
+  .copyright-text {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    margin: 0;
+    margin-top: var(--space-2);
+  }
+
+  @media (max-width: 1024px) {
+    .col-5, .col-4, .col-3 {
+      grid-column: span 12;
+    }
+  }
+</style>

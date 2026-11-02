@@ -1,0 +1,214 @@
+---
+// src/components/ThreeSkyDome.astro
+// Subtle 3D celestial sky dome with procedural stars & constellation lines
+// Dynamically imports three.js only when visible in viewport
+---
+
+<div class="three-skydome-container" id="three-skydome-wrapper" aria-hidden="true">
+  <canvas id="three-skydome-canvas" class="skydome-canvas"></canvas>
+  <div class="skydome-fallback" id="skydome-fallback"></div>
+</div>
+
+<style>
+  .three-skydome-container {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+    opacity: 0.65;
+    transition: opacity 300ms ease;
+  }
+
+  .skydome-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .skydome-fallback {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.05) 0%, transparent 70%);
+    opacity: 0;
+  }
+
+  [data-theme="light"] .three-skydome-container {
+    opacity: 0.22;
+  }
+</style>
+
+<script>
+  function initThreeSkyDome() {
+    const container = document.getElementById('three-skydome-wrapper');
+    const canvas = document.getElementById('three-skydome-canvas') as HTMLCanvasElement | null;
+    const fallback = document.getElementById('skydome-fallback');
+    if (!container || !canvas) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      if (fallback) fallback.style.opacity = '1';
+      return;
+    }
+
+    let isInitialized = false;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !isInitialized) {
+          isInitialized = true;
+          observer.disconnect();
+          loadSkyDome();
+        }
+      });
+    }, { threshold: 0.05 });
+
+    observer.observe(container);
+
+    async function loadSkyDome() {
+      try {
+        const THREE = await import('three');
+
+        const width = container!.clientWidth || window.innerWidth;
+        const height = container!.clientHeight || 480;
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(55, width / height, 1, 1000);
+        camera.position.z = 240;
+
+        const renderer = new THREE.WebGLRenderer({
+          canvas: canvas!,
+          alpha: true,
+          antialias: true,
+          powerPreference: 'low-power'
+        });
+        renderer.setSize(width, height);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+
+        // Procedural Starfield Particles
+        const starCount = 600;
+        const positions = new Float32Array(starCount * 3);
+        const colors = new Float32Array(starCount * 3);
+
+        const cyanColor = new THREE.Color(0x38bdf8);
+        const goldColor = new THREE.Color(0xf59e0b);
+        const whiteColor = new THREE.Color(0xf1f5f9);
+
+        for (let i = 0; i < starCount; i++) {
+          // Distributed across a sphere
+          const u = Math.random();
+          const v = Math.random();
+          const theta = u * 2.0 * Math.PI;
+          const phi = Math.acos(2.0 * v - 1.0);
+          const r = 180 + Math.random() * 80;
+
+          positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+          positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+          positions[i * 3 + 2] = r * Math.cos(phi);
+
+          const choice = Math.random();
+          const col = choice < 0.2 ? goldColor : (choice < 0.5 ? cyanColor : whiteColor);
+          colors[i * 3] = col.r;
+          colors[i * 3 + 1] = col.g;
+          colors[i * 3 + 2] = col.b;
+        }
+
+        const geometry = new THREE.BufferGeometry();
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+        const material = new THREE.PointsMaterial({
+          size: 1.8,
+          vertexColors: true,
+          transparent: true,
+          opacity: 0.85
+        });
+
+        const starField = new THREE.Points(geometry, material);
+        scene.add(starField);
+
+        // Constellation Lines: Connect close neighbors among first 80 stars
+        const linePositions: number[] = [];
+        for (let i = 0; i < 70; i++) {
+          for (let j = i + 1; j < 70; j++) {
+            const dx = positions[i * 3] - positions[j * 3];
+            const dy = positions[i * 3 + 1] - positions[j * 3 + 1];
+            const dz = positions[i * 3 + 2] - positions[j * 3 + 2];
+            const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+            if (dist < 42) {
+              linePositions.push(
+                positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2],
+                positions[j * 3], positions[j * 3 + 1], positions[j * 3 + 2]
+              );
+            }
+          }
+        }
+
+        const lineGeometry = new THREE.BufferGeometry();
+        lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+        const lineMaterial = new THREE.LineBasicMaterial({
+          color: 0x38bdf8,
+          transparent: true,
+          opacity: 0.15
+        });
+        const constellationLines = new THREE.LineSegments(lineGeometry, lineMaterial);
+        scene.add(constellationLines);
+
+        let animId = 0;
+        let isVisible = true;
+
+        const visObserver = new IntersectionObserver((entries) => {
+          entries.forEach(e => {
+            isVisible = e.isIntersecting;
+            if (isVisible && !animId) animate();
+          });
+        }, { threshold: 0.05 });
+        visObserver.observe(container!);
+
+        function animate() {
+          if (!isVisible) {
+            animId = 0;
+            return;
+          }
+          starField.rotation.y += 0.0003;
+          starField.rotation.x += 0.0001;
+          constellationLines.rotation.y += 0.0003;
+          constellationLines.rotation.x += 0.0001;
+
+          renderer.render(scene, camera);
+          animId = requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        function handleResize() {
+          if (!container) return;
+          const w = container.clientWidth || window.innerWidth;
+          const h = container.clientHeight || 480;
+          camera.aspect = w / h;
+          camera.updateProjectionMatrix();
+          renderer.setSize(w, h);
+        }
+
+        window.addEventListener('resize', handleResize, { passive: true });
+
+        document.addEventListener('astro:before-swap', () => {
+          cancelAnimationFrame(animId);
+          window.removeEventListener('resize', handleResize);
+          visObserver.disconnect();
+          renderer.dispose();
+          geometry.dispose();
+          material.dispose();
+          lineGeometry.dispose();
+          lineMaterial.dispose();
+        }, { once: true });
+
+      } catch (err) {
+        console.warn('[ThreeSkyDome] Fallback rendered:', err);
+        if (fallback) fallback.style.opacity = '1';
+      }
+    }
+  }
+
+  initThreeSkyDome();
+  document.addEventListener('astro:page-load', initThreeSkyDome);
+</script>

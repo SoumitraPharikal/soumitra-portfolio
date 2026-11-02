@@ -1,0 +1,1073 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import InteractivePhysicsPlate from '../components/InteractivePhysicsPlate.astro';
+import ThreeSkyDome from '../components/ThreeSkyDome.astro';
+import katex from 'katex';
+
+// Pre-render KaTeX Equations in frontmatter for zero-FOUC static HTML
+const eqDomainAstro = katex.renderToString(
+  'P_{\\text{LS}}(\\omega) = \\frac{1}{2\\sigma^2}\\left[\\frac{C^2}{C_0} + \\frac{S^2}{S_0}\\right]',
+  { displayMode: true, throwOnError: false }
+);
+
+const eqDomainComputational = katex.renderToString(
+  '\\mathcal{R}f(s,\\theta) = \\iint f(x,y)\\,\\delta(x\\cos\\theta + y\\sin\\theta - s)\\,dx\\,dy',
+  { displayMode: true, throwOnError: false }
+);
+
+const eqDomainOpticsRelativity = katex.renderToString(
+  'W(\\rho,\\theta) = \\sum_{n,m} c_n^m R_n^m(\\rho)\\cos(m\\theta)',
+  { displayMode: true, throwOnError: false }
+);
+
+const eqMonoAstro = katex.renderToString(
+  'P_{\\text{LS}} = 1.4820\\text{ d} \\quad \\sigma_{\\text{phot}} \\le 0.014\\text{ mag}',
+  { displayMode: true, throwOnError: false }
+);
+
+const eqMonoRadon = katex.renderToString(
+  'f(x,y) = \\int_0^\\pi \\mathcal{F}^{-1}\\left\\{|w|\\,\\mathcal{F}\\{\\mathcal{R}f\\}\\right\\} d\\theta',
+  { displayMode: true, throwOnError: false }
+);
+
+const eqMonoMC = katex.renderToString(
+  'P_{\\text{decay}} = 1 - e^{-\\lambda \\Delta t} \\quad \\sigma_{\\text{RMS}} \\propto \\frac{1}{\\sqrt{N_0}}',
+  { displayMode: true, throwOnError: false }
+);
+
+const eqMonoZernike = katex.renderToString(
+  'W(\\rho,\\theta) = \\sum_{j=1}^{36} a_j Z_j(\\rho,\\theta)',
+  { displayMode: true, throwOnError: false }
+);
+---
+
+<BaseLayout
+  title="Soumitra Pharikal | Academic Research Monograph & Portfolio"
+  description="Personal academic monograph and research portfolio of Soumitra Pharikal (IISER Berhampur). Observational astronomy, stellar photometry, tomographic CT reconstruction, and stochastic Monte Carlo modeling."
+>
+  <div class="monograph-container">
+
+    <!-- ====================================================================
+         SECTION 00: EDITORIAL HERO
+         ==================================================================== -->
+    <section class="hero-section" aria-label="Monograph Introduction">
+      <ThreeSkyDome />
+      <div class="swiss-grid-12 hero-grid">
+        <!-- Columns 1–6: Narrative & Identity -->
+        <div class="col-6 hero-narrative reveal-up" style="--stagger-index: 1;">
+          <div class="hero-glass-plate border-beam-card">
+            <div class="hero-eyebrow">
+              <span class="pulse-dot" aria-hidden="true"></span>
+              <span class="mono-badge">BS-MS PHYSICS &amp; CDS · IISER BERHAMPUR</span>
+            </div>
+
+            <h1 class="hero-headline">
+              Exploring physical systems through<br />
+              <span class="typewriter-container"><span id="hero-typewriter" class="typewriter-text"></span><span class="typewriter-cursor" aria-hidden="true">|</span></span>
+            </h1>
+
+            <div class="hero-prose reading-measure">
+              <p class="lead">
+                Hi, I'm Soumitra, a third-year BS-MS student at IISER Berhampur majoring in Physics with a minor in Computational and Data Sciences. I investigate astronomical time-series and variable stars at the Indian Centre for Space Physics, build GPU-accelerated ray tracing and wavefront engines, and develop physics-informed algorithms across optics and observational astrophysics.
+              </p>
+            </div>
+
+            <!-- Action Bar & Quick Monograph Links -->
+            <div class="hero-actions">
+              <a href="/research" class="editorial-btn primary">
+                Explore Research Monographs <span class="btn-arrow" aria-hidden="true">→</span>
+              </a>
+              <a href="/projects" class="editorial-btn">
+                Inspect Code &amp; Projects <span class="btn-arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
+
+            <div class="hero-meta-strip hairline-top">
+              <div class="meta-item">
+                <span class="meta-index">CURRICULUM</span>
+                <a href="/cv" class="editorial-link">Academic CV (Dossier) ↗</a>
+              </div>
+              <div class="meta-item">
+                <span class="meta-index">PUBLICATIONS &amp; NOTES</span>
+                <a href="/writing" class="editorial-link">LaTeX Course Compendiums ↗</a>
+              </div>
+              <div class="meta-item">
+                <span class="meta-index">STATION</span>
+                <span class="mono-text">Berhampur, Odisha [19.200° N, 84.835° E]</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columns 7–12: Interactive Physics Instrument -->
+        <div class="col-6 hero-instrument no-tilt reveal-up" style="--stagger-index: 3;">
+          <InteractivePhysicsPlate />
+        </div>
+      </div>
+    </section>
+
+    <div class="haikei-wave-divider reveal-line" style="--stagger-index: 2;" aria-hidden="true">
+      <svg viewBox="0 0 1200 48" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="waveH1" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#00F0FF" stop-opacity="0.35" />
+            <stop offset="50%" stop-color="#3B82F6" stop-opacity="0.25" />
+            <stop offset="100%" stop-color="#A855F7" stop-opacity="0.4" />
+          </linearGradient>
+          <linearGradient id="waveH2" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#F59E0B" stop-opacity="0.25" />
+            <stop offset="100%" stop-color="#10B981" stop-opacity="0.2" />
+          </linearGradient>
+        </defs>
+        <path d="M0,24 C200,8 400,38 600,18 C800,2 1000,38 1200,20 L1200,48 L0,48 Z" fill="url(#waveH1)"></path>
+        <path d="M0,32 C250,44 500,16 750,34 C950,48 1100,24 1200,30 L1200,48 L0,48 Z" fill="url(#waveH2)"></path>
+      </svg>
+    </div>
+
+    <!-- ====================================================================
+         SECTION 01: RESEARCH ARCHITECTURE & INTELLECTUAL FOCUS
+         ==================================================================== -->
+    <section class="section-container" id="domains-section" aria-label="Research Domains">
+      <div class="section-header-block reveal-up" style="--stagger-index: 1;">
+        <span class="meta-index">§ 01 / RESEARCH ARCHITECTURE</span>
+        <h2 class="section-title">Core Investigative Domains</h2>
+        <p class="section-subtitle reading-measure text-secondary">
+          Bridging empirical observational reduction pipelines, tomographic inverse problems, and analytical wave/relativistic mechanics.
+        </p>
+      </div>
+
+      <div class="swiss-grid-12 domains-grid">
+        <!-- 01 // ASTROPHYSICS -->
+        <div class="col-4 domain-card hairline-box spotlight-card interactive-row corner-crosshair reveal-up" style="--stagger-index: 2;">
+          <div class="domain-header">
+            <span class="domain-code mono">01 // ASTROPHYSICS</span>
+            <span class="domain-period mono">OBSERVATIONAL ASTRONOMY</span>
+          </div>
+          <h3 class="domain-title">Variable Star Photometry &amp; Exoplanetary Transits</h3>
+          <p class="domain-desc text-secondary">
+            Reduction of 814 CCD time-series frames of open cluster IC 1369, DAOPHOT point-spread-function extraction, 
+            Lomb-Scargle periodograms, PARSEC isochrone CMD fitting, and TESS/Gaia exoplanet transit photometry.
+          </p>
+          <div class="domain-math-box">
+            <div set:html={eqDomainAstro} />
+          </div>
+          <div class="domain-footer hairline-top">
+            <span class="meta-index">STACK:</span>
+            <span class="domain-tools mono">PYTHON · ASTROPY · PHOTUTILS · DAOPHOT II · IRAF · PARSEC</span>
+            <a href="/research#ic1369" class="domain-link">View Research Record →</a>
+          </div>
+        </div>
+
+        <!-- 02 // COMPUTATIONAL PHYSICS -->
+        <div class="col-4 domain-card hairline-box spotlight-card interactive-row corner-crosshair reveal-up" style="--stagger-index: 3;">
+          <div class="domain-header">
+            <span class="domain-code mono">02 // COMPUTATIONAL PHYSICS</span>
+            <span class="domain-period mono">INVERSE PROBLEMS &amp; MC</span>
+          </div>
+          <h3 class="domain-title">Tomographic Reconstruction &amp; Stochastic Monte Carlo</h3>
+          <p class="domain-desc text-secondary">
+            Analytical Radon transform inversion via filtered back-projection (FBP) on Shepp-Logan phantoms, 
+            physics-informed ML tumour classification in Hounsfield Units, and discrete Monte Carlo radioactive decay scaling.
+          </p>
+          <div class="domain-math-box">
+            <div set:html={eqDomainComputational} />
+          </div>
+          <div class="domain-footer hairline-top">
+            <span class="meta-index">STACK:</span>
+            <span class="domain-tools mono">NUMPY · SCIPY · SCIKIT-LEARN · RADON FBP · STATISTICAL PHYSICS</span>
+            <a href="/projects/ct-imaging-tumour-detection" class="domain-link">View Project Spec →</a>
+          </div>
+        </div>
+
+        <!-- 03 // OPTICS & RELATIVITY -->
+        <div class="col-4 domain-card hairline-box spotlight-card interactive-row corner-crosshair reveal-up" style="--stagger-index: 4;">
+          <div class="domain-header">
+            <span class="domain-code mono">03 // OPTICS &amp; RELATIVITY</span>
+            <span class="domain-period mono">WAVE MECHANICS &amp; SPACETIME</span>
+          </div>
+          <h3 class="domain-title">Adaptive Optics Wavefronts &amp; Relativistic Mechanics</h3>
+          <p class="domain-desc text-secondary">
+            Zernike polynomial modal decomposition <em>W</em>(ρ, θ) under dynamic pupil resizing in MATLAB for ophthalmic and microscopic imaging, 
+            alongside Lorentz transformation kinematics, Minkowski four-vectors, and relativistic mechanics.
+          </p>
+          <div class="domain-math-box">
+            <div set:html={eqDomainOpticsRelativity} />
+          </div>
+          <div class="domain-footer hairline-top">
+            <span class="meta-index">STACK:</span>
+            <span class="domain-tools mono">MATLAB · ZERNIKE MODES · MINKOWSKI METRIC · TENSORS</span>
+            <a href="/projects/zernike-wavefront-analyzer" class="domain-link">View Project Spec →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="haikei-wave-divider reveal-line" style="--stagger-index: 1;" aria-hidden="true">
+      <svg viewBox="0 0 1200 48" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="waveH3" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#10B981" stop-opacity="0.3" />
+            <stop offset="50%" stop-color="#00F0FF" stop-opacity="0.25" />
+            <stop offset="100%" stop-color="#6366F1" stop-opacity="0.35" />
+          </linearGradient>
+          <linearGradient id="waveH4" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#A855F7" stop-opacity="0.25" />
+            <stop offset="100%" stop-color="#F43F5E" stop-opacity="0.2" />
+          </linearGradient>
+        </defs>
+        <path d="M0,20 C220,38 450,10 700,28 C920,44 1080,18 1200,26 L1200,48 L0,48 Z" fill="url(#waveH3)"></path>
+        <path d="M0,30 C280,16 540,42 800,22 C1020,8 1120,32 1200,28 L1200,48 L0,48 Z" fill="url(#waveH4)"></path>
+      </svg>
+    </div>
+
+    <!-- ====================================================================
+         SECTION 02: 2x2 BENTO GRID: 4 FEATURED TECHNICAL MONOGRAPHS
+         ==================================================================== -->
+    <section class="section-container" aria-label="Featured Technical Monographs">
+      <div class="section-header-block reveal-up" style="--stagger-index: 1;">
+        <span class="meta-index">§ 02 / MONOGRAPH PORTFOLIO</span>
+        <h2 class="section-title">Featured Research &amp; Computational Monographs</h2>
+        <p class="section-subtitle reading-measure text-secondary">
+          Four flagship technical monographs with full mathematical models, algorithm architectures, and reproducible scientific toolchains.
+        </p>
+      </div>
+
+      <!-- 2x2 Bento Grid -->
+      <div class="monographs-bento-grid reveal-up" style="--stagger-index: 2;">
+        <!-- Card 1: IC 1369 Photometry -->
+        <article class="bento-card hairline-box spotlight-card interactive-row corner-crosshair border-beam-card">
+          <div class="bento-card-header">
+            <div class="bento-tags mono">
+              <span class="bento-num text-signal">01</span>
+              <span class="bento-domain">OBSERVATIONAL ASTROPHYSICS</span>
+            </div>
+            <span class="bento-period mono text-tertiary">ICSP KOLKATA · 2026</span>
+          </div>
+
+          <h3 class="bento-card-title">
+            <a href="/projects/ic-1369-photometry-pipeline" class="title-link no-underline">
+              Variable Star Photometry &amp; Isochronal Age of IC 1369
+            </a>
+          </h3>
+
+          <p class="bento-card-desc text-secondary">
+            Reduction of 814 time-series CCD frames using DAOPHOT point-spread-function extraction, 
+            Lomb-Scargle periodograms, and PARSEC isochrone CMD fitting for open cluster IC 1369.
+          </p>
+
+          <div class="bento-math-box">
+            <div set:html={eqMonoAstro} />
+          </div>
+
+          <div class="bento-card-footer hairline-top">
+            <span class="bento-tools mono text-tertiary">PYTHON · ASTROPY · DAOPHOT · PARSEC</span>
+            <a href="/projects/ic-1369-photometry-pipeline" class="editorial-btn">
+              Read Monograph <span class="btn-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 2: Radon CT Tumour Detection -->
+        <article class="bento-card hairline-box spotlight-card interactive-row corner-crosshair">
+          <div class="bento-card-header">
+            <div class="bento-tags mono">
+              <span class="bento-num text-signal">02</span>
+              <span class="bento-domain">COMPUTATIONAL TOMOGRAPHY</span>
+            </div>
+            <span class="bento-period mono text-tertiary">ALGEBRAIC INVERSION · 2025</span>
+          </div>
+
+          <h3 class="bento-card-title">
+            <a href="/projects/ct-imaging-tumour-detection" class="title-link no-underline">
+              Radon CT Sinogram &amp; Algebraic Tumour Reconstruction
+            </a>
+          </h3>
+
+          <p class="bento-card-desc text-secondary">
+            Continuous Radon projection transforms, Filtered Back-Projection (FBP) with Ram-Lak frequency filtering, 
+            and Hounsfield Unit neoplasm segmentation on synthetic phantoms.
+          </p>
+
+          <div class="bento-math-box">
+            <div set:html={eqMonoRadon} />
+          </div>
+
+          <div class="bento-card-footer hairline-top">
+            <span class="bento-tools mono text-tertiary">NUMPY · SCIPY · SKIMAGE · RADON FBP</span>
+            <a href="/projects/ct-imaging-tumour-detection" class="editorial-btn">
+              Read Monograph <span class="btn-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 3: Monte Carlo Stochastic Decay -->
+        <article class="bento-card hairline-box spotlight-card interactive-row corner-crosshair">
+          <div class="bento-card-header">
+            <div class="bento-tags mono">
+              <span class="bento-num text-signal">03</span>
+              <span class="bento-domain">STOCHASTIC PHYSICS</span>
+            </div>
+            <span class="bento-period mono text-tertiary">MONTE CARLO METHODS · 2025</span>
+          </div>
+
+          <h3 class="bento-card-title">
+            <a href="/projects/monte-carlo-stochastic-decay" class="title-link no-underline">
+              Discrete Decay Ensembles &amp; Poisson Limit Convergence
+            </a>
+          </h3>
+
+          <p class="bento-card-desc text-secondary">
+            Stochastic Monte Carlo simulation of nuclear decay cascades, tracking ensemble convergence from 
+            <em>N</em><sub>0</sub> = 10 to 10<sup>4</sup> onto macroscopic analytical exponentials.
+          </p>
+
+          <div class="bento-math-box">
+            <div set:html={eqMonoMC} />
+          </div>
+
+          <div class="bento-card-footer hairline-top">
+            <span class="bento-tools mono text-tertiary">PYTHON · NUMPY · MATPLOTLIB · POISSON</span>
+            <a href="/projects/monte-carlo-stochastic-decay" class="editorial-btn">
+              Read Monograph <span class="btn-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 4: Zernike Wavefront Analyzer -->
+        <article class="bento-card hairline-box spotlight-card interactive-row corner-crosshair">
+          <div class="bento-card-header">
+            <div class="bento-tags mono">
+              <span class="bento-num text-signal">04</span>
+              <span class="bento-domain">ADAPTIVE OPTICS</span>
+            </div>
+            <span class="bento-period mono text-tertiary">WAVEFRONT MODES · 2025</span>
+          </div>
+
+          <h3 class="bento-card-title">
+            <a href="/projects/zernike-wavefront-analyzer" class="title-link no-underline">
+              Zernike Polynomial Wavefront Decomposition &amp; Modal Analysis
+            </a>
+          </h3>
+
+          <p class="bento-card-desc text-secondary">
+            Orthogonal circular pupil expansion of optical wavefront aberrations up to 36 modes, 
+            dynamic pupil scaling matrices, and Strehl ratio approximations in MATLAB.
+          </p>
+
+          <div class="bento-math-box">
+            <div set:html={eqMonoZernike} />
+          </div>
+
+          <div class="bento-card-footer hairline-top">
+            <span class="bento-tools mono text-tertiary">MATLAB · ZERNIKE MODES · GRAM-SCHMIDT</span>
+            <a href="/projects/zernike-wavefront-analyzer" class="editorial-btn">
+              Read Monograph <span class="btn-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="haikei-wave-divider reveal-line" style="--stagger-index: 1;" aria-hidden="true">
+      <svg viewBox="0 0 1200 48" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="waveH3" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#10B981" stop-opacity="0.3" />
+            <stop offset="50%" stop-color="#00F0FF" stop-opacity="0.25" />
+            <stop offset="100%" stop-color="#6366F1" stop-opacity="0.35" />
+          </linearGradient>
+          <linearGradient id="waveH4" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#A855F7" stop-opacity="0.25" />
+            <stop offset="100%" stop-color="#F43F5E" stop-opacity="0.2" />
+          </linearGradient>
+        </defs>
+        <path d="M0,20 C220,38 450,10 700,28 C920,44 1080,18 1200,26 L1200,48 L0,48 Z" fill="url(#waveH3)"></path>
+        <path d="M0,30 C280,16 540,42 800,22 C1020,8 1120,32 1200,28 L1200,48 L0,48 Z" fill="url(#waveH4)"></path>
+      </svg>
+    </div>
+
+    <!-- ====================================================================
+         SECTION 03: ACADEMIC HIGHLIGHTS & QUICK PORTALS BENTO
+         ==================================================================== -->
+    <section class="section-container" aria-label="Academic Highlights and Portals">
+      <div class="section-header-block reveal-up" style="--stagger-index: 1;">
+        <span class="meta-index">§ 03 / SCHOLASTIC RECOGNITION &amp; QUICK PORTALS</span>
+        <h2 class="section-title">Academic Highlights &amp; Curricular Portals</h2>
+        <p class="section-subtitle reading-measure text-secondary">
+          Scholastic examination merits, national olympiad qualifications, and direct navigation portals across research, theoretical compendiums, and leadership.
+        </p>
+      </div>
+
+      <div class="swiss-grid-12 bento-portals-layout reveal-up" style="--stagger-index: 2;">
+        <!-- Left 7 Columns: 3 Verified Examination Merit Cards -->
+        <div class="col-7 merit-stack">
+          <!-- Merit 1: NGPE 2026 -->
+          <div class="merit-box hairline-box spotlight-card interactive-row">
+            <div class="merit-head mono">
+              <span class="merit-badge text-gold">RANK 01 // INSTITUTE MERIT LIST</span>
+              <span class="merit-year text-tertiary">2026</span>
+            </div>
+            <h3 class="merit-title">National Graduate Physics Examination (NGPE 2026)</h3>
+            <p class="merit-desc text-secondary">
+              Ranked 1st on the Institute-Wide Merit List at IISER Berhampur in the premier national competitive examination conducted by the Indian Association of Physics Teachers (IAPT).
+            </p>
+          </div>
+
+          <!-- Merit 2: INAO 2022 -->
+          <div class="merit-box hairline-box spotlight-card interactive-row">
+            <div class="merit-head mono">
+              <span class="merit-badge text-accent">NATIONAL OLYMPIAD // STAGE 2 QUALIFIED</span>
+              <span class="merit-year text-tertiary">2022</span>
+            </div>
+            <h3 class="merit-title">Indian National Astronomy Olympiad (INAO 2022)</h3>
+            <p class="merit-desc text-secondary">
+              Qualified for Stage 2 (IOAA Selection) by ranking among the Top 256 students nationwide in the Indian Olympiad Qualifier in Astronomy (IOQA 2021–22).
+            </p>
+          </div>
+
+          <!-- Merit 3: PRMO 2019–20 -->
+          <div class="merit-box hairline-box spotlight-card interactive-row">
+            <div class="merit-head mono">
+              <span class="merit-badge text-signal">MATHEMATICAL MERIT // TOP 300 NATIONWIDE</span>
+              <span class="merit-year text-tertiary">2019 – 2020</span>
+            </div>
+            <h3 class="merit-title">Pre-Regional Mathematical Olympiad (PRMO)</h3>
+            <p class="merit-desc text-secondary">
+              Qualified Stage 1 of the International Mathematical Olympiad (IMO) selection pipeline; placed within the Top 300 nationwide across secondary standards.
+            </p>
+          </div>
+        </div>
+
+        <!-- Right 5 Columns: 3 Quick Portals -->
+        <div class="col-5 portals-stack">
+          <!-- Portal 1 -->
+          <a href="/research" class="portal-card hairline-box spotlight-card interactive-row no-underline">
+            <div class="portal-icon-row">
+              <span class="portal-index mono text-gold">PORTAL // 01</span>
+              <span class="portal-arrow mono">↗</span>
+            </div>
+            <h3 class="portal-title">Research Ledger &amp; Internships</h3>
+            <p class="portal-desc text-secondary">
+              Verified record of observational appointments at ICSP Kolkata, UH Manoa collaborations, and theoretical physics explorations.
+            </p>
+            <span class="portal-action mono text-accent">Enter Research Ledger →</span>
+          </a>
+
+          <!-- Portal 2 -->
+          <a href="/writing" class="portal-card hairline-box spotlight-card interactive-row no-underline">
+            <div class="portal-icon-row">
+              <span class="portal-index mono text-gold">PORTAL // 02</span>
+              <span class="portal-arrow mono">↗</span>
+            </div>
+            <h3 class="portal-title">Authored LaTeX Compendiums</h3>
+            <p class="portal-desc text-secondary">
+              Five complete theoretical handbooks covering Quantum Mechanics, Thermal Physics, Classical Mechanics, Mathematical Methods, and Data Structures.
+            </p>
+            <span class="portal-action mono text-accent">Browse Compendiums →</span>
+          </a>
+
+          <!-- Portal 3 -->
+          <a href="/leadership" class="portal-card hairline-box spotlight-card interactive-row no-underline">
+            <div class="portal-icon-row">
+              <span class="portal-index mono text-gold">PORTAL // 03</span>
+              <span class="portal-arrow mono">↗</span>
+            </div>
+            <h3 class="portal-title">Leadership &amp; Visual Direction</h3>
+            <p class="portal-desc text-secondary">
+              Directing telescope nights in Naxatra, heading Pixophiles Photography Club (Best Club Award), and institutional governance.
+            </p>
+            <span class="portal-action mono text-accent">View Leadership Archive →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</BaseLayout>
+
+<script>
+  // Hero Typewriter Engine
+  function initHeroTypewriter() {
+    const target = document.getElementById('hero-typewriter');
+    if (!target) return;
+
+    const phrases = [
+      "observational astrophysics.",
+      "computational physics & ray tracing.",
+      "optical wavefront & Zernike modeling.",
+      "astronomical time-series analysis.",
+      "scientific computing in Julia, Python & C++."
+    ];
+
+    let phraseIdx = 0;
+    let charIdx = 0;
+    let isDeleting = false;
+    let timer: number = 0;
+
+    const el = target as HTMLElement;
+
+    function tick() {
+      const current = phrases[phraseIdx];
+      if (isDeleting) {
+        charIdx--;
+        el.textContent = current.substring(0, charIdx);
+        if (charIdx <= 0) {
+          isDeleting = false;
+          phraseIdx = (phraseIdx + 1) % phrases.length;
+          timer = window.setTimeout(tick, 400);
+          return;
+        }
+        timer = window.setTimeout(tick, 35);
+      } else {
+        charIdx++;
+        el.textContent = current.substring(0, charIdx);
+        if (charIdx >= current.length) {
+          isDeleting = true;
+          timer = window.setTimeout(tick, 1800); // Hold for 1.8s
+          return;
+        }
+        timer = window.setTimeout(tick, 60);
+      }
+    }
+
+    tick();
+
+    document.addEventListener('astro:before-swap', () => {
+      clearTimeout(timer);
+    }, { once: true });
+  }
+
+  initHeroTypewriter();
+  document.addEventListener('astro:page-load', initHeroTypewriter);
+</script>
+
+<style>
+  /* ==========================================================================
+     HERO SECTION STYLES
+     ========================================================================== */
+  .hero-section {
+    position: relative;
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-8);
+  }
+
+  .hero-grid {
+    align-items: start;
+    row-gap: var(--space-6);
+  }
+
+  .hero-narrative {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  /* Hero Glass Container with Supreme Readability & Contrast */
+  .hero-glass-plate {
+    background: rgba(11, 18, 32, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 32px;
+    border-radius: 16px;
+    border: 1px solid var(--border-specular);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  :global(html[data-theme="light"]) .hero-glass-plate {
+    background: #FAF8F3 !important;
+    border: 1px solid rgba(14, 26, 43, 0.12) !important;
+    box-shadow: 0 20px 45px -10px rgba(14, 26, 43, 0.08), 0 0 0 1px rgba(14, 26, 43, 0.04) !important;
+  }
+
+  :global(html[data-theme="light"]) .hero-headline {
+    color: #0E1A2B !important;
+  }
+
+  :global(html[data-theme="light"]) .typewriter-text {
+    color: #B45309 !important; /* Darkened amber on warm paper: WCAG AA 4.7:1 */
+  }
+
+  :global(html[data-theme="light"]) .hero-prose .lead {
+    color: #3B4658 !important; /* Muted ink body text: WCAG AAA 8.1:1 */
+  }
+
+  :global(html[data-theme="light"]) .mono-badge {
+    background: #FAF8F3 !important;
+    color: #3B4658 !important;
+    border-color: rgba(14, 26, 43, 0.16) !important;
+  }
+
+  :global(html[data-theme="light"]) .hero-meta-strip {
+    border-top-color: rgba(14, 26, 43, 0.12) !important;
+  }
+
+  :global(html[data-theme="light"]) .meta-index {
+    color: #526075 !important;
+  }
+
+  :global(html[data-theme="light"]) .mono-text {
+    color: #0E1A2B !important;
+  }
+
+  :global(html[data-theme="light"]) .editorial-link {
+    color: #1B2E6B !important;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .mono-badge {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    color: var(--text-secondary);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+  }
+
+  .hero-headline {
+    font-size: var(--text-h1);
+    line-height: var(--leading-tight);
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .typewriter-container {
+    display: inline-block;
+    min-height: 2.3em;
+    vertical-align: top;
+    white-space: normal;
+  }
+
+  .typewriter-text {
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--accent-amber);
+  }
+
+  .typewriter-cursor {
+    display: inline;
+    color: var(--accent-primary);
+    font-weight: 300;
+    animation: blinkCursor 1s step-start infinite;
+    margin-left: 0;
+  }
+
+  @keyframes blinkCursor {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .hero-prose {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .hero-prose p {
+    margin: 0;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+  }
+
+  .hero-meta-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+    padding-top: var(--space-4);
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .mono-text {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+  }
+
+  .hero-instrument {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ==========================================================================
+     SECTION COMMON STYLES (Tight 36px Rhythm & Haikei Wave Dividers)
+     ========================================================================== */
+  .section-container {
+    padding-top: 36px !important;
+    padding-bottom: 36px !important;
+    scroll-margin-top: 80px;
+  }
+
+  .haikei-wave-divider {
+    width: 100%;
+    height: 32px;
+    opacity: 0.14;
+    color: var(--accent-primary);
+    overflow: hidden;
+    margin: 8px 0;
+  }
+
+  .haikei-wave-divider svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .section-header-block {
+    margin-bottom: var(--space-6);
+  }
+
+  .section-title {
+    font-size: var(--text-h2);
+    line-height: var(--leading-snug);
+    margin-top: var(--space-2);
+    margin-bottom: var(--space-2);
+  }
+
+  .section-subtitle {
+    margin: 0;
+  }
+
+  /* ==========================================================================
+     SECTION 01: DOMAINS GRID (No Equation Scrollbars)
+     ========================================================================== */
+  .domains-grid {
+    row-gap: var(--space-5);
+  }
+
+  .domain-card {
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    border-left: 3px solid transparent;
+  }
+
+  .domain-card:hover {
+    border-left-color: var(--accent-primary);
+  }
+
+  .domain-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-3);
+  }
+
+  .domain-code {
+    font-size: var(--text-xs);
+    color: var(--accent-signal);
+    font-weight: 600;
+  }
+
+  .domain-period {
+    font-size: 0.625rem;
+    color: var(--text-tertiary);
+    letter-spacing: 0.06em;
+  }
+
+  .domain-title {
+    font-size: 1.2rem;
+    line-height: 1.3;
+    margin-bottom: var(--space-3);
+  }
+
+  .domain-desc {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin-bottom: var(--space-4);
+  }
+
+  .domain-math-box {
+    background-color: var(--bg-surface-sunken);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: var(--space-4);
+    overflow: hidden !important;
+    font-size: 0.88rem;
+  }
+
+  .domain-footer {
+    padding-top: var(--space-3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .domain-tools {
+    font-size: 0.6875rem;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+  }
+
+  .domain-link {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    color: var(--accent-primary);
+    text-decoration: none;
+    margin-top: 4px;
+  }
+
+  .domain-link:hover {
+    color: var(--accent-primary-hover);
+    text-decoration: underline;
+  }
+
+  /* ==========================================================================
+     SECTION 02: 2x2 BENTO GRID MONOGRAPHS
+     ========================================================================== */
+  .monographs-bento-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-5);
+  }
+
+  .bento-card {
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    border-top: 2px solid var(--border-subtle);
+    transition: border-top-color var(--transition-base), transform var(--transition-base);
+  }
+
+  .bento-card:hover {
+    border-top-color: var(--accent-primary);
+  }
+
+  .bento-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-3);
+  }
+
+  .bento-teaser-box {
+    width: 100%;
+    height: 72px;
+    background: var(--bg-surface-sunken);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    margin-bottom: var(--space-3);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bento-teaser-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .bento-tags {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.6875rem;
+    letter-spacing: 0.05em;
+  }
+
+  .bento-num {
+    font-weight: 700;
+  }
+
+  .bento-period {
+    font-size: 0.625rem;
+  }
+
+  .bento-card-title {
+    font-size: 1.25rem;
+    line-height: 1.35;
+    margin: 0 0 var(--space-3) 0;
+  }
+
+  .title-link {
+    color: var(--text-primary);
+    transition: color var(--transition-fast);
+  }
+
+  .title-link:hover {
+    color: var(--accent-primary);
+  }
+
+  .bento-card-desc {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin: 0 0 var(--space-4) 0;
+  }
+
+  .bento-math-box {
+    background-color: var(--bg-surface-sunken);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-bottom: var(--space-4);
+    overflow: hidden !important;
+    font-size: 0.85rem;
+  }
+
+  .bento-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: var(--space-3);
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+
+  .bento-tools {
+    font-size: 0.625rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* ==========================================================================
+     SECTION 03: ACADEMIC HIGHLIGHTS & QUICK PORTALS BENTO
+     ========================================================================== */
+  .bento-portals-layout {
+    row-gap: var(--space-5);
+  }
+
+  .merit-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .merit-box {
+    padding: var(--space-4) var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border-left: 3px solid transparent;
+  }
+
+  .merit-box:hover {
+    border-left-color: var(--accent-gold);
+  }
+
+  .merit-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.6875rem;
+  }
+
+  .merit-badge {
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  .merit-title {
+    font-size: 1.05rem;
+    line-height: 1.35;
+    margin: 0;
+  }
+
+  .merit-desc {
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .portals-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .portal-card {
+    padding: var(--space-4) var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    height: 100%;
+    border-left: 3px solid transparent;
+  }
+
+  .portal-card:hover {
+    border-left-color: var(--accent-primary);
+  }
+
+  .portal-icon-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.6875rem;
+  }
+
+  .portal-index {
+    letter-spacing: 0.06em;
+  }
+
+  .portal-arrow {
+    font-size: 0.9rem;
+    color: var(--accent-primary);
+    transition: transform var(--transition-fast);
+  }
+
+  .portal-card:hover .portal-arrow {
+    transform: translate(2px, -2px);
+  }
+
+  .portal-title {
+    font-size: 1.125rem;
+    line-height: 1.3;
+    margin: 0;
+    color: var(--text-primary);
+  }
+
+  .portal-desc {
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .portal-action {
+    font-size: 0.75rem;
+    letter-spacing: 0.03em;
+    font-weight: 500;
+    margin-top: 4px;
+  }
+
+  /* Responsive Isolation */
+  @media (max-width: 960px) {
+    .monographs-bento-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-meta-strip {
+      grid-template-columns: 1fr;
+      gap: var(--space-3);
+    }
+
+    .merit-stack, .portals-stack {
+      grid-column: span 12;
+    }
+  }
+</style>

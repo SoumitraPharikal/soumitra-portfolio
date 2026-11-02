@@ -1,0 +1,945 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const rabbitHoles = [
+  {
+    topic: 'GEOPOLITICS & MARITIME CORRIDORS',
+    tag: 'GLOBAL TRADE & DEFENSE',
+    title: 'Strategic Chokepoints & Semiconductor Supply Chains',
+    desc: 'Analyzing naval chokepoints (Malacca, Hormuz, Bab-el-Mandeb), rare-earth mineral processing bottlenecks, and sovereign lithography fabrication facilities shaping 21st-century technological autonomy.'
+  },
+  {
+    topic: 'TECH POLICY & DATA SOVEREIGNTY',
+    tag: 'OPEN RESEARCH & GOVERNANCE',
+    title: 'Open-Source Scientific Infrastructure & Algorithmic Sovereignty',
+    desc: 'Investigating institutional dependencies on proprietary compute stacks, open-source scientific software preservation, and legal frameworks governing research data sovereignty in computational sciences.'
+  },
+  {
+    topic: 'VISUAL ART',
+    tag: 'GRAPHITE & PENCIL',
+    title: 'Pencil Art & Sketching',
+    desc: 'Observational pencil sketching and freehand graphite drawing. Exploring tonal gradients, form construction, and architectural perspective studies to sharpen visual intuition and spatial proportions off-screen.'
+  },
+  {
+    topic: 'ANALYTICAL SKETCHING & FIELD NOTES',
+    tag: 'VISUAL INQUIRY',
+    title: 'Orthogonal Perspective & Optical Ray Diagrams',
+    desc: 'Maintaining hand-drawn field notebooks with pen-and-ink diagrams of telescope optical trains, astronomical coordinates, brutalist campus architecture, and geometric wavefront traces.'
+  }
+];
+
+const toolkits = [
+  {
+    category: 'Scientific Systems & Languages',
+    tools: [
+      { name: 'Python', desc: 'Astropy, photutils, NumPy, SciPy, Matplotlib, Pandas, scikit-learn' },
+      { name: 'Rust', desc: 'High-performance numerical simulation, memory-safe astrodynamics, concurrency' },
+      { name: 'C / C++', desc: 'Pointer-level memory architectures, algorithm optimization, systems code' },
+      { name: 'MATLAB', desc: 'Zernike wavefront modal decomposition, matrix eigensystems, 2D phase maps' },
+      { name: 'POSIX Shell', desc: 'Workstation scripting, automated batch FITS processing, UNIX workflows' }
+    ]
+  },
+  {
+    category: 'Astronomical & Optical Software',
+    tools: [
+      { name: 'IRAF / DAOPHOT II', desc: 'Crowded-field stellar PSF modeling, aperture correction, CCD calibration' },
+      { name: 'SAOImage DS9', desc: 'FITS visual analysis, coordinate astrometry, aperture extraction' },
+      { name: 'Lightkurve / MAST', desc: 'TESS and Kepler time-series transit light-curve detrending' },
+      { name: 'PARSEC Isochrones', desc: 'Stellar evolution CMD matching, age and distance modulus estimation' }
+    ]
+  },
+  {
+    category: 'Typesetting & Scientific Publishing',
+    tools: [
+      { name: 'LaTeX / TeX', desc: 'pdfLaTeX, XeLaTeX, KOMA-Script, TikZ vector geometry, PGFPlots' },
+      { name: 'Web & Visualisation', desc: 'Astro 5, TypeScript, HTML5 Canvas for real-time mathematical visualizations' },
+      { name: 'Color & Media', desc: 'Digital RAW color grading, optical sensor noise evaluation' }
+    ]
+  }
+];
+---
+
+<BaseLayout
+  title="Academic Biography, Media & Inquiry | Soumitra Pharikal"
+  description="Personal narrative, academic trajectory from Ahmedabad and Gandhinagar to IISER Berhampur, Fellowship Varta conversation, intellectual rabbit holes, and scientific toolkit."
+>
+  <div class="monograph-container">
+    <header class="page-header reveal-up" style="--stagger-index: 1;">
+      <div class="page-meta-strip">
+        <span class="pulse-dot" aria-hidden="true"></span>
+        <span class="meta-index">§ 05 // ACADEMIC BIOGRAPHY &amp; INQUIRY</span>
+        <span class="mono text-tertiary" style="font-size: 0.75rem; margin-left: 8px;">ORCID: <a href="https://orcid.org/0009-0001-8670-0352" target="_blank" rel="noopener noreferrer" class="editorial-link">0009-0001-8670-0352 ↗</a></span>
+      </div>
+      <h1 class="page-title">Biography, Trajectory &amp; Scientific Philosophy</h1>
+      <p class="page-subtitle reading-measure text-secondary">
+        Undergraduate student in Physics and Computational Sciences at IISER Berhampur. Bridging mathematical derivations with telescope reductions, recorded scientific dialogues, and reproducible research.
+      </p>
+    </header>
+
+    <!-- ====================================================================
+         SECTION 01: TWO-COLUMN NARRATIVE & EDUCATION JOURNEY GRID
+         ==================================================================== -->
+    <section class="about-grid-section">
+      <div class="swiss-grid-12">
+        <!-- Left: Prose Narrative -->
+        <div class="col-7 narrative-column reveal-up" style="--stagger-index: 2;">
+          <div class="prose-block">
+            <h2 class="narrative-heading">Roots in Gujarat &amp; The Path to Fundamental Physics</h2>
+            <p class="narrative-p text-secondary">
+              I am a Bengali who grew up in Ahmedabad, Gujarat. My curiosity for quantitative science took shape during my schooling at <strong>Delhi Public School (DPS), Bopal, Ahmedabad</strong> (Class X: <strong>96.2%</strong>) and senior secondary education at <strong>Puna International School, Gandhinagar</strong> (Class XII: <strong>85.0%</strong>).
+            </p>
+            <p class="narrative-p text-secondary">
+              Driven by a desire to understand celestial mechanics and physical laws from first principles, I qualified for the <strong>Pre-Regional Mathematical Olympiad (PRMO, Top 300)</strong> and the <strong>Indian National Astronomy Olympiad (INAO 2022, Top 256 Nationwide)</strong>. These competitions solidified my desire to pursue fundamental science, leading me to join the five-year integrated <strong>BS-MS Dual Degree</strong> at the <strong>Indian Institute of Science Education and Research (IISER) Berhampur</strong>, an autonomous Institute of National Importance under the Ministry of Education, Government of India.
+            </p>
+
+            <h2 class="narrative-heading">Dual Disciplinary Foundation</h2>
+            <p class="narrative-p text-secondary">
+              At IISER Berhampur, my undergraduate curriculum integrates a <strong>Physics Major</strong> with a <strong>Computational and Data Sciences Minor</strong> (Current CGPA: <strong>8.7&nbsp;/&nbsp;10.0</strong>). In 2026, I secured <strong>Rank 1 on the Institute-Wide Merit List</strong> in the <strong>National Graduate Physics Examination (NGPE 2026)</strong> conducted by the Indian Association of Physics Teachers (IAPT).
+            </p>
+            <p class="narrative-p text-secondary">
+              I treat computation as an empirical physics laboratory. Whether running PSF photometry on hundreds of crowded-field telescope CCD frames, simulating ill-posed tomographic inverse problems with filtered back-projection, or decomposing distorted wavefronts into orthogonal Zernike polynomials, my objective is always the same: testing how mathematical models hold up against noisy real-world data.
+            </p>
+
+            <h2 class="narrative-heading">Observational Operations &amp; Telescopic Outreach</h2>
+            <p class="narrative-p text-secondary">
+              Beyond individual research, I am deeply invested in our student scientific community. As a core member of <strong>Naxatra</strong> (the Astronomy Club of IISER Berhampur), I coordinate nocturnal telescope observation sessions with 8-inch Dobsonian reflectors and public sky-watching outreach across Southern Odisha dark-sky corridors.
+            </p>
+          </div>
+        </div>
+
+        <!-- Right: Portrait & Education Journey Card -->
+        <div class="col-5 journey-column reveal-up" style="--stagger-index: 3;">
+          <!-- Academic Portrait Plate -->
+          <div class="portrait-card hairline-box spotlight-card corner-crosshair">
+            <div class="portrait-frame">
+              <img
+                src="/assets/potrait.jpg.png"
+                alt="Soumitra Pharikal Portrait"
+                class="portrait-img"
+                width="400"
+                height="480"
+                loading="eager"
+              />
+            </div>
+            <div class="portrait-caption mono">
+              <span class="portrait-name text-primary">SOUMITRA PHARIKAL</span>
+              <span class="portrait-affil text-tertiary">PHYSICS &amp; CDS · IISER BERHAMPUR</span>
+            </div>
+          </div>
+
+          <div class="journey-card hairline-box spotlight-card corner-crosshair">
+            <div class="journey-header">
+              <span class="meta-index">CURRICULAR PROGRESSION</span>
+              <h3 class="journey-title">Education Journey &amp; Milestones</h3>
+            </div>
+
+            <!-- Dynamic Graduation Progress Gauge -->
+            <div class="progress-block hairline-box">
+              <div class="progress-labels mono">
+                <span class="progress-title">BS-MS DEGREE PROGRESS</span>
+                <span class="progress-percent text-lime" id="degree-percent-label">--% COMPLETED</span>
+              </div>
+              <div class="progress-bar-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar-fill" id="degree-progress-fill" style="width: 0%;"></div>
+              </div>
+              <span class="progress-dates mono text-tertiary">SEP 3, 2024 (ENROLLMENT) → MAY 31, 2029 (GRADUATION)</span>
+            </div>
+
+            <!-- Vertical Timeline with 3 Connected Nodes -->
+            <div class="timeline-container">
+              <!-- Node 1: IISER Berhampur -->
+              <div class="timeline-node is-current">
+                <div class="timeline-marker">
+                  <div class="marker-dot active-dot"></div>
+                  <div class="marker-line"></div>
+                </div>
+                <div class="timeline-content">
+                  <div class="inst-logo-row">
+                    <img
+                      src="/logos/iiserbpr.png"
+                      onerror="this.onerror=null; this.src='/logos/iiserbpr-crest.svg';"
+                      alt="IISER Berhampur Emblem"
+                      class="inst-logo-img"
+                      width="36"
+                      height="36"
+                      loading="lazy"
+                    />
+                    <div>
+                      <a href="https://www.iiserbpr.ac.in/" target="_blank" rel="noopener noreferrer" class="inst-link">
+                        <h4 class="node-inst">IISER Berhampur ↗</h4>
+                      </a>
+                      <span class="node-period mono text-tertiary">SEP 2024 – MAY 2029 · CURRENT (3RD YEAR)</span>
+                    </div>
+                  </div>
+                  <p class="node-degree">BS-MS Dual Degree (Physics Major · CDS Minor)</p>
+                  <div class="node-scores-row">
+                    <span class="node-score-text">CGPA: <strong>8.7&nbsp;/&nbsp;10.0</strong></span>
+                    <span class="node-score-separator" aria-hidden="true">·</span>
+                    <span class="node-score-text">NGPE 2026: <strong>Rank 1</strong> (Institute Merit)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Node 2: Puna International School -->
+              <div class="timeline-node">
+                <div class="timeline-marker">
+                  <div class="marker-dot"></div>
+                  <div class="marker-line"></div>
+                </div>
+                <div class="timeline-content">
+                  <div class="inst-logo-row">
+                    <img
+                      src="/assets/Puna_International_School.png"
+                      alt="Puna International School Crest"
+                      class="inst-logo-img"
+                      width="36"
+                      height="36"
+                      loading="lazy"
+                    />
+                    <div>
+                      <a href="https://www.facebook.com/pisgurukul1/" target="_blank" rel="noopener noreferrer" class="inst-link">
+                        <h4 class="node-inst">Puna International School ↗</h4>
+                      </a>
+                      <span class="node-period mono text-tertiary">COMPLETED 2023 · GANDHINAGAR, GUJARAT</span>
+                    </div>
+                  </div>
+                  <p class="node-degree">Senior Secondary Certificate (Class XII, CBSE)</p>
+                  <div class="node-scores-row">
+                    <span class="node-score-text">Score: <strong>85.0%</strong></span>
+                    <span class="node-score-separator" aria-hidden="true">·</span>
+                    <span class="node-score-text">Physics, Chemistry, Mathematics, Computer Science</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Node 3: DPS Ahmedabad -->
+              <div class="timeline-node">
+                <div class="timeline-marker">
+                  <div class="marker-dot"></div>
+                </div>
+                <div class="timeline-content">
+                  <div class="inst-logo-row">
+                    <img
+                      src="/assets/Delhi_Public_School.png"
+                      alt="DPS Bopal Crest"
+                      class="inst-logo-img"
+                      width="36"
+                      height="36"
+                      loading="lazy"
+                    />
+                    <div>
+                      <a href="https://dpsbopal-ahd.edu.in/test-campaign-pg/" target="_blank" rel="noopener noreferrer" class="inst-link">
+                        <h4 class="node-inst">Delhi Public School (DPS), Bopal ↗</h4>
+                      </a>
+                      <span class="node-period mono text-tertiary">COMPLETED 2021 · AHMEDABAD, GUJARAT</span>
+                    </div>
+                  </div>
+                  <p class="node-degree">Secondary School Examination (Class X, CBSE)</p>
+                  <div class="node-scores-row">
+                    <span class="node-score-text">Score: <strong>96.2%</strong></span>
+                    <span class="node-score-separator" aria-hidden="true">·</span>
+                    <span class="node-score-text">Merit Distinction</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bottom Action Button -->
+            <div class="journey-action hairline-top">
+              <a href="/cv" class="editorial-btn primary full-width-btn">
+                Inspect Complete Academic CV ↗
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="hairline-divider reveal-line" style="--stagger-index: 1;" />
+
+    <!-- ====================================================================
+         SECTION 02: FEATURED MEDIA CONVERSATION (FELLOWSHIP VARTA)
+         ==================================================================== -->
+    <section class="section-container" id="media" aria-label="Featured Media Conversation">
+      <div class="section-header-block reveal-up" style="--stagger-index: 1;">
+        <span class="meta-index">FEATURED MEDIA CONVERSATION</span>
+        <h2 class="section-title">Fellowship Varta Interview: Dr. S.K. Varshney</h2>
+        <p class="section-subtitle reading-measure text-secondary">
+          An in-depth recorded academic conversation on international research fellowships, scientific diplomacy, and scientific research trajectories.
+        </p>
+      </div>
+
+      <div class="video-showcase-plate hairline-box spotlight-card reveal-up" style="--stagger-index: 2;">
+        <div class="swiss-grid-12 video-grid">
+          <!-- Video Embed Frame -->
+          <div class="col-7 video-frame-col">
+            <div class="video-responsive-wrapper">
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/Nv-tED5eJy0"
+                title="Fellowship Varta with Dr. S.K. Varshney"
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                class="video-iframe"
+              ></iframe>
+            </div>
+          </div>
+
+          <!-- Video Context Column -->
+          <div class="col-5 video-context-col">
+            <span class="mono context-tag text-gold">RECORDED DISCUSSION // FELLOWSHIP VARTA</span>
+            <h3 class="context-title">International Scientific Fellowships &amp; Research Horizons</h3>
+            
+            <p class="context-text text-secondary">
+              A comprehensive discussion with <strong>Dr. S.K. Varshney</strong>, Former Adviser &amp; Head of the International Bilateral Cooperation Division at the Department of Science and Technology (DST), Government of India.
+            </p>
+
+            <ul class="context-points mono text-secondary">
+              <li>• Bilateral research fellowships &amp; international labs</li>
+              <li>• Navigating funding schemes for young physicists</li>
+              <li>• Translation of undergraduate training into fundamental science</li>
+            </ul>
+
+            <div class="video-action-row hairline-top">
+              <a
+                href="https://www.youtube.com/watch?v=Nv-tED5eJy0"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="editorial-btn primary"
+              >
+                Watch on YouTube <span class="arrow" aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="hairline-divider reveal-line" style="--stagger-index: 1;" />
+
+    <!-- ====================================================================
+         SECTION 03: INTERESTS & INTELLECTUAL RABBIT HOLES BENTO GRID
+         ==================================================================== -->
+    <section class="section-container" aria-label="Interests and Intellectual Rabbit Holes">
+      <div class="section-header-block reveal-up" style="--stagger-index: 1;">
+        <span class="meta-index">INTELLECTUAL INQUIRY</span>
+        <h2 class="section-title">Interests &amp; Intellectual Rabbit Holes</h2>
+        <p class="section-subtitle reading-measure text-secondary">
+          Beyond research and coursework: deep dives into maritime geopolitics, technology policy, pencil art &amp; sketching, and analytical field notes.
+        </p>
+      </div>
+
+      <div class="swiss-grid-12">
+        {rabbitHoles.map((hole, idx) => (
+          <div class="col-6 rabbit-card hairline-box spotlight-card interactive-row corner-crosshair reveal-up" style={`--stagger-index: ${idx + 2};`}>
+            <div class="rabbit-head mono">
+              <span class="rabbit-tag text-gold">{hole.tag}</span>
+              <span class="rabbit-topic text-tertiary">{hole.topic}</span>
+            </div>
+            <h3 class="rabbit-title">{hole.title}</h3>
+            <p class="rabbit-desc text-secondary">{hole.desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <hr class="hairline-divider reveal-line" style="--stagger-index: 1;" />
+
+    <!-- ====================================================================
+         SECTION 04: TECHNICAL TOOLKIT MATRIX
+         ==================================================================== -->
+    <section class="toolkit-section reveal-up" style="--stagger-index: 4;">
+      <div class="section-header-block">
+        <span class="meta-index">METHODOLOGICAL APPARATUS</span>
+        <h2 class="section-title">Technical &amp; Computational Toolkit</h2>
+        <p class="section-subtitle reading-measure text-secondary">
+          Scientific programming languages, astronomical data engines, numerical inverse packages, and typesetting toolchains used across research projects.
+        </p>
+      </div>
+
+      <div class="swiss-grid-12">
+        {toolkits.map((tk) => (
+          <div class="col-4 toolkit-card hairline-box spotlight-card interactive-row">
+            <span class="mono toolkit-category text-gold">{tk.category}</span>
+            <div class="tools-detail-list">
+              {tk.tools.map((t) => (
+                <div class="tool-entry">
+                  <div class="tool-name-row mono">
+                    <span class="tool-name text-primary">{t.name}</span>
+                  </div>
+                  <p class="tool-desc text-secondary">{t.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  function updateDegreeProgress() {
+    // Sep 3, 2024 to May 31, 2029
+    const startDate = new Date('2024-09-03T00:00:00+05:30').getTime();
+    const endDate = new Date('2029-05-31T23:59:59+05:30').getTime();
+    const now = Date.now();
+    const percent = Math.min(100, Math.max(0, ((now - startDate) / (endDate - startDate)) * 100));
+    const rounded = percent.toFixed(1);
+
+    const label = document.getElementById('degree-percent-label');
+    const fill = document.getElementById('degree-progress-fill');
+    const track = fill?.parentElement;
+    const progressBlock = document.querySelector('.progress-block');
+
+    if (label) label.textContent = `${rounded}% COMPLETED`;
+    if (track) track.setAttribute('aria-valuenow', rounded);
+
+    // Scroll-into-view fill animation
+    if (fill && progressBlock && 'IntersectionObserver' in window) {
+      fill.style.width = '0%';
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            fill.style.width = `${rounded}%`;
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+      obs.observe(progressBlock);
+    } else if (fill) {
+      fill.style.width = `${rounded}%`;
+    }
+  }
+
+  updateDegreeProgress();
+  document.addEventListener('astro:page-load', updateDegreeProgress);
+</script>
+
+<style>
+  .page-header {
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-8);
+  }
+
+  .page-meta-strip {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-2);
+  }
+
+  .page-title {
+    font-size: var(--text-h1);
+    line-height: var(--leading-tight);
+    font-weight: 500;
+    margin: 0 0 var(--space-3) 0;
+  }
+
+  .page-subtitle {
+    font-size: var(--text-lead);
+    line-height: var(--leading-body);
+    margin: 0;
+  }
+
+  /* Section Containers */
+  .section-container {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+
+  .section-header-block {
+    margin-bottom: var(--space-6);
+  }
+
+  .section-title {
+    font-size: var(--text-h2);
+    line-height: var(--leading-snug);
+    margin-top: var(--space-2);
+    margin-bottom: var(--space-2);
+  }
+
+  .section-subtitle {
+    margin: 0;
+  }
+
+  /* Two Column Narrative */
+  .about-grid-section {
+    padding-bottom: 64px;
+  }
+
+  .narrative-heading {
+    font-size: var(--text-h3);
+    line-height: var(--leading-snug);
+    margin-top: var(--space-6);
+    margin-bottom: var(--space-3);
+  }
+
+  .narrative-p {
+    font-size: var(--text-body);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-4);
+  }
+
+  /* Right Column: Portrait & Journey */
+  .journey-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .portrait-card {
+    padding: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .portrait-frame {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+    background: var(--bg-surface-sunken);
+  }
+
+  .portrait-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    filter: grayscale(15%) contrast(105%);
+    transition: transform var(--transition-slow), filter var(--transition-slow);
+  }
+
+  .portrait-card:hover .portrait-img {
+    transform: scale(1.02);
+    filter: grayscale(0%) contrast(100%);
+  }
+
+  .portrait-caption {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.6875rem;
+  }
+
+  .portrait-name {
+    font-weight: 600;
+    letter-spacing: var(--tracking-wider);
+  }
+
+  .portrait-affil {
+    letter-spacing: 0.05em;
+  }
+
+  .journey-card {
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .journey-header {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .journey-title {
+    font-size: 1.25rem;
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  /* Progress Gauge */
+  .progress-block {
+    padding: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: var(--bg-surface-sunken);
+  }
+
+  .progress-labels {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.6875rem;
+  }
+
+  .progress-title {
+    color: var(--text-secondary);
+    letter-spacing: 0.05em;
+  }
+
+  .progress-percent {
+    font-weight: 700;
+    color: #34D399;
+    letter-spacing: 0.05em;
+  }
+
+  :global(html[data-theme="light"]) .progress-percent {
+    color: #2F4D1E;
+  }
+
+  .progress-bar-track {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  :global(html[data-theme="light"]) .progress-bar-track {
+    background: #E4E0D4;
+  }
+
+  .progress-bar-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #10B981 0%, #34D399 100%);
+    border-radius: 999px;
+    box-shadow: 0 0 12px #34D399;
+    transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  :global(html[data-theme="light"]) .progress-bar-fill {
+    background: #5E7F3A;
+    box-shadow: none;
+  }
+
+  .progress-dates {
+    font-size: 0.625rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* Timeline */
+  .timeline-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: var(--space-2);
+  }
+
+  .timeline-node {
+    display: flex;
+    gap: var(--space-3);
+    position: relative;
+    transition: transform 250ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .timeline-node:hover {
+    transform: translateX(4px);
+  }
+
+  .timeline-marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 16px;
+    flex-shrink: 0;
+    padding-top: 6px;
+  }
+
+  .marker-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--text-tertiary);
+    border: 2px solid var(--bg-surface);
+    transition: background 200ms ease;
+  }
+
+  .active-dot {
+    background: var(--accent-primary);
+    box-shadow: 0 0 8px var(--accent-primary);
+  }
+
+  .marker-line {
+    width: 2px;
+    flex: 1;
+    background: var(--border-subtle);
+    margin: 4px 0;
+    min-height: 48px;
+  }
+
+  .timeline-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-bottom: var(--space-4);
+  }
+
+  .inst-logo-row {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    gap: 10px;
+    margin-bottom: 2px;
+  }
+
+  .inst-logo-img {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    object-fit: contain;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+  }
+
+  .node-inst {
+    font-size: 1.1rem;
+    line-height: 1.25;
+    margin: 0;
+    transition: color var(--transition-fast);
+  }
+
+  .inst-link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .inst-link:hover .node-inst {
+    color: var(--accent-primary);
+  }
+
+  .node-period {
+    font-size: 0.625rem;
+    letter-spacing: 0.05em;
+  }
+
+  .node-degree {
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    margin: 0;
+    color: var(--text-primary);
+  }
+
+  .node-scores-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+  }
+
+  .node-score-text strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .node-score-separator {
+    color: var(--text-tertiary);
+  }
+
+  .journey-action {
+    padding-top: var(--space-3);
+  }
+
+  .full-width-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* ==========================================================================
+     VIDEO SHOWCASE (FELLOWSHIP VARTA)
+     ========================================================================== */
+  .video-showcase-plate {
+    background: var(--bg-surface);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    border: 1px solid var(--border-subtle);
+  }
+
+  :global(html[data-theme="light"]) .video-showcase-plate {
+    background: #FAF8F3 !important;
+    border: 1px solid rgba(14, 26, 43, 0.14) !important;
+  }
+
+  .video-grid {
+    align-items: center;
+  }
+
+  .video-frame-col {
+    padding: var(--space-4);
+  }
+
+  .video-responsive-wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    background: #000;
+  }
+
+  .video-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .video-context-col {
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .context-tag {
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+  }
+
+  .context-title {
+    font-size: 1.25rem;
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  .context-text {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .context-points {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.75rem;
+  }
+
+  .video-action-row {
+    padding-top: var(--space-3);
+  }
+
+  /* ==========================================================================
+     RABBIT HOLES BENTO GRID
+     ========================================================================== */
+  .rabbit-card {
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    height: 100%;
+    border-top: 2px solid var(--border-subtle);
+  }
+
+  :global(html[data-theme="light"]) .rabbit-card {
+    background: #FAF8F3 !important;
+    border: 1px solid rgba(14, 26, 43, 0.12) !important;
+    border-top: 2px solid rgba(14, 26, 43, 0.18) !important;
+  }
+
+  .rabbit-card:hover {
+    border-top-color: var(--accent-gold);
+  }
+
+  :global(html[data-theme="light"]) .rabbit-card:hover {
+    border-top-color: #B45309 !important;
+  }
+
+  .rabbit-thumb-wrapper {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    margin-bottom: var(--space-2);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .rabbit-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.625rem;
+    letter-spacing: 0.06em;
+  }
+
+  .rabbit-title {
+    font-size: 1.15rem;
+    line-height: 1.35;
+    margin: 0;
+  }
+
+  .rabbit-desc {
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* ==========================================================================
+     TOOLKIT SECTION
+     ========================================================================== */
+  .toolkit-section {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+
+  .toolkit-card {
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    height: 100%;
+  }
+
+  :global(html[data-theme="light"]) .toolkit-card {
+    background: #FAF8F3 !important;
+    border: 1px solid rgba(14, 26, 43, 0.12) !important;
+  }
+
+  .toolkit-category {
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .tools-detail-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .tool-entry {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .tool-name {
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+
+  .tool-desc {
+    font-size: 0.75rem;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  @media (max-width: 960px) {
+    .narrative-column,
+    .journey-column {
+      grid-column: span 12;
+    }
+
+    .video-grid .col-7,
+    .video-grid .col-5 {
+      grid-column: span 12;
+    }
+  }
+</style>

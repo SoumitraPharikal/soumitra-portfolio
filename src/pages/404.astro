@@ -1,0 +1,115 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="404: Null Geodesic | Soumitra Pharikal"
+  description="The requested astronomical coordinates or monograph route do not exist within this repository domain."
+>
+  <div class="monograph-container notfound-container">
+    <header class="page-header reveal-up" style="--stagger-index: 1;">
+      <div class="page-meta-strip">
+        <span class="pulse-dot" aria-hidden="true"></span>
+        <span class="meta-index">ERROR 404 // NULL GEODESIC</span>
+      </div>
+      <h1 class="page-title">Coordinates Outside Physical Domain</h1>
+      <p class="page-subtitle reading-measure text-secondary">
+        The requested endpoint does not correspond to an indexed monograph, research pipeline, or compendium in this repository. The trajectory may have shifted, decayed into vacuum, or undergone coordinate singularity.
+      </p>
+    </header>
+
+    <div class="notfound-plate hairline-box spotlight-card corner-crosshair reveal-up" style="--stagger-index: 2;">
+      <div class="tensor-matrix mono">
+        <div class="tensor-row">
+          <span class="tensor-key">METRIC TENSOR:</span>
+          <span class="tensor-val">g_μν = diag(-1, +1, +1, +1)</span>
+        </div>
+        <div class="tensor-row">
+          <span class="tensor-key">PROPER TIME:</span>
+          <span class="tensor-val">dτ² = 0 (Null Interval)</span>
+        </div>
+        <div class="tensor-row">
+          <span class="tensor-key">CELESTIAL COORD:</span>
+          <span class="tensor-val">RA 00h 00m 00s · Dec -90° 00′ 00″</span>
+        </div>
+        <div class="tensor-row">
+          <span class="tensor-key">STATION BARYCENTER:</span>
+          <span class="tensor-val">IISER Berhampur [19.200° N, 84.835° E]</span>
+        </div>
+      </div>
+
+      <!-- Action Navigation Buttons -->
+      <div class="notfound-actions hairline-top">
+        <a href="/" class="editorial-btn primary">
+          Return to Monograph Home <span class="btn-arrow" aria-hidden="true">→</span>
+        </a>
+        <a href="/research" class="editorial-btn">
+          Explore Research Monographs <span class="btn-arrow" aria-hidden="true">→</span>
+        </a>
+        <a href="/projects" class="editorial-btn">
+          Inspect Code &amp; Pipelines <span class="btn-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .notfound-container {
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-16);
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  .notfound-plate {
+    background: var(--bg-surface);
+    padding: 36px;
+    border-radius: var(--radius-card);
+    margin-top: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .tensor-matrix {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: var(--bg-surface-sunken);
+    padding: 20px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+    font-size: 0.8125rem;
+  }
+
+  .tensor-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .tensor-key {
+    color: var(--text-tertiary);
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+  }
+
+  .tensor-val {
+    color: var(--accent-amber);
+    font-weight: 500;
+  }
+
+  [data-theme="light"] .tensor-val {
+    color: var(--accent-gold-bright);
+  }
+
+  .notfound-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding-top: var(--space-4);
+  }
+</style>

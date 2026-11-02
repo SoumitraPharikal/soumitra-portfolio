@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <radialGradient id="cosmicGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#06080E" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- Squircle Base Frame -->
+  <rect width="100" height="100" rx="22" fill="#0B1220"/>
+  <rect width="98" height="98" x="1" y="1" rx="21" fill="none" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1"/>
+  
+  <!-- Ambient Core Starlight Glow -->
+  <circle cx="50" cy="50" r="40" fill="url(#cosmicGlow)"/>
+
+  <!-- Wave Optics Crest (Spectral Cyan) -->
+  <path d="M 20 54 Q 35 34, 50 50 T 80 46" fill="none" stroke="#38BDF8" stroke-width="2.4" stroke-linecap="round" opacity="0.85"/>
+  <path d="M 22 60 Q 36 44, 50 58 T 78 54" fill="none" stroke="#38BDF8" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.45"/>
+
+  <!-- Relativistic Elliptical Orbit (Champagne Gold) -->
+  <ellipse cx="50" cy="50" rx="36" ry="15" fill="none" stroke="#D4AF37" stroke-width="2.2" transform="rotate(-28 50 50)"/>
+  <circle cx="21" cy="38" r="2.8" fill="#D4AF37"/>
+
+  <!-- Serif Monogram 'S' at Barycenter -->
+  <text x="50" y="58" font-family="'Newsreader', 'Times New Roman', Georgia, serif" font-size="28" font-weight="500" font-style="italic" fill="#F3F1EC" text-anchor="middle">S</text>
+</svg>

@@ -1,0 +1,218 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allWriting = await getCollection('writing');
+const sortedWriting = allWriting.sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+  title="LaTeX Course Compendiums & Theoretical Reference Archive | Soumitra Pharikal"
+  description="Publication-grade LaTeX course compendiums authored by Soumitra Pharikal covering quantum mechanics, thermal physics, mathematical methods, classical mechanics, and data structures."
+>
+  <div class="monograph-container">
+    <header class="page-header reveal-up" style="--stagger-index: 1;">
+      <div class="page-meta-strip">
+        <span class="pulse-dot" aria-hidden="true"></span>
+        <span class="meta-index">§ 03 // COMPENDIUM ARCHIVE</span>
+      </div>
+      <h1 class="page-title">Authored Course Compendiums &amp; Theoretical Handbooks</h1>
+      <p class="page-subtitle reading-measure text-secondary">
+        Comprehensive academic compendiums authored in modular LaTeX, unifying rigorous mathematical derivations, operator algebra, tensor kinematics, and data structures.
+      </p>
+    </header>
+
+    <!-- Compendium List -->
+    <div class="compendiums-ledger">
+      {sortedWriting.map((item, idx) => (
+        <article
+          class="compendium-plate hairline-box spotlight-card interactive-row corner-crosshair reveal-up"
+          style={`--stagger-index: ${idx + 2};`}
+        >
+          <div class="comp-plate-grid">
+            <!-- Col 1: Course Identification -->
+            <div class="comp-col-code">
+              <span class="mono comp-course-tag text-gold">{item.data.courseCode || 'COMP'}</span>
+              <span class="mono comp-date text-tertiary">{item.data.date}</span>
+            </div>
+
+            <!-- Col 2: Title, Subject & Topics -->
+            <div class="comp-col-main">
+              <h2 class="comp-title">
+                <a href={`/writing/${item.id}`} class="title-link no-underline">
+                  {item.data.title}
+                </a>
+              </h2>
+              <p class="comp-subject text-secondary">{item.data.subject}</p>
+              
+              <div class="comp-topics-list">
+                {item.data.topicsCovered.map((topic) => (
+                  <span class="topic-pill mono text-secondary">• {topic}</span>
+                ))}
+              </div>
+            </div>
+
+            <!-- Col 3: Engine Specs & Action -->
+            <div class="comp-col-action">
+              <div class="engine-meta mono">
+                <span class="engine-badge">{item.data.typesetEngine}</span>
+                {item.data.pageCount && (
+                  <span class="page-count text-tertiary">{item.data.pageCount} PAGES</span>
+                )}
+              </div>
+
+              <a href={`/writing/${item.id}`} class="editorial-btn">
+                Read Specification <span class="btn-arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-8);
+  }
+
+  .page-meta-strip {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+  }
+
+  .page-title {
+    font-size: var(--text-h1);
+    line-height: var(--leading-tight);
+    margin-bottom: var(--space-3);
+  }
+
+  .page-subtitle {
+    font-size: var(--text-lead);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .compendiums-ledger {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    padding-bottom: var(--space-14);
+  }
+
+  .compendium-plate {
+    padding: var(--space-6);
+  }
+
+  .comp-plate-grid {
+    display: grid;
+    grid-template-columns: 140px 1fr 200px;
+    gap: var(--space-5);
+    align-items: start;
+  }
+
+  .comp-col-code {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .comp-course-tag {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  .comp-date {
+    font-size: 0.6875rem;
+  }
+
+  .comp-col-main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .comp-title {
+    font-size: 1.35rem;
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  .title-link {
+    color: var(--text-primary);
+    transition: color var(--transition-fast);
+  }
+
+  .title-link:hover {
+    color: var(--accent-primary);
+  }
+
+  .comp-subject {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .comp-topics-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: var(--space-2);
+  }
+
+  .topic-pill {
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+
+  .comp-col-action {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--space-4);
+  }
+
+  .engine-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+  }
+
+  .engine-badge {
+    font-size: 0.6875rem;
+    padding: 3px 8px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-surface-sunken);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+  }
+
+  .page-count {
+    font-size: 0.625rem;
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 900px) {
+    .comp-plate-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+
+    .comp-col-action {
+      align-items: flex-start;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .engine-meta {
+      align-items: flex-start;
+    }
+  }
+</style>

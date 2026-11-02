@@ -1,0 +1,378 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pixophilesMetrics = [
+  {
+    title: 'Best Club of the Year Award',
+    value: 'HONOR',
+    subtitle: 'Institutional Distinction',
+    desc: 'Awarded to Pixophiles by the IISER Berhampur Student Council for outstanding campus impact, media excellence, and creative leadership across the 2025–2026 academic tenure.'
+  },
+  {
+    title: '11 Campus Events & Exhibitions',
+    value: '11 EVENTS',
+    subtitle: 'Curated & Executed',
+    desc: 'Directed comprehensive visual operations, stage lighting design, photojournalistic coverage, and fine-art competitive exhibitions for convocations, science fests, and cultural summits.'
+  },
+  {
+    title: '₹1,00,000+ Executive Budget',
+    value: '₹1,00,000+',
+    subtitle: 'Financial Administration',
+    desc: 'Managed capital allocation for professional camera gear, studio lighting apparatus, dark-sky astrophotography expeditions, and large-format physical gallery exhibition prints.'
+  },
+  {
+    title: '200+ Students Mentored & Trained',
+    value: '200+ STUDENTS',
+    subtitle: 'Workshops & Clinics',
+    desc: 'Conducted rigorous hands-on masterclasses on exposure physics, sensor ISO noise profiles, optical focal length compression, and raw digital negative color-grading workflows.'
+  }
+];
+---
+
+<BaseLayout
+  title="Campus Leadership, Governance & Student Service | Soumitra Pharikal"
+  description="Student leadership and governance at IISER Berhampur: Pixophiles tenure (Best Club of the Year), Naxatra Astronomy Club, Mimansa 2026, Invenio 2026, IICM 2025, and national science initiatives."
+>
+  <div class="monograph-container">
+    <!-- Header -->
+    <header class="page-header reveal-up" style="--stagger-index: 1;">
+      <div class="page-meta-strip">
+        <span class="pulse-dot" aria-hidden="true"></span>
+        <span class="meta-index">§ 04 // CAMPUS LEADERSHIP &amp; GOVERNANCE</span>
+      </div>
+      <h1 class="page-title">Campus Leadership, Institutional Governance &amp; Student Service</h1>
+      <p class="page-subtitle reading-measure text-secondary">
+        Directing student club operations, heading the institute's principal visual media agency (Best Club of the Year), and coordinating national academic and cultural initiatives at IISER Berhampur.
+      </p>
+    </header>
+
+    <!-- ====================================================================
+         SECTION 01: CLUBS & CAMPUS LEADERSHIP
+         ==================================================================== -->
+    <section class="leadership-section" aria-label="Student Club Leadership">
+      <div class="swiss-grid-12">
+        <!-- Naxatra Astronomy Club -->
+        <div class="col-6 role-card hairline-box spotlight-card interactive-row corner-crosshair reveal-up" style="--stagger-index: 2;">
+          <div class="role-badge-row">
+            <span class="mono-badge text-gold">ASTRONOMY &amp; OUTREACH</span>
+            <span class="mono text-secondary">2024 – PRESENT</span>
+          </div>
+          <h2 class="role-title">Naxatra: Astronomy Club of IISER Berhampur</h2>
+          <span class="role-designation mono text-accent">Core Member &amp; Telescopic Operations Coordinator</span>
+
+          <p class="role-desc text-secondary">
+            Coordinate observational astronomy expeditions, nocturnal telescope alignment sessions (utilizing 8-inch Dobsonian reflectors), and astrophotography imaging across Southern Odisha dark-sky corridors. Facilitate public sky-watching sessions for planetary transits, solar eclipses, and lunar occultations, alongside mentoring junior undergraduates in stellar magnitude systems and celestial coordinate reductions.
+          </p>
+
+          <div class="role-highlights hairline-top mono">
+            <span class="highlight-item">✓ 8" DOBSONIAN &amp; EQUATORIAL TELESCOPE ALIGNMENT</span>
+            <span class="highlight-item">✓ DEEP-SKY MILKY WAY &amp; LUNAR ASTROPHOTOGRAPHY</span>
+            <span class="highlight-item">✓ CAMPUS CELESTIAL PHENOMENA PUBLIC OUTREACH</span>
+          </div>
+        </div>
+
+        <!-- Pixophiles Photography Club -->
+        <div class="col-6 role-card hairline-box spotlight-card interactive-row corner-crosshair reveal-up" style="--stagger-index: 3;">
+          <div class="role-badge-row">
+            <span class="mono-badge text-signal">MEDIA &amp; VISUAL ARTS</span>
+            <span class="mono text-secondary">2025 – PRESENT</span>
+          </div>
+          <h2 class="role-title">Pixophiles: Official Photography &amp; Media Club</h2>
+          <span class="role-designation mono text-signal">Club Coordinator &amp; Creative Director</span>
+
+          <p class="role-desc text-secondary">
+            Lead executive operations and creative curation for the institute's principal visual documentation agency. Oversee high-resolution still capture, color grading pipelines, and media archiving for institutional convocations, national symposia, and visiting dignitary colloquia. Conduct workshops on exposure physics, sensor ISO noise profiles, optical focal length compression, and raw digital negative post-processing.
+          </p>
+
+          <div class="role-highlights hairline-top mono">
+            <span class="highlight-item">✓ BEST CLUB OF THE YEAR DISTINCTION (STUDENT COUNCIL)</span>
+            <span class="highlight-item">✓ 11 PAN-INSTITUTIONAL EVENTS &amp; EXHIBITIONS CURATED</span>
+            <span class="highlight-item">✓ 200+ STUDENTS TRAINED IN OPTICS &amp; VISUAL DIRECTION</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="hairline-divider reveal-line" style="--stagger-index: 1;" />
+
+    <!-- ====================================================================
+         SECTION 02: PIXOPHILES TENURE IMPACT BENTO GRID
+         ==================================================================== -->
+    <section class="section-container" aria-label="Pixophiles Executive Tenure Impact">
+      <div class="section-header-block reveal-up" style="--stagger-index: 1;">
+        <span class="meta-index">EXECUTIVE TENURE REPORT</span>
+        <h2 class="section-title">Pixophiles Leadership &amp; Operational Impact</h2>
+        <p class="section-subtitle reading-measure text-secondary">
+          Quantitative metrics and milestones achieved during my tenure heading IISER Berhampur's principal photography and media agency.
+        </p>
+      </div>
+
+      <div class="swiss-grid-12">
+        {pixophilesMetrics.map((item, idx) => (
+          <div class="col-6 metric-card hairline-box spotlight-card interactive-row corner-crosshair reveal-up" style={`--stagger-index: ${idx + 2};`}>
+            <div class="metric-card-head">
+              <span class="mono metric-tag text-gold">{item.subtitle}</span>
+              <span class="mono metric-val-highlight text-signal">{item.value}</span>
+            </div>
+            <h3 class="metric-card-title">{item.title}</h3>
+            <p class="metric-card-desc text-secondary">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <hr class="hairline-divider reveal-line" style="--stagger-index: 1;" />
+
+    <!-- ====================================================================
+         SECTION 03: INSTITUTIONAL SERVICE & NATIONAL INITIATIVES
+         ==================================================================== -->
+    <section class="section-container" aria-label="Campus Governance and Academic Service">
+      <div class="section-header-block reveal-up" style="--stagger-index: 1;">
+        <span class="meta-index">INSTITUTIONAL SERVICE</span>
+        <h2 class="section-title">National Science Initiatives &amp; Academic Governance</h2>
+        <p class="section-subtitle reading-measure text-secondary">
+          Coordinating national science competitions, festival technical operations, cultural symposia, and departmental peer advising.
+        </p>
+      </div>
+
+      <div class="initiatives-grid">
+        <!-- Mimansa 2026 -->
+        <div class="init-card hairline-box spotlight-card interactive-row reveal-up" style="--stagger-index: 2;">
+          <div class="init-header">
+            <span class="mono init-role text-gold">CAMPUS COORDINATOR</span>
+            <span class="mono init-year text-secondary">2026</span>
+          </div>
+          <h3 class="init-title">Mimansa 2026: National Science Competition</h3>
+          <p class="init-desc text-secondary">
+            Spearheaded institutional outreach, candidate registration, and examination administration at IISER Berhampur for <strong>Mimansa</strong>, India's premier undergraduate inter-college science competition organized by IISER Pune across Physics, Chemistry, Mathematics, and Biology.
+          </p>
+        </div>
+
+        <!-- Invenio 2026 -->
+        <div class="init-card hairline-box spotlight-card interactive-row reveal-up" style="--stagger-index: 3;">
+          <div class="init-header">
+            <span class="mono init-role text-accent">WORKSHOP &amp; MEDIA LOGISTICS</span>
+            <span class="mono init-year text-secondary">2026</span>
+          </div>
+          <h3 class="init-title">Invenio 2026: Annual Flagship Science Festival</h3>
+          <p class="init-desc text-secondary">
+            Coordinated experimental physics workshops and live mathematical demonstrations under the Science Subcouncil. Managed technical audio-visual infrastructure, streaming networks, and documentary media records for visiting keynote physicists.
+          </p>
+        </div>
+
+        <!-- IICM 2025 -->
+        <div class="init-card hairline-box spotlight-card interactive-row reveal-up" style="--stagger-index: 4;">
+          <div class="init-header">
+            <span class="mono init-role text-gold">EVENT COORDINATOR</span>
+            <span class="mono init-year text-secondary">2025</span>
+          </div>
+          <h3 class="init-title">IICM 2025: Inter-IISER Cultural Meet</h3>
+          <p class="init-desc text-secondary">
+            Served as Event Coordinator for the national Inter-IISER Cultural Meet hosted across IISER campuses. Administered delegate logistics, competitive schedule execution, stage operations, and inter-institute team coordination for hundreds of visiting delegates.
+          </p>
+        </div>
+
+        <!-- TEDxIISERBPR -->
+        <div class="init-card hairline-box spotlight-card interactive-row reveal-up" style="--stagger-index: 5;">
+          <div class="init-header">
+            <span class="mono init-role text-signal">CONTENT TEAM MEMBER</span>
+            <span class="mono init-year text-secondary">2025</span>
+          </div>
+          <h3 class="init-title">TEDxIISERBPR: Ideas Worth Spreading</h3>
+          <p class="init-desc text-secondary">
+            Core member of the TEDx content curation team. Collaborated with distinguished speakers, researchers, and innovators to structure narrative arcs, draft talk scripts, and refine technical presentations for global dissemination.
+          </p>
+        </div>
+
+        <!-- 137-Inverse, Q-Cell & SCDC -->
+        <div class="init-card hairline-box spotlight-card interactive-row reveal-up" style="--stagger-index: 6;">
+          <div class="init-header">
+            <span class="mono init-role text-secondary">ACTIVE CONTRIBUTOR</span>
+            <span class="mono init-year text-secondary">2024 – PRESENT</span>
+          </div>
+          <h3 class="init-title">Departmental Societies: 137-Inverse, Q-Cell &amp; SCDC</h3>
+          <p class="init-desc text-secondary">
+            Contributed to physics seminars in <strong>137-Inverse</strong> (Physics Society); introductory quantum information sessions in <strong>Q-Cell</strong>; and peer-advising internship applications with the <strong>Student Career Development Cell (SCDC)</strong>.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-8);
+  }
+
+  .page-meta-strip {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-2);
+  }
+
+  .page-title {
+    font-size: var(--text-h1);
+    line-height: var(--leading-tight);
+    font-weight: 500;
+    margin: 0 0 var(--space-3) 0;
+  }
+
+  .page-subtitle {
+    font-size: var(--text-lead);
+    line-height: var(--leading-body);
+    margin: 0;
+  }
+
+  /* Section Common */
+  .section-container {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+
+  .section-header-block {
+    margin-bottom: var(--space-6);
+  }
+
+  .section-title {
+    font-size: var(--text-h2);
+    line-height: var(--leading-snug);
+    margin-top: var(--space-2);
+    margin-bottom: var(--space-2);
+  }
+
+  .section-subtitle {
+    margin: 0;
+  }
+
+  /* Role Cards */
+  .role-card {
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    height: 100%;
+  }
+
+  .role-badge-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.6875rem;
+  }
+
+  .role-title {
+    font-size: 1.35rem;
+    line-height: 1.25;
+    margin: 0;
+  }
+
+  .role-designation {
+    font-size: 0.8125rem;
+    letter-spacing: 0.04em;
+  }
+
+  .role-desc {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin: 0;
+    flex: 1;
+  }
+
+  .role-highlights {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-top: var(--space-3);
+    font-size: 0.6875rem;
+    color: var(--text-secondary);
+  }
+
+  .highlight-item {
+    letter-spacing: 0.03em;
+  }
+
+  /* Metrics Bento */
+  .metric-card {
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    height: 100%;
+  }
+
+  .metric-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .metric-tag {
+    font-size: 0.6875rem;
+    letter-spacing: 0.05em;
+  }
+
+  .metric-val-highlight {
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+
+  .metric-card-title {
+    font-size: 1.2rem;
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  .metric-card-desc {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Initiatives Grid */
+  .initiatives-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .init-card {
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    border-left: 3px solid var(--border-subtle);
+    transition: border-left-color var(--transition-base), transform var(--transition-base);
+  }
+
+  .init-card:hover {
+    border-left-color: var(--accent-primary);
+  }
+
+  .init-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.6875rem;
+  }
+
+  .init-title {
+    font-size: 1.125rem;
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  .init-desc {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  @media (max-width: 960px) {
+    .role-card {
+      margin-bottom: var(--space-4);
+    }
+  }
+</style>

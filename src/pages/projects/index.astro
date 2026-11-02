@@ -1,0 +1,412 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Thumbnail from '../../components/Thumbnail.astro';
+import { getCollection } from 'astro:content';
+
+const allProjects = await getCollection('projects');
+const sortedProjects = allProjects.sort((a, b) => a.data.order - b.data.order);
+
+const categories = [
+  'All',
+  'Observational Astrophysics',
+  'Computational Physics',
+  'Applied Optics',
+  'Astrodynamics & Systems'
+];
+
+const categoryCounts = categories.reduce((acc, cat) => {
+  if (cat === 'All') {
+    acc[cat] = sortedProjects.length;
+  } else {
+    acc[cat] = sortedProjects.filter((p) => p.data.category === cat).length;
+  }
+  return acc;
+}, {} as Record<string, number>);
+---
+
+<BaseLayout
+  title="Projects & Computational Monograph | Soumitra Pharikal"
+  description="High-performance scientific computing, stellar photometry reduction pipelines, tomographic CT imaging reconstructions, and Monte Carlo stochastic simulations."
+>
+  <div class="monograph-container">
+    <header class="page-header reveal-up" style="--stagger-index: 1;">
+      <div class="page-meta-strip">
+        <span class="pulse-dot" aria-hidden="true"></span>
+        <span class="meta-index">§ 02 // PROJECT ARCHIVE</span>
+      </div>
+      <h1 class="page-title">Scientific Computing, Inverse Pipelines &amp; Numerical Models</h1>
+      <p class="page-subtitle reading-measure text-secondary">
+        Autonomous scientific pipelines, tomographic inversion engines, astrodynamics propagation algorithms, and Monte Carlo decay kinetics.
+      </p>
+
+      <!-- Category Filter Pills -->
+      <div class="filter-pills-bar mono">
+        {categories.map((cat, idx) => (
+          <button
+            type="button"
+            class:list={['filter-pill', { 'is-active': idx === 0 }]}
+            data-filter={cat}
+          >
+            <span class="active-dot" aria-hidden="true"></span>
+            <span class="filter-label">{cat}</span>
+            <span class="filter-count">({categoryCounts[cat] || 0})</span>
+          </button>
+        ))}
+      </div>
+    </header>
+
+    <!-- Projects Grid -->
+    <div class="projects-bento-grid">
+      {sortedProjects.map((project, idx) => (
+        <article
+          class="project-card hairline-box spotlight-card interactive-row corner-crosshair reveal-up"
+          data-category={project.data.category}
+          style={`--stagger-index: ${idx + 2};`}
+        >
+          <div class="project-header">
+            <div class="project-code-row">
+              <span class="mono project-codename text-gold">{project.data.codeName}</span>
+              <span class="mono project-category text-secondary">{project.data.category}</span>
+            </div>
+            <span class="mono project-period text-tertiary">{project.data.period}</span>
+          </div>
+
+          <!-- Unified 16:9 Thumbnail Component from Manifest -->
+          <Thumbnail id={project.id} class="project-svg-teaser" />
+
+          <div class="project-content">
+            <h2 class="project-title">
+              <a href={`/projects/${project.id}`} class="title-anchor no-underline">
+                {project.data.title}
+              </a>
+            </h2>
+            <p class="project-subtitle text-secondary">
+              {project.data.subtitle}
+            </p>
+
+            {project.data.leadMetrics && (
+              <div class="lead-metrics-plate mono">
+                <span class="metrics-tag text-signal">METRICS:</span>
+                <span class="metrics-val">{project.data.leadMetrics}</span>
+              </div>
+            )}
+
+            <div class="project-footer hairline-top">
+              <div class="tech-pills">
+                {project.data.techStack.slice(0, 4).map((tech) => (
+                  <span class="mono tech-pill">{tech}</span>
+                ))}
+                {project.data.techStack.length > 4 && (
+                  <span class="mono tech-pill-more">+{project.data.techStack.length - 4}</span>
+                )}
+              </div>
+              <a href={`/projects/${project.id}`} class="read-monograph-btn mono">
+                Read Monograph <span class="arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  function initProjectFilters() {
+    const filterButtons = document.querySelectorAll('.filter-pill');
+    const cards = document.querySelectorAll('.project-card');
+
+    filterButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach((b) => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+
+        const selected = btn.getAttribute('data-filter') || 'All';
+
+        cards.forEach((card) => {
+          const c = card as HTMLElement;
+          const category = c.getAttribute('data-category');
+          if (selected === 'All' || category === selected) {
+            c.style.display = 'flex';
+            c.style.opacity = '0';
+            c.style.transform = 'translateY(6px)';
+            requestAnimationFrame(() => {
+              c.style.transition = 'opacity 250ms cubic-bezier(0.22, 1, 0.36, 1), transform 250ms cubic-bezier(0.22, 1, 0.36, 1)';
+              c.style.opacity = '1';
+              c.style.transform = 'translateY(0)';
+            });
+          } else {
+            c.style.transition = 'opacity 150ms ease, transform 150ms ease';
+            c.style.opacity = '0';
+            c.style.transform = 'translateY(6px)';
+            setTimeout(() => {
+              c.style.display = 'none';
+            }, 150);
+          }
+        });
+      });
+    });
+  }
+
+  initProjectFilters();
+  document.addEventListener('astro:page-load', initProjectFilters);
+</script>
+
+<style>
+  .page-header {
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-8);
+  }
+
+  .page-meta-strip {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+  }
+
+  .page-title {
+    font-size: var(--text-h1);
+    line-height: var(--leading-tight);
+    margin-bottom: var(--space-3);
+  }
+
+  .page-subtitle {
+    font-size: var(--text-lead);
+    line-height: 1.6;
+    margin-bottom: var(--space-6);
+  }
+
+  .filter-pills-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: var(--space-2);
+  }
+
+  .filter-pill {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-pill);
+    padding: 6px 14px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all var(--transition-fast);
+  }
+
+  .filter-pill .active-dot {
+    display: none;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #F59E0B;
+  }
+
+  .filter-pill .filter-count {
+    opacity: 0.75;
+    font-size: 0.6875rem;
+  }
+
+  .filter-pill:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-amber);
+    background: var(--bg-surface-elevated);
+  }
+
+  .filter-pill.is-active {
+    background: #1B2E6B !important;
+    color: #FFFFFF !important;
+    border-color: #1B2E6B !important;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(27, 46, 107, 0.25);
+  }
+
+  .filter-pill.is-active .active-dot {
+    display: inline-block;
+  }
+
+  [data-theme="dark"] .filter-pill.is-active {
+    background: #1B2E6B !important;
+    color: #EEF1F6 !important;
+    border-color: var(--accent-primary) !important;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+  }
+
+  [data-theme="light"] .filter-pill {
+    background: #FAF8F3;
+    border: 1px solid rgba(14, 26, 43, 0.16);
+    color: #3B4658;
+  }
+
+  [data-theme="light"] .filter-pill:hover {
+    color: #0E1A2B;
+    border-color: #D97706;
+  }
+
+  .projects-bento-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6);
+    padding-bottom: var(--space-12);
+  }
+
+  .project-card {
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .project-code-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .project-codename {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  .project-category {
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+  }
+
+  .project-period {
+    font-size: 0.6875rem;
+  }
+
+  .project-svg-teaser {
+    width: 100%;
+    height: 75px;
+    background: var(--bg-surface-sunken);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .teaser-svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .project-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .project-title {
+    font-size: 1.35rem;
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  .title-anchor {
+    color: var(--text-primary);
+    transition: color var(--transition-fast);
+  }
+
+  .title-anchor:hover {
+    color: var(--accent-primary);
+  }
+
+  .project-subtitle {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .lead-metrics-plate {
+    background: var(--bg-surface-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 6px 12px;
+    font-size: 0.6875rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .metrics-tag {
+    font-weight: 600;
+    font-size: 0.625rem;
+  }
+
+  .metrics-val {
+    color: var(--text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .project-footer {
+    padding-top: var(--space-4);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .tech-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tech-pill {
+    font-size: 0.6875rem;
+    padding: 3px 8px;
+    border-radius: var(--radius-pill);
+    background: var(--bg-surface-sunken);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-tertiary);
+  }
+
+  .tech-pill-more {
+    font-size: 0.6875rem;
+    color: var(--text-tertiary);
+    align-self: center;
+  }
+
+  .read-monograph-btn {
+    font-size: 0.75rem;
+    color: var(--accent-gold);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .read-monograph-btn:hover {
+    color: var(--accent-primary);
+    text-decoration: underline;
+  }
+
+  @media (max-width: 900px) {
+    .projects-bento-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

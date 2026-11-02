@@ -1,0 +1,416 @@
+---
+// src/components/ThreeTelescope.astro
+// Procedural 3D 8-inch Dobsonian Reflector (Naxatra Observational Astronomy)
+// Tilts elevation on scroll; mouse-interactive azimuth; lazy loaded Three.js
+---
+
+<div class="telescope-widget hairline-box spotlight-card corner-crosshair" id="telescope-widget-container">
+  <div class="telescope-masthead hairline-bottom">
+    <div class="masthead-left">
+      <span class="pulse-dot" aria-hidden="true"></span>
+      <span class="mono text-gold">NAXATRA 8" DOBSONIAN REFLECTOR</span>
+    </div>
+    <div class="masthead-right mono text-secondary">
+      <span id="telescope-alt-readout">ALT: 45.0° · AZ: 180.0°</span>
+    </div>
+  </div>
+
+  <div class="telescope-canvas-wrapper" id="telescope-canvas-container">
+    <canvas id="three-telescope-canvas" class="telescope-canvas"></canvas>
+
+    <!-- Technical SVG Fallback when WebGL is unavailable or prefers-reduced-motion -->
+    <div class="telescope-fallback" id="telescope-fallback">
+      <svg viewBox="0 0 400 300" class="fallback-svg" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="8-inch Dobsonian Telescope Technical Schematic">
+        <!-- Ground Base -->
+        <ellipse cx="200" cy="260" rx="90" ry="16" stroke="var(--border-strong)" stroke-width="2" fill="var(--bg-surface-elevated)" />
+        <line x1="130" y1="260" x2="130" y2="272" stroke="var(--text-tertiary)" stroke-width="2" />
+        <line x1="200" y1="266" x2="200" y2="278" stroke="var(--text-tertiary)" stroke-width="2" />
+        <line x1="270" y1="260" x2="270" y2="272" stroke="var(--text-tertiary)" stroke-width="2" />
+        <!-- Rocker Box -->
+        <path d="M150 256 L150 180 L180 180 A25 25 0 0 1 220 180 L250 180 L250 256 Z" stroke="var(--accent-primary)" stroke-width="1.5" fill="var(--bg-surface)" opacity="0.8" />
+        <!-- Optical Tube (Elevated at 50 deg) -->
+        <g transform="rotate(-50 200 180)">
+          <!-- Main Tube -->
+          <rect x="182" y="70" width="36" height="190" rx="4" stroke="var(--accent-gold)" stroke-width="1.8" fill="var(--bg-surface-elevated)" />
+          <!-- Primary Mirror Cell -->
+          <rect x="180" y="250" width="40" height="14" rx="2" stroke="var(--text-secondary)" stroke-width="1.5" fill="var(--border-subtle)" />
+          <!-- Aperture Trim -->
+          <ellipse cx="200" cy="70" rx="18" ry="6" stroke="var(--accent-primary)" stroke-width="1.5" fill="var(--bg-surface-sunken)" />
+          <!-- Focuser & Eyepiece -->
+          <rect x="218" y="85" width="16" height="8" stroke="var(--text-primary)" stroke-width="1.2" fill="var(--border-strong)" />
+          <line x1="234" y1="89" x2="242" y2="89" stroke="var(--accent-amber)" stroke-width="2" />
+        </g>
+        <!-- Reticle Callouts -->
+        <text x="20" y="32" class="svg-mono" fill="var(--text-secondary)">8" PARABOLIC PRIMARY (f/6)</text>
+        <text x="20" y="48" class="svg-mono" fill="var(--text-tertiary)">FOCAL LENGTH: 1200 mm</text>
+        <text x="20" y="64" class="svg-mono" fill="var(--accent-gold)">CRAYFORD DUAL-SPEED FOCUSER</text>
+        <text x="240" y="285" class="svg-mono" fill="var(--text-tertiary)">ALT-AZIMUTH ROCKER</text>
+      </svg>
+    </div>
+
+    <!-- Interactive Overlay Hint -->
+    <div class="telescope-overlay-hint mono">
+      <span>SCROLL TO ELEVATE · DRAG TO ROTATE AZIMUTH</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .telescope-widget {
+    background: var(--bg-surface);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    margin-top: var(--space-4);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .telescope-masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px var(--space-4);
+    background: var(--bg-surface-elevated);
+    font-size: 0.6875rem;
+    letter-spacing: 0.05em;
+  }
+
+  .masthead-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .telescope-canvas-wrapper {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    background: var(--bg-primary);
+    cursor: grab;
+    overflow: hidden;
+  }
+
+  .telescope-canvas-wrapper:active {
+    cursor: grabbing;
+  }
+
+  .telescope-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .telescope-fallback {
+    position: absolute;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-surface-sunken);
+  }
+
+  .fallback-svg {
+    width: 85%;
+    max-height: 85%;
+  }
+
+  .svg-mono {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.06em;
+  }
+
+  .telescope-overlay-hint {
+    position: absolute;
+    bottom: 8px;
+    left: 12px;
+    font-size: 0.5625rem;
+    color: var(--text-tertiary);
+    letter-spacing: 0.06em;
+    pointer-events: none;
+    opacity: 0.8;
+  }
+
+  [data-theme="light"] .telescope-widget {
+    background: #FAF8F3;
+    border: 1px solid rgba(14, 26, 43, 0.14);
+  }
+
+  [data-theme="light"] .telescope-masthead {
+    background: #EDE8DC;
+  }
+</style>
+
+<script>
+  function initThreeTelescope() {
+    const container = document.getElementById('telescope-canvas-container');
+    const canvas = document.getElementById('three-telescope-canvas') as HTMLCanvasElement | null;
+    const fallback = document.getElementById('telescope-fallback');
+    const readout = document.getElementById('telescope-alt-readout');
+    if (!container || !canvas) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      if (fallback) fallback.style.display = 'flex';
+      return;
+    }
+
+    let isInitialized = false;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !isInitialized) {
+          isInitialized = true;
+          observer.disconnect();
+          loadTelescopeModel();
+        }
+      });
+    }, { threshold: 0.05 });
+
+    observer.observe(container);
+
+    async function loadTelescopeModel() {
+      try {
+        const THREE = await import('three');
+
+        const width = container!.clientWidth || 400;
+        const height = container!.clientHeight || 300;
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(40, width / height, 1, 1000);
+        camera.position.set(0, 45, 175);
+        camera.lookAt(0, 20, 0);
+
+        const renderer = new THREE.WebGLRenderer({
+          canvas: canvas!,
+          alpha: true,
+          antialias: true,
+          powerPreference: 'low-power'
+        });
+        renderer.setSize(width, height);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+
+        // Subtle Studio Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+        scene.add(ambientLight);
+
+        const dirLight1 = new THREE.DirectionalLight(0x38bdf8, 1.5);
+        dirLight1.position.set(100, 150, 100);
+        scene.add(dirLight1);
+
+        const dirLight2 = new THREE.DirectionalLight(0xf59e0b, 0.9);
+        dirLight2.position.set(-100, 50, -50);
+        scene.add(dirLight2);
+
+        // Ground Board & Azimuth Pivot
+        const azimPivot = new THREE.Group();
+        scene.add(azimPivot);
+
+        // Circular Ground Board
+        const baseGeo = new THREE.CylinderGeometry(34, 34, 4, 32);
+        const baseMat = new THREE.MeshStandardMaterial({
+          color: 0x1e293b,
+          roughness: 0.6,
+          metalness: 0.2
+        });
+        const groundBoard = new THREE.Mesh(baseGeo, baseMat);
+        groundBoard.position.y = 2;
+        azimPivot.add(groundBoard);
+
+        // Rocker Box Side Panels
+        const rockerMat = new THREE.MeshStandardMaterial({
+          color: 0x0f172a,
+          roughness: 0.5,
+          metalness: 0.3
+        });
+        const rockerPanelGeo = new THREE.BoxGeometry(6, 44, 46);
+
+        const leftRocker = new THREE.Mesh(rockerPanelGeo, rockerMat);
+        leftRocker.position.set(-22, 26, 0);
+        azimPivot.add(leftRocker);
+
+        const rightRocker = new THREE.Mesh(rockerPanelGeo, rockerMat);
+        rightRocker.position.set(22, 26, 0);
+        azimPivot.add(rightRocker);
+
+        // Front Rocker Board
+        const frontRockerGeo = new THREE.BoxGeometry(40, 22, 5);
+        const frontRocker = new THREE.Mesh(frontRockerGeo, rockerMat);
+        frontRocker.position.set(0, 15, 21);
+        azimPivot.add(frontRocker);
+
+        // Elevation Pivot (Tube Altitude Axis at Height y = 36)
+        const altPivot = new THREE.Group();
+        altPivot.position.y = 36;
+        azimPivot.add(altPivot);
+
+        // Circular Altitude Bearings on Sides
+        const bearingGeo = new THREE.CylinderGeometry(14, 14, 4, 32);
+        bearingGeo.rotateZ(Math.PI / 2);
+        const bearingMat = new THREE.MeshStandardMaterial({
+          color: 0x38bdf8,
+          roughness: 0.3,
+          metalness: 0.7
+        });
+        const leftBearing = new THREE.Mesh(bearingGeo, bearingMat);
+        leftBearing.position.x = -18;
+        altPivot.add(leftBearing);
+
+        const rightBearing = new THREE.Mesh(bearingGeo, bearingMat);
+        rightBearing.position.x = 18;
+        altPivot.add(rightBearing);
+
+        // Optical Tube Assembly (OTA)
+        const tubeAssembly = new THREE.Group();
+        altPivot.add(tubeAssembly);
+
+        // Main 8-Inch Tube (White/Parchment)
+        const tubeGeo = new THREE.CylinderGeometry(15, 15, 96, 32);
+        const tubeMat = new THREE.MeshStandardMaterial({
+          color: 0xf8fafc,
+          roughness: 0.4,
+          metalness: 0.1
+        });
+        const tube = new THREE.Mesh(tubeGeo, tubeMat);
+        tubeAssembly.add(tube);
+
+        // Primary Mirror Cell at Tube Base
+        const cellGeo = new THREE.CylinderGeometry(15.5, 15.5, 8, 32);
+        const darkTrimMat = new THREE.MeshStandardMaterial({
+          color: 0x0284c7,
+          roughness: 0.3,
+          metalness: 0.8
+        });
+        const primaryCell = new THREE.Mesh(cellGeo, darkTrimMat);
+        primaryCell.position.y = -46;
+        tubeAssembly.add(primaryCell);
+
+        // Top Aperture Trim Ring
+        const topRingGeo = new THREE.CylinderGeometry(15.4, 15.4, 4, 32);
+        const topRing = new THREE.Mesh(topRingGeo, darkTrimMat);
+        topRing.position.y = 47;
+        tubeAssembly.add(topRing);
+
+        // Eyepiece Focuser Protrusion (near top, pointing right-front)
+        const focuserGeo = new THREE.CylinderGeometry(3.5, 3.5, 10, 16);
+        focuserGeo.rotateZ(Math.PI / 2);
+        const focuserMat = new THREE.MeshStandardMaterial({
+          color: 0xf59e0b,
+          roughness: 0.2,
+          metalness: 0.9
+        });
+        const focuser = new THREE.Mesh(focuserGeo, focuserMat);
+        focuser.position.set(16, 36, 6);
+        tubeAssembly.add(focuser);
+
+        // Finder Scope Mounted on Tube
+        const finderGeo = new THREE.CylinderGeometry(2, 2, 24, 16);
+        const finder = new THREE.Mesh(finderGeo, darkTrimMat);
+        finder.position.set(-10, 32, 12);
+        tubeAssembly.add(finder);
+
+        // Default Altitude Elevation (45 degrees)
+        let targetAltDeg = 48.0;
+        let currentAltDeg = 48.0;
+        let targetAzimDeg = 25.0;
+        let currentAzimDeg = 25.0;
+
+        // Interactive Mouse Drag on Azimuth
+        let isDragging = false;
+        let prevMouseX = 0;
+
+        container!.addEventListener('mousedown', (e) => {
+          isDragging = true;
+          prevMouseX = e.clientX;
+        });
+
+        window.addEventListener('mouseup', () => {
+          isDragging = false;
+        });
+
+        window.addEventListener('mousemove', (e) => {
+          if (!isDragging) return;
+          const deltaX = e.clientX - prevMouseX;
+          prevMouseX = e.clientX;
+          targetAzimDeg += deltaX * 0.45;
+        });
+
+        // Scroll-driven Altitude Tilt
+        function handleScroll() {
+          const rect = container!.getBoundingClientRect();
+          const winHeight = window.innerHeight;
+          // Fractional position in viewport: 0 (top) to 1 (bottom)
+          const scrollFrac = Math.max(0, Math.min(1, 1 - (rect.top / winHeight)));
+          // Tilt elevation between 28 deg and 75 deg as user scrolls
+          targetAltDeg = 28 + scrollFrac * 46;
+        }
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll();
+
+        let animId = 0;
+        let isVisible = true;
+
+        const visObserver = new IntersectionObserver((entries) => {
+          entries.forEach(e => {
+            isVisible = e.isIntersecting;
+            if (isVisible && !animId) animate();
+          });
+        }, { threshold: 0.05 });
+        visObserver.observe(container!);
+
+        function animate() {
+          if (!isVisible) {
+            animId = 0;
+            return;
+          }
+
+          // Smooth interpolation
+          currentAltDeg += (targetAltDeg - currentAltDeg) * 0.08;
+          currentAzimDeg += (targetAzimDeg - currentAzimDeg) * 0.08;
+
+          // Convert deg to radians: tube altitude angle
+          const altRad = (currentAltDeg * Math.PI) / 180;
+          // In Three.js, rotation about X tilts the tube
+          altPivot.rotation.x = -altRad + Math.PI / 2;
+
+          // Azimuth rotation about Y
+          azimPivot.rotation.y = (currentAzimDeg * Math.PI) / 180;
+
+          if (readout) {
+            readout.textContent = `ALT: ${currentAltDeg.toFixed(1)}° · AZ: ${(currentAzimDeg % 360).toFixed(1)}°`;
+          }
+
+          renderer.render(scene, camera);
+          animId = requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        function handleResize() {
+          if (!container) return;
+          const w = container.clientWidth || 400;
+          const h = container.clientHeight || 300;
+          camera.aspect = w / h;
+          camera.updateProjectionMatrix();
+          renderer.setSize(w, h);
+        }
+
+        window.addEventListener('resize', handleResize, { passive: true });
+
+        document.addEventListener('astro:before-swap', () => {
+          cancelAnimationFrame(animId);
+          window.removeEventListener('scroll', handleScroll);
+          window.removeEventListener('resize', handleResize);
+          visObserver.disconnect();
+          renderer.dispose();
+        }, { once: true });
+
+      } catch (err) {
+        console.warn('[ThreeTelescope] Fallback rendered:', err);
+        if (fallback) fallback.style.display = 'flex';
+      }
+    }
+  }
+
+  initThreeTelescope();
+  document.addEventListener('astro:page-load', initThreeTelescope);
+</script>

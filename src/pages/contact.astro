@@ -1,0 +1,510 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Contact & Academic Inquiries | Soumitra Pharikal"
+  description="Contact and collaboration hub for Soumitra Pharikal (IISER Berhampur). Direct email, phone, GitHub, LinkedIn, and message dispatch."
+>
+  <div class="monograph-container">
+    <header class="page-header reveal-up" style="--stagger-index: 1;">
+      <div class="page-meta-strip">
+        <span class="pulse-dot" aria-hidden="true"></span>
+        <span class="meta-index">§ 06 // COMMUNICATION CHANNEL</span>
+        <span class="mono text-tertiary" style="font-size: 0.75rem; margin-left: 8px;">ORCID: <a href="https://orcid.org/0009-0001-8670-0352" target="_blank" rel="noopener noreferrer" class="editorial-link">0009-0001-8670-0352 ↗</a></span>
+      </div>
+      <h1 class="page-title">Contact &amp; Academic Collaboration</h1>
+      <p class="page-subtitle reading-measure text-secondary">
+        I welcome inquiries regarding observational astrophysics research, computational physics collaborations, LaTeX compendiums, or student leadership.
+      </p>
+    </header>
+
+    <!-- 4 Direct Spotlight Cards (Email, Phone, GitHub, LinkedIn) -->
+    <section class="quick-contact-grid swiss-grid-12">
+      <!-- Card 1: Institutional Email with Copy Button -->
+      <div class="col-3 contact-spot-card hairline-box spotlight-card interactive-row reveal-up" style="--stagger-index: 2;">
+        <span class="meta-index">INSTITUTIONAL EMAIL</span>
+        <p class="contact-card-val mono">24123@iiserbpr.ac.in</p>
+        <div class="contact-actions">
+          <button type="button" class="editorial-btn copy-btn" data-copy="24123@iiserbpr.ac.in">
+            Copy Email ⎘
+          </button>
+          <a href="mailto:24123@iiserbpr.ac.in" class="editorial-link mono">Open Mail ↗</a>
+        </div>
+      </div>
+
+      <!-- Card 2: Phone with Copy Button -->
+      <div class="col-3 contact-spot-card hairline-box spotlight-card interactive-row reveal-up" style="--stagger-index: 3;">
+        <span class="meta-index">TELEPHONE &amp; WHATSAPP</span>
+        <p class="contact-card-val mono">+91 8160785898</p>
+        <div class="contact-actions">
+          <button type="button" class="editorial-btn copy-btn" data-copy="+918160785898">
+            Copy Phone ⎘
+          </button>
+          <a href="tel:+918160785898" class="editorial-link mono">Call Direct ↗</a>
+        </div>
+      </div>
+
+      <!-- Card 3: GitHub Spotlight -->
+      <div class="col-3 contact-spot-card hairline-box spotlight-card interactive-row reveal-up" style="--stagger-index: 4;">
+        <span class="meta-index">CODE REPOSITORIES</span>
+        <p class="contact-card-val mono">github.com/SoumitraPharikal</p>
+        <div class="contact-actions">
+          <a href="https://github.com/SoumitraPharikal" target="_blank" rel="noopener noreferrer" class="editorial-btn">
+            View Repositories ↗
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 4: LinkedIn Spotlight -->
+      <div class="col-3 contact-spot-card hairline-box spotlight-card interactive-row reveal-up" style="--stagger-index: 5;">
+        <span class="meta-index">ACADEMIC NETWORK</span>
+        <p class="contact-card-val mono">in/soumitra-pharikal</p>
+        <div class="contact-actions">
+          <a href="https://www.linkedin.com/in/soumitra-pharikal" target="_blank" rel="noopener noreferrer" class="editorial-btn">
+            Connect on LinkedIn ↗
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Two-Column Form & Maps Grid -->
+    <section class="composer-section">
+      <div class="swiss-grid-12">
+        <!-- Message Composer Form -->
+        <div class="col-7 form-column reveal-up" style="--stagger-index: 6;">
+          <div class="composer-plate hairline-box spotlight-card corner-crosshair">
+            <span class="meta-index">INTERACTIVE DISPATCH</span>
+            <h2 class="composer-title">Compose Direct Dispatch</h2>
+            <p class="composer-desc text-secondary">
+              Draft your message below. Submitting will encode your inquiry and open your native mail client addressed directly to <code>24123@iiserbpr.ac.in</code>.
+            </p>
+
+            <form id="contact-form" class="composer-form" novalidate>
+              <!-- Anti-Spam Honeypot Field -->
+              <div style="display:none !important;" aria-hidden="true">
+                <input type="text" name="honeypot_website" id="honeypot_field" tabindex="-1" autocomplete="off" />
+              </div>
+
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label for="sender-name" class="form-label mono">YOUR FULL NAME:</label>
+                  <input
+                    type="text"
+                    id="sender-name"
+                    name="name"
+                    required
+                    placeholder="e.g. Dr. Carl Sagan"
+                    class="form-input mono"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="sender-email" class="form-label mono">YOUR EMAIL ADDRESS:</label>
+                  <input
+                    type="email"
+                    id="sender-email"
+                    name="email"
+                    required
+                    placeholder="e.g. user@institution.edu"
+                    class="form-input mono"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="sender-topic" class="form-label mono">INQUIRY CATEGORY:</label>
+                <select id="sender-topic" name="topic" class="form-input mono form-select">
+                  <option value="Research Collaboration & Astrophysics">Observational Astronomy &amp; Research Collaboration</option>
+                  <option value="Computational Inverse Problems & CT">Computational Physics &amp; Numerical Pipelines</option>
+                  <option value="LaTeX Compendium PDF Request">LaTeX Course Compendium PDF Request</option>
+                  <option value="Student Leadership & Outreach">Student Leadership &amp; Scientific Outreach</option>
+                  <option value="General Academic Inquiry">General Academic Inquiry</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="sender-subject" class="form-label mono">SUBJECT LINE:</label>
+                <input
+                  type="text"
+                  id="sender-subject"
+                  name="subject"
+                  required
+                  placeholder="e.g. Discussion on IC 1369 Light-Curve Reductions"
+                  class="form-input mono"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="sender-message" class="form-label mono">MESSAGE BODY:</label>
+                <textarea
+                  id="sender-message"
+                  name="message"
+                  rows="5"
+                  required
+                  placeholder="Draft your academic inquiry, research question, or collaboration proposal..."
+                  class="form-input mono form-textarea"
+                ></textarea>
+              </div>
+
+              <div class="form-actions hairline-top">
+                <button type="submit" class="editorial-btn primary">
+                  Send Message via Email Client <span class="arrow" aria-hidden="true">↗</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Right: IISER Berhampur Maps & Station Location -->
+        <div class="col-5 map-column reveal-up" style="--stagger-index: 7;">
+          <div class="station-plate hairline-box spotlight-card corner-crosshair">
+            <span class="meta-index">INSTITUTIONAL STATION</span>
+            <h3 class="station-title">Department of Physical Sciences</h3>
+            
+            <p class="station-address text-secondary">
+              <strong>Indian Institute of Science Education and Research (IISER) Berhampur</strong><br />
+              Permanent Campus: Vigyanpuri, At/PO: Laudigam, Konisi Tehsil<br />
+              Police Station: Golanthara, District: Ganjam<br />
+              Odisha 760003, India
+            </p>
+
+            <div class="coordinates-badge mono">
+              <span>LATITUDE: 19.200° N</span>
+              <span>·</span>
+              <span>LONGITUDE: 84.835° E</span>
+            </div>
+
+            <!-- Live Google Maps Satellite View Iframe -->
+            <div class="map-graphic-box hairline-box" style="padding: 0; overflow: hidden;">
+              <iframe 
+                src="https://maps.google.com/maps?q=19.200,84.835&t=k&z=15&ie=UTF8&iwloc=&output=embed" 
+                width="100%" 
+                height="360" 
+                style="border:0; border-radius: 12px; filter: saturate(1.2) contrast(1.1); display: block;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+            </div>
+
+            <div class="station-actions hairline-top">
+              <a
+                href="https://www.google.com/maps/place/19%C2%B012'00.0%22N+84%C2%B050'06.0%22E/@19.200,84.835,16z"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="editorial-btn primary"
+              >
+                View on Google Maps ↗
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Floating Copy Toast Notification -->
+    <div id="toast-notification" class="toast-popup mono" role="status" aria-live="polite">
+      Copied to clipboard! ✓
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  function initContactSystems() {
+    // 1. Copy Buttons with Toast Notification
+    const copyBtns = document.querySelectorAll('.copy-btn');
+    const toast = document.getElementById('toast-notification');
+    let toastTimer: number;
+
+    copyBtns.forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const text = btn.getAttribute('data-copy');
+        if (!text) return;
+
+        try {
+          await navigator.clipboard.writeText(text);
+          if (toast) {
+            toast.classList.add('is-visible');
+            clearTimeout(toastTimer);
+            toastTimer = window.setTimeout(() => {
+              toast.classList.remove('is-visible');
+            }, 2400);
+          }
+        } catch {
+          // Fallback
+          prompt('Copy to clipboard:', text);
+        }
+      });
+    });
+
+    // 2. Direct Dispatch Message Composer
+    const form = document.getElementById('contact-form') as HTMLFormElement | null;
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const honeypot = (document.getElementById('honeypot_field') as HTMLInputElement)?.value;
+      if (honeypot) {
+        // Silent bot block
+        return;
+      }
+
+      const name = (document.getElementById('sender-name') as HTMLInputElement)?.value;
+      const email = (document.getElementById('sender-email') as HTMLInputElement)?.value;
+      const topic = (document.getElementById('sender-topic') as HTMLSelectElement)?.value;
+      const subject = (document.getElementById('sender-subject') as HTMLInputElement)?.value;
+      const message = (document.getElementById('sender-message') as HTMLTextAreaElement)?.value;
+
+      const fullSubject = encodeURIComponent(`[${topic}] ${subject}`);
+      const body = encodeURIComponent(
+        `From: ${name} (${email})\nTopic: ${topic}\n\nMessage:\n${message}\n\n---\nDispatched via Academic Monograph Portfolio`
+      );
+
+      window.location.href = `mailto:24123@iiserbpr.ac.in?subject=${fullSubject}&body=${body}`;
+    });
+  }
+
+  initContactSystems();
+  document.addEventListener('astro:page-load', initContactSystems);
+</script>
+
+<style>
+  .page-header {
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-8);
+  }
+
+  .page-meta-strip {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+  }
+
+  .page-title {
+    font-size: var(--text-h1);
+    line-height: var(--leading-tight);
+    margin-bottom: var(--space-3);
+  }
+
+  .page-subtitle {
+    font-size: var(--text-lead);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Quick Contact 4 Cards */
+  .quick-contact-grid {
+    padding-bottom: var(--space-10);
+    row-gap: var(--space-4);
+    align-items: stretch;
+  }
+
+  .contact-spot-card {
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    justify-content: space-between;
+    height: 100%;
+    min-height: 155px;
+  }
+
+  .contact-card-val {
+    font-size: 0.8125rem;
+    color: var(--text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin: 0;
+  }
+
+  .contact-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .contact-actions .editorial-btn,
+  .contact-actions .editorial-link {
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center;
+  }
+
+  .copy-btn {
+    font-size: 0.6875rem;
+    padding: 4px 10px;
+  }
+
+  /* Composer Section */
+  .composer-section {
+    padding-bottom: var(--space-14);
+  }
+
+  .composer-plate {
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .composer-title {
+    font-size: 1.45rem;
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  .composer-desc {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .composer-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-top: var(--space-2);
+  }
+
+  .form-row-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .form-label {
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+  }
+
+  .form-input {
+    background: var(--bg-surface-sunken);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-size: 0.8125rem;
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color var(--transition-fast), background var(--transition-fast);
+  }
+
+  .form-input:focus {
+    border-color: var(--accent-primary);
+    background: var(--bg-surface-elevated);
+  }
+
+  .form-select {
+    cursor: pointer;
+  }
+
+  .form-textarea {
+    resize: vertical;
+    min-height: 110px;
+  }
+
+  .form-actions {
+    padding-top: var(--space-4);
+  }
+
+  /* Right: Station Plate */
+  .station-plate {
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .station-title {
+    font-size: 1.35rem;
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  .station-address {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .coordinates-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.6875rem;
+    color: var(--accent-gold);
+    margin-top: 4px;
+  }
+
+  .map-graphic-box {
+    width: 100%;
+    height: 160px;
+    background: var(--bg-primary);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-top: var(--space-2);
+  }
+
+  .map-svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .station-actions {
+    padding-top: var(--space-4);
+  }
+
+  /* Toast Notification */
+  .toast-popup {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--accent-primary);
+    color: #06080E;
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    padding: 8px 18px;
+    border-radius: var(--radius-pill);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    z-index: 99999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 200ms ease, transform 200ms ease;
+  }
+
+  .toast-popup.is-visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  @media (max-width: 1024px) {
+    .quick-contact-grid .col-3 {
+      grid-column: span 6;
+    }
+    .form-column,
+    .map-column {
+      grid-column: span 12;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .quick-contact-grid .col-3 {
+      grid-column: span 12;
+    }
+    .form-row-2 {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

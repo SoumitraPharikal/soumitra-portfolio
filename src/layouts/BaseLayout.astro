@@ -1,0 +1,657 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+import 'katex/dist/katex.min.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Soumitra Pharikal | Academic Research Monograph & Portfolio",
+  description = "Personal academic monograph, observational astrophysics research, optical wavefront modeling, and computational physics portfolio of Soumitra Pharikal (IISER Berhampur)."
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'http://localhost:4321');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Meta -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+
+    <!-- View Transitions -->
+    <ClientRouter />
+
+    <!-- FOUC Prevention Script (Cosmic Dark Default) -->
+    <script is:inline>
+      (function() {
+        const storedTheme = localStorage.getItem('soumitra-theme-v2');
+        const theme = (storedTheme === 'light') ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+
+      // Privacy-Friendly Academic Telemetry Engine (Zero Surveillance, Zero Cookies)
+      window.academicTelemetryQueue = window.academicTelemetryQueue || [];
+      window.trackEvent = function(eventName, eventProps) {
+        const timestamp = new Date().toISOString();
+        const record = {
+          event: eventName,
+          props: eventProps || {},
+          timestamp: timestamp,
+          path: window.location.pathname
+        };
+        window.academicTelemetryQueue.push(record);
+        try {
+          document.dispatchEvent(new CustomEvent('academic:telemetry', { detail: record }));
+          if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            console.info(`[TELEMETRY] ${timestamp} :: ${eventName}`, eventProps || {});
+          }
+        } catch (e) {}
+      };
+    </script>
+  </head>
+  <body>
+    <!-- Tactile 3% Film Grain & Dither Texture -->
+    <div class="film-grain-overlay" aria-hidden="true"></div>
+
+    <!-- Desktop Magnetic Orbit Cursor with Reticle -->
+    <div id="custom-cursor" class="custom-cursor" aria-hidden="true">
+      <div class="cursor-dot custom-cursor-dot" id="cursor-dot"></div>
+      <div class="cursor-ring custom-cursor-ring" id="cursor-ring">
+        <span class="reticle-tick tick-top"></span>
+        <span class="reticle-tick tick-bottom"></span>
+        <span class="reticle-tick tick-left"></span>
+        <span class="reticle-tick tick-right"></span>
+      </div>
+    </div>
+
+    <!-- Viewport Top Scroll Progress Bar -->
+    <div id="scroll-progress-bar" aria-hidden="true"></div>
+
+    <!-- Cosmic Gravitational Contour & Starfield Backdrop -->
+    <div class="cosmic-backdrop" aria-hidden="true">
+      <div class="nebula-radial nebula-top-left"></div>
+      <div class="nebula-radial nebula-bottom-right"></div>
+      
+      <!-- Haikei-Style Organic Gravitational Curvature Mesh -->
+      <svg class="gravitational-contours" viewBox="0 0 1440 900" fill="none" preserveAspectRatio="none">
+        <path d="M-100,200 C300,100 600,450 1540,250" stroke="var(--contour-color)" stroke-width="1.2" />
+        <path d="M-100,320 C350,220 700,550 1540,380" stroke="var(--contour-color)" stroke-width="1.2" stroke-dasharray="6 4" />
+        <path d="M-100,480 C400,380 800,680 1540,520" stroke="var(--contour-color)" stroke-width="1.2" />
+        <path d="M-100,640 C450,540 900,780 1540,680" stroke="var(--contour-color)" stroke-width="1.2" stroke-dasharray="8 6" />
+        <circle cx="720" cy="450" r="280" stroke="var(--contour-color)" stroke-width="0.8" />
+        <circle cx="720" cy="450" r="440" stroke="var(--contour-color)" stroke-width="0.8" stroke-dasharray="4 6" />
+      </svg>
+
+      <!-- Aceternity Cosmic Meteors (Dark Mode) -->
+      <div class="meteor-container" aria-hidden="true">
+        <div class="meteor-streak"></div>
+        <div class="meteor-streak"></div>
+        <div class="meteor-streak"></div>
+      </div>
+
+      <!-- Deep Field Interactive Constellation Starfield Canvas -->
+      <canvas id="cosmic-starfield-canvas" class="starfield-canvas"></canvas>
+    </div>
+
+    <!-- Floating Live Scroll Telemetry Badge -->
+    <div id="scroll-telemetry-badge" aria-hidden="true">
+      <span class="scroll-badge-dot"></span>
+      <span id="scroll-telemetry-text">§ 00 // 0%</span>
+    </div>
+
+    <div class="site-wrapper">
+      <Header />
+      <main id="main-content">
+        <slot />
+      </main>
+      <Footer />
+    </div>
+
+    <!-- Theme Switch Script (macOS / iOS Slider Synchronization) -->
+    <script is:inline>
+      function setupTheme() {
+        const toggleBtn = document.getElementById('theme-toggle-btn');
+        if (!toggleBtn) return;
+
+        const stored = localStorage.getItem('soumitra-theme-v2');
+        const currentTheme = (stored === 'light') ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        toggleBtn.setAttribute('aria-checked', currentTheme === 'dark' ? 'true' : 'false');
+
+        toggleBtn.onclick = function() {
+          const current = document.documentElement.getAttribute('data-theme') || 'dark';
+          const next = current === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem('soumitra-theme-v2', next);
+          toggleBtn.setAttribute('aria-checked', next === 'dark' ? 'true' : 'false');
+
+          if (typeof window.trackEvent === 'function') {
+            window.trackEvent('theme_toggle', { newTheme: next });
+          }
+
+          // Brief Starfield Fade & Aurora Pulse on Switching to Dark Mode
+          if (next === 'dark') {
+            const canvas = document.getElementById('cosmic-starfield-canvas');
+            if (canvas) {
+              canvas.style.transition = 'opacity 150ms ease';
+              canvas.style.opacity = '1';
+              setTimeout(() => {
+                canvas.style.transition = 'opacity 600ms ease';
+                canvas.style.opacity = '';
+              }, 300);
+            }
+          }
+        };
+      }
+
+      setupTheme();
+      document.addEventListener('astro:after-swap', () => {
+        const storedTheme = localStorage.getItem('soumitra-theme-v2') || 'dark';
+        document.documentElement.setAttribute('data-theme', storedTheme);
+        setupTheme();
+      });
+      document.addEventListener('astro:page-load', setupTheme);
+    </script>
+
+    <!-- Interactive Physics Engines: Magnetic Cursor, 3D Card Tilt & Constellation Canvas -->
+    <script>
+      declare global {
+        interface Window {
+          trackEvent?: (eventName: string, eventProps?: Record<string, any>) => void;
+          academicTelemetryQueue?: any[];
+        }
+      }
+
+      // 1. Desktop Magnetic Orbit Cursor Engine & Button Pull
+      function initMagneticCursor() {
+        if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+        const dot = document.getElementById('cursor-dot');
+        const ring = document.getElementById('cursor-ring');
+        if (!dot || !ring) return;
+
+        let mouseX = -100;
+        let mouseY = -100;
+        let ringX = -100;
+        let ringY = -100;
+        let rafId: number;
+
+        function onMouseMove(e: MouseEvent) {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+          dot!.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
+        }
+
+        function loop() {
+          ringX += (mouseX - ringX) * 0.2;
+          ringY += (mouseY - ringY) * 0.2;
+          ring!.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
+          rafId = requestAnimationFrame(loop);
+        }
+
+        window.addEventListener('mousemove', onMouseMove, { passive: true });
+        rafId = requestAnimationFrame(loop);
+
+        // Hover Detection & Magnetic Pull on Buttons
+        const interactiveSelector = 'a, button, input, textarea, select, [role="button"], .spotlight-card, .exhibit-card, .project-card, .mode-pill, .nav-pill-link, .tab-btn';
+        const magneticBtns = document.querySelectorAll('.editorial-btn, .theme-switch, .filter-pill');
+
+        function addHoverListeners() {
+          document.querySelectorAll(interactiveSelector).forEach((el) => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'), { passive: true });
+            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'), { passive: true });
+          });
+
+          // Magnetic button pull (micro-interaction)
+          magneticBtns.forEach((btn) => {
+            const b = btn as HTMLElement;
+            b.addEventListener('mousemove', (e: MouseEvent) => {
+              const rect = b.getBoundingClientRect();
+              const dx = (e.clientX - (rect.left + rect.width / 2)) * 0.18;
+              const dy = (e.clientY - (rect.top + rect.height / 2)) * 0.18;
+              b.style.transform = `translate(${dx}px, ${dy}px)`;
+            });
+            b.addEventListener('mouseleave', () => {
+              b.style.transform = '';
+            });
+          });
+        }
+
+        addHoverListeners();
+
+        // Global Event Delegation for Privacy-Friendly Telemetry
+        function attachGlobalTelemetry() {
+          document.addEventListener('click', (e) => {
+            const target = (e.target as HTMLElement).closest('a, button');
+            if (!target) return;
+
+            // 1. "Explore research monographs"
+            if (target.matches('a[href="/research"]') || target.textContent?.includes('Explore Research Monographs')) {
+              window.trackEvent?.('explore_monographs', { location: window.location.pathname });
+            }
+            // 2. CV Download
+            else if (target.matches('.cv-download-btn') || target.hasAttribute('download') || target.getAttribute('href')?.includes('.pdf')) {
+              window.trackEvent?.('cv_download', { file: target.getAttribute('href') });
+            }
+            // 3. Google Maps link
+            else if (target.getAttribute('href')?.includes('google.com/maps') || target.getAttribute('href')?.includes('maps.app.goo.gl')) {
+              window.trackEvent?.('maps_view', { destination: 'IISER Berhampur Laudigam Campus' });
+            }
+            // 4. Project filter pill
+            else if (target.classList.contains('filter-pill')) {
+              window.trackEvent?.('project_filter_change', { filter: target.getAttribute('data-filter') });
+            }
+            // 5. Instrument mode pill
+            else if (target.classList.contains('mode-pill')) {
+              window.trackEvent?.('instrument_mode_switch', { mode: target.getAttribute('data-mode') });
+            }
+          });
+
+          // Contact Form Submit Telemetry
+          const contactForm = document.getElementById('contact-form');
+          if (contactForm) {
+            contactForm.addEventListener('submit', () => {
+              window.trackEvent?.('contact_form_submit', { formId: 'academic_inquiry' });
+            });
+          }
+        }
+
+        attachGlobalTelemetry();
+
+        document.addEventListener('astro:before-swap', () => {
+          cancelAnimationFrame(rafId);
+          window.removeEventListener('mousemove', onMouseMove);
+          document.body.classList.remove('cursor-hover');
+        }, { once: true });
+      }
+
+      // 2. 3D Card Tilt Engine (Strictly Capped at 6 Degrees)
+      function init3DCardTilt() {
+        const cards = document.querySelectorAll('.spotlight-card:not(.no-tilt), .exhibit-card:not(.no-tilt), .project-card:not(.no-tilt)');
+        if (!cards.length) return;
+
+        cards.forEach((c) => {
+          const card = c as HTMLElement;
+
+          function handleMove(e: MouseEvent) {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+
+            // Normalize coordinate (-0.5 to 0.5)
+            const normX = x / rect.width - 0.5;
+            const normY = y / rect.height - 0.5;
+            const tiltX = -normY * 6; // Max 6 deg
+            const tiltY = normX * 6;
+
+            card.style.transform = `perspective(1000px) rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg) translateY(-2px)`;
+          }
+
+          function handleLeave() {
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
+          }
+
+          card.addEventListener('mousemove', handleMove, { passive: true });
+          card.addEventListener('mouseleave', handleLeave, { passive: true });
+        });
+      }
+
+      // 3. Interactive Constellation Canvas Engine with Subtle Parallax
+      function initConstellationCanvas() {
+        const canvas = document.getElementById('cosmic-starfield-canvas') as HTMLCanvasElement | null;
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        let animationFrameId: number;
+        let width = 0;
+        let height = 0;
+        let mouseX = -9999;
+        let mouseY = -9999;
+        let parallaxX = 0;
+        let parallaxY = 0;
+
+        function resize() {
+          width = window.innerWidth;
+          height = window.innerHeight;
+          canvas!.width = width * (window.devicePixelRatio || 1);
+          canvas!.height = height * (window.devicePixelRatio || 1);
+          ctx!.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
+        }
+
+        resize();
+        window.addEventListener('resize', resize, { passive: true });
+
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        window.addEventListener('mousemove', (e) => {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+
+          if (!prefersReduced && canvas) {
+            const pTargetX = (e.clientX / width - 0.5) * -16;
+            const pTargetY = (e.clientY / height - 0.5) * -16;
+            parallaxX += (pTargetX - parallaxX) * 0.08;
+            parallaxY += (pTargetY - parallaxY) * 0.08;
+            canvas.style.transform = `translate(${parallaxX.toFixed(1)}px, ${parallaxY.toFixed(1)}px)`;
+          }
+        }, { passive: true });
+
+        // 65 Interactive Constellation Nodes
+        const nodes = Array.from({ length: 65 }, () => ({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.45,
+          vy: (Math.random() - 0.5) * 0.45,
+          radius: Math.random() * 1.6 + 0.8,
+          alpha: Math.random() * 0.6 + 0.25,
+        }));
+
+        function renderConstellation() {
+          ctx!.clearRect(0, 0, width, height);
+
+          const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+          const nodeColor = isDark ? '243, 241, 236' : '30, 58, 138';
+          const lineColor = isDark ? '56, 189, 248' : '30, 58, 138';
+
+          // Update & Draw Nodes
+          for (let i = 0; i < nodes.length; i++) {
+            const n = nodes[i];
+
+            if (!prefersReduced) {
+              n.x += n.vx;
+              n.y += n.vy;
+
+              if (n.x < 0) n.x = width;
+              else if (n.x > width) n.x = 0;
+              if (n.y < 0) n.y = height;
+              else if (n.y > height) n.y = 0;
+            }
+
+            // Draw Node Dot
+            ctx!.beginPath();
+            ctx!.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
+            ctx!.fillStyle = `rgba(${nodeColor}, ${n.alpha})`;
+            ctx!.fill();
+
+            // Inter-Node Constellation Lines (< 95px)
+            for (let j = i + 1; j < nodes.length; j++) {
+              const n2 = nodes[j];
+              const dx = n.x - n2.x;
+              const dy = n.y - n2.y;
+              const dist = Math.sqrt(dx * dx + dy * dy);
+
+              if (dist < 95) {
+                const alpha = (1 - dist / 95) * (isDark ? 0.14 : 0.08);
+                ctx!.beginPath();
+                ctx!.moveTo(n.x, n.y);
+                ctx!.lineTo(n2.x, n2.y);
+                ctx!.strokeStyle = `rgba(${lineColor}, ${alpha})`;
+                ctx!.lineWidth = 0.7;
+                ctx!.stroke();
+              }
+            }
+
+            // Interactive Cursor Connection (< 140px)
+            const cdx = n.x - mouseX;
+            const cdy = n.y - mouseY;
+            const cdist = Math.sqrt(cdx * cdx + cdy * cdy);
+            if (cdist < 140) {
+              const calpha = (1 - cdist / 140) * (isDark ? 0.35 : 0.2);
+              ctx!.beginPath();
+              ctx!.moveTo(n.x, n.y);
+              ctx!.lineTo(mouseX, mouseY);
+              ctx!.strokeStyle = `rgba(${lineColor}, ${calpha})`;
+              ctx!.lineWidth = 1;
+              ctx!.stroke();
+            }
+          }
+
+          if (!prefersReduced) {
+            animationFrameId = requestAnimationFrame(renderConstellation);
+          }
+        }
+
+        renderConstellation();
+
+        document.addEventListener('astro:before-swap', () => {
+          cancelAnimationFrame(animationFrameId);
+          window.removeEventListener('resize', resize);
+        }, { once: true });
+      }
+
+      function initInteractiveSystems() {
+        initMagneticCursor();
+        init3DCardTilt();
+        initConstellationCanvas();
+      }
+
+      initInteractiveSystems();
+      document.addEventListener('astro:page-load', initInteractiveSystems);
+    </script>
+
+    <!-- Lenis Smooth Scroll & Bi-Directional Scroll Animation Engine -->
+    <script>
+      import Lenis from 'lenis';
+
+      let lenis: Lenis | null = null;
+      let rafId: number = 0;
+
+      function initScrollSystems() {
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // 1. Lenis Smooth Scroll Initialization
+        if (!prefersReduced) {
+          if (lenis) {
+            lenis.destroy();
+            cancelAnimationFrame(rafId);
+          }
+
+          lenis = new Lenis({
+            duration: 1.15,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            touchMultiplier: 1.5,
+          });
+
+          // MotionSites.ai Scroll-Velocity Kinetic Depth on Bento Cards
+          const kineticCards = document.querySelectorAll('.bento-card:not(.no-tilt), .monograph-card:not(.no-tilt)');
+          lenis.on('scroll', (e: any) => {
+            const rawVel = e.velocity || 0;
+            const clampedVel = Math.max(-10, Math.min(10, rawVel));
+            const pitch = (clampedVel * 0.15).toFixed(2);
+            kineticCards.forEach((c) => {
+              (c as HTMLElement).style.setProperty('--scroll-pitch', `${pitch}deg`);
+            });
+          });
+
+          function raf(time: number) {
+            lenis?.raf(time);
+            rafId = requestAnimationFrame(raf);
+          }
+          rafId = requestAnimationFrame(raf);
+        }
+
+        // 2. Bi-Directional Scroll Observer
+        const elements = document.querySelectorAll('.reveal-up, .reveal-line, .svg-plot-trace');
+        if (elements.length && 'IntersectionObserver' in window) {
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                entry.target.classList.toggle('is-visible', entry.isIntersecting);
+              });
+            },
+            {
+              threshold: 0.08,
+              rootMargin: '0px 0px -40px 0px',
+            }
+          );
+
+          elements.forEach((el) => observer.observe(el));
+        } else {
+          elements.forEach((el) => el.classList.add('is-visible'));
+        }
+
+        // 3. Top Progress Bar & Live Telemetry Badge Listener
+        const progressBar = document.getElementById('scroll-progress-bar');
+        const badge = document.getElementById('scroll-telemetry-badge');
+        const badgeText = document.getElementById('scroll-telemetry-text');
+
+        function updateScrollTelemetry() {
+          const scrollY = window.scrollY;
+          const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+          const percent = maxScroll > 0 ? Math.min(100, Math.max(0, Math.round((scrollY / maxScroll) * 100))) : 0;
+
+          if (progressBar) {
+            progressBar.style.width = `${percent}%`;
+          }
+
+          // Active Section Detector
+          let activeSection = '§ 00';
+          const sections = document.querySelectorAll('section[aria-label], section.section-container');
+          sections.forEach((sec) => {
+            const rect = sec.getBoundingClientRect();
+            if (rect.top <= window.innerHeight * 0.45 && rect.bottom >= window.innerHeight * 0.15) {
+              const secHeader = sec.querySelector('.section-header-block .meta-index');
+              if (secHeader && secHeader.textContent) {
+                const match = secHeader.textContent.match(/§\s*\d+/);
+                if (match) activeSection = match[0];
+              }
+            }
+          });
+
+          if (badge && badgeText) {
+            if (scrollY > 140) {
+              badge.classList.add('active');
+              badgeText.textContent = `${activeSection} // ${percent}%`;
+            } else {
+              badge.classList.remove('active');
+            }
+          }
+        }
+
+        window.removeEventListener('scroll', updateScrollTelemetry);
+        window.addEventListener('scroll', updateScrollTelemetry, { passive: true });
+        updateScrollTelemetry();
+      }
+
+      initScrollSystems();
+      document.addEventListener('astro:page-load', initScrollSystems);
+      document.addEventListener('astro:before-swap', () => {
+        if (lenis) {
+          lenis.destroy();
+          cancelAnimationFrame(rafId);
+        }
+      });
+    </script>
+  </body>
+</html>
+
+<style>
+  /* Cosmic Background Architecture */
+  .cosmic-backdrop {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+    opacity: 0.85;
+  }
+
+  .nebula-radial {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.18;
+    pointer-events: none;
+  }
+
+  .nebula-top-left {
+    top: -150px;
+    left: -100px;
+    background: radial-gradient(circle, var(--accent-primary) 0%, transparent 70%);
+  }
+
+  .nebula-bottom-right {
+    bottom: -150px;
+    right: -100px;
+    background: radial-gradient(circle, var(--accent-gold) 0%, transparent 70%);
+    opacity: 0.12;
+  }
+
+  .gravitational-contours {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.55;
+  }
+
+  .starfield-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transition: opacity var(--transition-slow);
+  }
+
+  [data-theme="light"] .starfield-canvas {
+    opacity: 0.75;
+  }
+
+  .site-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 1;
+  }
+
+  main {
+    flex: 1 0 auto;
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-14);
+  }
+
+  /* Telescope Reticle Micro-Ticks */
+  .reticle-tick {
+    position: absolute;
+    background: var(--accent-primary);
+    opacity: 0.65;
+    pointer-events: none;
+  }
+  .tick-top { top: -4px; left: 50%; transform: translateX(-50%); width: 1px; height: 3px; }
+  .tick-bottom { bottom: -4px; left: 50%; transform: translateX(-50%); width: 1px; height: 3px; }
+  .tick-left { left: -4px; top: 50%; transform: translateY(-50%); width: 3px; height: 1px; }
+  .tick-right { right: -4px; top: 50%; transform: translateY(-50%); width: 3px; height: 1px; }
+</style>

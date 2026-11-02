@@ -1,0 +1,321 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ThreeCTVolume from '../../components/ThreeCTVolume.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { id: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+
+const sections = [
+  { id: '01-overview', label: '01. Overview' },
+  { id: '02-motivation', label: '02. Motivation' },
+  { id: '03-mathematical-and-physical-model', label: '03. Mathematical Model' },
+  { id: '04-computational-implementation', label: '04. Computational Core' },
+  { id: '05-results-and-visual-verification', label: '05. Results & Validation' },
+  { id: '06-further-work', label: '06. Future Extensions' },
+  { id: '07-resources', label: '07. References & Code' },
+];
+---
+
+<BaseLayout
+  title={`${project.data.title} | Soumitra Pharikal`}
+  description={project.data.subtitle}
+>
+  <div class="monograph-container">
+    <!-- Breadcrumb Header -->
+    <nav class="monograph-breadcrumb mono reveal-up" style="--stagger-index: 1;" aria-label="Breadcrumb">
+      <a href="/projects" class="breadcrumb-link">Projects</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current text-gold">{project.data.codeName}</span>
+    </nav>
+
+    <!-- Project Hero Header -->
+    <header class="monograph-header hairline-bottom reveal-up" style="--stagger-index: 2;">
+      <div class="header-badge-row">
+        <span class="mono-badge text-signal">{project.data.category}</span>
+        <span class="mono text-secondary">{project.data.period}</span>
+      </div>
+      <h1 class="monograph-title">{project.data.title}</h1>
+      <p class="monograph-subtitle text-secondary">{project.data.subtitle}</p>
+
+      {project.data.leadMetrics && (
+        <div class="metrics-bar hairline-box mono">
+          <span class="metrics-label text-gold">KEY METRICS:</span>
+          <span class="metrics-text">{project.data.leadMetrics}</span>
+        </div>
+      )}
+
+      <!-- Primary Action Links -->
+      <div class="header-links mono">
+        <a href="https://github.com/SoumitraPharikal" target="_blank" rel="noopener noreferrer" class="editorial-btn">
+          GitHub Repository ↗
+        </a>
+        <a href="/cv" class="editorial-link">
+          Official Academic CV ↗
+        </a>
+      </div>
+    </header>
+
+    <!-- Monograph Two-Column Layout -->
+    <div class="swiss-grid-12 monograph-body-layout">
+      <!-- Sticky Left Rail: Table of Contents & Specifications -->
+      <aside class="col-4 toc-sidebar reveal-up" style="--stagger-index: 3;">
+        <div class="sticky-sidebar-inner hairline-box">
+          <span class="meta-index">MONOGRAPH OUTLINE</span>
+          <ul class="toc-list mono">
+            {sections.map((sec) => (
+              <li>
+                <a href={`#${sec.id}`} class="toc-anchor">
+                  {sec.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <div class="sidebar-spec-block hairline-top">
+            <span class="meta-index">TECHNICAL SPECIFICATIONS</span>
+            <div class="spec-row mono">
+              <span class="spec-label">LANGUAGE:</span>
+              <span class="spec-val text-primary">{project.data.primaryLanguage}</span>
+            </div>
+            <div class="spec-row mono">
+              <span class="spec-label">STACK:</span>
+              <span class="spec-val text-secondary">{project.data.techStack.join(' · ')}</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Prose & Derivations Column -->
+      <main class="col-8 monograph-prose-column reveal-up" style="--stagger-index: 4;">
+        <article class="prose-article">
+          {project.id === 'ct-imaging-tumour-detection' && (
+            <ThreeCTVolume />
+          )}
+          <Content />
+        </article>
+
+        <!-- Monograph Footnote / Navigation -->
+        <div class="monograph-end-card hairline-box spotlight-card hairline-top">
+          <span class="meta-index">NEXT MONOGRAPH INVESTIGATION</span>
+          <h3 class="end-card-title">Explore Research Dossiers</h3>
+          <p class="text-secondary">
+            Read observational reduction monographs from the Indian Centre for Space Physics (ICSP) Kolkata and exoplanet transit analyses.
+          </p>
+          <a href="/research" class="editorial-btn primary">
+            View Research Dossier <span class="btn-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </main>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .monograph-breadcrumb {
+    padding-top: var(--space-4);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+  }
+
+  .breadcrumb-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .breadcrumb-link:hover {
+    color: var(--text-primary);
+  }
+
+  .breadcrumb-sep {
+    color: var(--text-tertiary);
+  }
+
+  .monograph-header {
+    padding-top: var(--space-4);
+    padding-bottom: var(--space-8);
+    margin-bottom: var(--space-8);
+  }
+
+  .header-badge-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: var(--space-3);
+  }
+
+  .monograph-title {
+    font-size: var(--text-h1);
+    line-height: var(--leading-tight);
+    margin-bottom: var(--space-3);
+  }
+
+  .monograph-subtitle {
+    font-size: var(--text-lead);
+    line-height: 1.6;
+    margin-bottom: var(--space-5);
+    max-width: var(--reading-measure);
+  }
+
+  .metrics-bar {
+    padding: var(--space-3) var(--space-4);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.75rem;
+    margin-bottom: var(--space-5);
+  }
+
+  .metrics-label {
+    font-weight: 600;
+  }
+
+  .header-links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .monograph-body-layout {
+    align-items: flex-start;
+    padding-bottom: var(--space-14);
+  }
+
+  .toc-sidebar {
+    position: sticky;
+    top: 90px;
+  }
+
+  .sticky-sidebar-inner {
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .toc-anchor {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .toc-anchor:hover {
+    color: var(--accent-primary);
+  }
+
+  .sidebar-spec-block {
+    padding-top: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .spec-row {
+    font-size: 0.6875rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .spec-label {
+    color: var(--text-tertiary);
+    font-size: 0.625rem;
+  }
+
+  .monograph-prose-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  /* Prose Article Styling */
+  .prose-article :global(h2) {
+    font-size: var(--text-h2);
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-3);
+    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: var(--space-2);
+  }
+
+  .prose-article :global(h3) {
+    font-size: var(--text-h3);
+    margin-top: var(--space-6);
+    margin-bottom: var(--space-2);
+    color: var(--accent-gold);
+  }
+
+  .prose-article :global(p) {
+    font-size: 1.05rem;
+    line-height: 1.72;
+    color: var(--text-primary);
+    margin-bottom: var(--space-4);
+  }
+
+  .prose-article :global(ul),
+  .prose-article :global(ol) {
+    padding-left: var(--space-6);
+    margin-bottom: var(--space-5);
+  }
+
+  .prose-article :global(li) {
+    font-size: 1rem;
+    line-height: 1.68;
+    margin-bottom: var(--space-2);
+    color: var(--text-secondary);
+  }
+
+  .prose-article :global(li strong) {
+    color: var(--text-primary);
+  }
+
+  .prose-article :global(hr) {
+    height: 0;
+    border: 0;
+    border-top: 1px solid var(--border-subtle);
+    margin: var(--space-8) 0;
+  }
+
+  .monograph-end-card {
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+
+  .end-card-title {
+    font-size: 1.35rem;
+    margin: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .toc-sidebar {
+      position: static;
+      grid-column: span 12;
+    }
+    .monograph-prose-column {
+      grid-column: span 12;
+    }
+  }
+</style>

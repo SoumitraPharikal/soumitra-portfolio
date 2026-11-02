@@ -1,0 +1,100 @@
+---
+// src/components/Thumbnail.astro
+import fs from 'node:fs';
+import path from 'node:path';
+import { thumbnailManifest } from '../data/thumbnails';
+
+interface Props {
+  id: string;
+  class?: string;
+  aspectRatio?: string;
+}
+
+const { id, class: className = '', aspectRatio = '16 / 9' } = Astro.props;
+
+const item = thumbnailManifest[id];
+
+if (!item) {
+  throw new Error(`[Thumbnail] Unknown thumbnail id: "${id}". Must be defined in src/data/thumbnails.ts`);
+}
+
+// Check on-disk existence in public/ folder
+const publicDir = path.resolve('public');
+const relPath = item.src.startsWith('/') ? item.src.slice(1) : item.src;
+const absPath = path.join(publicDir, relPath);
+const fileExists = fs.existsSync(absPath);
+
+if (!fileExists && import.meta.env.DEV) {
+  console.info(`[Thumbnail Notice] File "${item.src}" not yet dropped into public/images/thumbnails/. Rendering verified SVG fallback for "${id}".`);
+}
+---
+
+<div class:list={['thumbnail-wrapper', className]} style={`aspect-ratio: ${aspectRatio};`}>
+  {fileExists ? (
+    <picture class="thumbnail-picture">
+      {item.avifSrc && fs.existsSync(path.join(publicDir, item.avifSrc.slice(1))) && (
+        <source srcset={item.avifSrc} type="image/avif" />
+      )}
+      <source srcset={item.src} type="image/webp" />
+      <img
+        src={item.src}
+        alt={item.alt}
+        width={item.width}
+        height={item.height}
+        loading="lazy"
+        decoding="async"
+        class="thumbnail-img"
+      />
+    </picture>
+  ) : (
+    <div class="thumbnail-svg-fallback" title={item.alt}>
+      <Fragment set:html={item.fallbackSvg} />
+    </div>
+  )}
+</div>
+
+<style>
+  .thumbnail-wrapper {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+    background: var(--bg-surface-sunken);
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .thumbnail-picture {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .thumbnail-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .thumbnail-wrapper:hover .thumbnail-img {
+    transform: scale(1.03);
+  }
+
+  .thumbnail-svg-fallback {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  :global(.thumbnail-svg-fallback svg) {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+</style>
