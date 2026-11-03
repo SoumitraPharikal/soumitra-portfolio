@@ -3,12 +3,21 @@ const navItems = [
   { href: '/', label: 'Home' },
   { href: '/research', label: 'Research' },
   { href: '/projects', label: 'Projects' },
-  { href: '/writing', label: 'Writing' },
-  { href: '/visuals', label: 'Visuals' },
-  { href: '/leadership', label: 'Leadership' },
+  { href: '/writing', label: 'Course Notes' },
   { href: '/about', label: 'About' },
-  { href: '/cv', label: 'CV' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/cv', label: 'CV', isButton: true },
+];
+
+const commandPaletteItems = [
+  { href: '/', label: 'Home' },
+  { href: '/research', label: 'Research Experience' },
+  { href: '/projects', label: 'Computational Projects & Code' },
+  { href: '/writing', label: 'LaTeX Course Notes' },
+  { href: '/about', label: 'About & Academic Trajectory' },
+  { href: '/cv', label: 'Curriculum Vitae (CV)' },
+  { href: '/leadership', label: 'Campus Leadership & Governance' },
+  { href: '/visuals', label: 'Visual Arts & Astrophotography Archive' },
+  { href: '/contact', label: 'Contact & Collaboration' },
 ];
 
 const pathname = Astro.url.pathname;
@@ -37,7 +46,10 @@ const pathname = Astro.url.pathname;
               <li>
                 <a
                   href={item.href}
-                  class:list={['nav-pill-link', { 'is-active': isActive }]}
+                  class:list={[
+                    'nav-pill-link',
+                    { 'is-active': isActive, 'nav-btn-cv': item.isButton }
+                  ]}
                   aria-current={isActive ? 'page' : undefined}
                 >
                   {item.label}
@@ -114,7 +126,7 @@ const pathname = Astro.url.pathname;
         </div>
         <div class="cmd-results-list" id="cmd-results-list">
           <div class="cmd-section-label mono">PAGES &amp; DIRECTORIES</div>
-          {navItems.map((item) => (
+          {commandPaletteItems.map((item) => (
             <a href={item.href} class="cmd-item">
               <span class="cmd-item-title">{item.label}</span>
               <span class="cmd-item-path mono text-tertiary">{item.href}</span>
@@ -147,6 +159,25 @@ const pathname = Astro.url.pathname;
               </li>
             );
           })}
+          <li class="mobile-nav-divider hairline-top"></li>
+          <li>
+            <a href="/leadership" class="mobile-nav-link mobile-sublink">
+              <span class="mobile-nav-label">Leadership</span>
+              <span class="mobile-nav-arrow mono" aria-hidden="true">↗</span>
+            </a>
+          </li>
+          <li>
+            <a href="/visuals" class="mobile-nav-link mobile-sublink">
+              <span class="mobile-nav-label">Visuals</span>
+              <span class="mobile-nav-arrow mono" aria-hidden="true">↗</span>
+            </a>
+          </li>
+          <li>
+            <a href="/contact" class="mobile-nav-link mobile-sublink">
+              <span class="mobile-nav-label">Contact</span>
+              <span class="mobile-nav-arrow mono" aria-hidden="true">↗</span>
+            </a>
+          </li>
         </ul>
       </nav>
     </div>
@@ -185,6 +216,7 @@ const pathname = Astro.url.pathname;
       if (!cmdBackdrop) return;
       cmdBackdrop.classList.add('is-open');
       cmdBackdrop.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
       setTimeout(() => cmdInput?.focus(), 50);
     }
 
@@ -192,6 +224,7 @@ const pathname = Astro.url.pathname;
       if (!cmdBackdrop) return;
       cmdBackdrop.classList.remove('is-open');
       cmdBackdrop.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
       if (cmdInput) cmdInput.value = '';
       filterItems('');
     }
@@ -209,6 +242,19 @@ const pathname = Astro.url.pathname;
         else openCommandPalette();
       } else if (e.key === 'Escape' && cmdBackdrop?.classList.contains('is-open')) {
         closeCommandPalette();
+      } else if (e.key === 'Tab' && cmdBackdrop?.classList.contains('is-open')) {
+        const focusables = cmdBackdrop.querySelectorAll<HTMLElement>('input, button, a:not([style*="display: none"])');
+        if (focusables.length > 0) {
+          const first = focusables[0];
+          const last = focusables[focusables.length - 1];
+          if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
       }
     });
 
@@ -331,6 +377,37 @@ const pathname = Astro.url.pathname;
     list-style: none;
     margin: 0;
     padding: 0;
+  }
+
+    .nav-pill-link.nav-btn-cv {
+    background: var(--accent-primary);
+    color: var(--text-inverse);
+    font-weight: 600;
+    padding: 5px 14px;
+    box-shadow: 0 2px 8px var(--accent-primary-tint);
+    margin-left: 4px;
+  }
+  .nav-pill-link.nav-btn-cv:hover {
+    background: var(--accent-primary-hover);
+    color: var(--text-inverse);
+    transform: translateY(-1.5px) scale(1.05);
+    box-shadow: 0 4px 14px rgba(56, 189, 248, 0.35);
+  }
+  :global(html[data-theme="light"]) .nav-pill-link.nav-btn-cv {
+    background: #1B2E6B;
+    color: #FFFFFF !important;
+  }
+  :global(html[data-theme="light"]) .nav-pill-link.nav-btn-cv:hover {
+    background: #254094;
+    color: #FFFFFF !important;
+  }
+  .mobile-nav-divider {
+    margin: 8px 0;
+    border-color: var(--border-subtle);
+  }
+  .mobile-sublink {
+    opacity: 0.85;
+    font-size: 0.875rem;
   }
 
   .nav-pill-link {

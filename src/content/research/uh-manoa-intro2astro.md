@@ -10,8 +10,8 @@ domains: ["Observational Astronomy", "Exoplanetary Science", "Transit Photometry
 tools: ["Python", "Astropy", "Lightkurve", "TESS", "Gaia DR3", "MAST Archive", "Shell Scripting"]
 abstract: "Participated in Intro2Astro, an 8-week research training program led by Dr. Fei Dai (UH Manoa) focused on observational astronomy, data analysis, and exoplanetary science. Analyzed real datasets from TESS, Gaia, and MAST to extract transit signatures and radial velocity patterns using Python workflows, phase-folded light curves, and UNIX shell scripting automation."
 order: 2
-reportUrl: "[TODO: Add Intro2Astro project link]"
-repoUrl: "[TODO: Add code repository link]"
+reportUrl: "https://github.com/SoumitraPharikal"
+repoUrl: "https://github.com/SoumitraPharikal"
 ---
 
 ## Programme Overview

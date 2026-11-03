@@ -28,6 +28,9 @@ const rabbitHoles = [
   }
 ];
 
+// Static Curricular Progression: 5th of 10 semesters (50%)
+const degreeProgressPercent = 50;
+
 const toolkits = [
   {
     category: 'Scientific Systems & Languages',
@@ -94,7 +97,7 @@ const toolkits = [
 
             <h2 class="narrative-heading">Dual Disciplinary Foundation</h2>
             <p class="narrative-p text-secondary">
-              At IISER Berhampur, my undergraduate curriculum integrates a <strong>Physics Major</strong> with a <strong>Computational and Data Sciences Minor</strong> (Current CGPA: <strong>8.7&nbsp;/&nbsp;10.0</strong>). In 2026, I secured <strong>Rank 1 on the Institute-Wide Merit List</strong> in the <strong>National Graduate Physics Examination (NGPE 2026)</strong> conducted by the Indian Association of Physics Teachers (IAPT).
+              At IISER Berhampur, my undergraduate curriculum integrates a <strong>Physics Major</strong> with a <strong>Computational and Data Sciences Minor</strong> (Current CPI: <strong>8.15&nbsp;/&nbsp;10.0</strong>). In 2026, I secured <strong>Rank 1 on the Institute-Wide Merit List</strong> in the <strong>National Graduate Physics Examination (NGPE 2026)</strong> conducted by the Indian Association of Physics Teachers (IAPT).
             </p>
             <p class="narrative-p text-secondary">
               I treat computation as an empirical physics laboratory. Whether running PSF photometry on hundreds of crowded-field telescope CCD frames, simulating ill-posed tomographic inverse problems with filtered back-projection, or decomposing distorted wavefronts into orthogonal Zernike polynomials, my objective is always the same: testing how mathematical models hold up against noisy real-world data.
@@ -113,8 +116,8 @@ const toolkits = [
           <div class="portrait-card hairline-box spotlight-card corner-crosshair">
             <div class="portrait-frame">
               <img
-                src="/assets/potrait.jpg.png"
-                alt="Soumitra Pharikal Portrait"
+                src="/assets/portrait.png"
+                alt="Soumitra Pharikal - Physics & Computational Sciences undergraduate at IISER Berhampur"
                 class="portrait-img"
                 width="400"
                 height="480"
@@ -137,10 +140,10 @@ const toolkits = [
             <div class="progress-block hairline-box">
               <div class="progress-labels mono">
                 <span class="progress-title">BS-MS DEGREE PROGRESS</span>
-                <span class="progress-percent text-lime" id="degree-percent-label">--% COMPLETED</span>
+                <span class="progress-percent text-lime" id="degree-percent-label">{degreeProgressPercent}% COMPLETED</span>
               </div>
-              <div class="progress-bar-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                <div class="progress-bar-fill" id="degree-progress-fill" style="width: 0%;"></div>
+              <div class="progress-bar-track" role="progressbar" aria-valuenow={degreeProgressPercent} aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar-fill" id="degree-progress-fill" style={`width: ${degreeProgressPercent}%;`}></div>
               </div>
               <span class="progress-dates mono text-tertiary">SEP 3, 2024 (ENROLLMENT) → MAY 31, 2029 (GRADUATION)</span>
             </div>
@@ -173,7 +176,7 @@ const toolkits = [
                   </div>
                   <p class="node-degree">BS-MS Dual Degree (Physics Major · CDS Minor)</p>
                   <div class="node-scores-row">
-                    <span class="node-score-text">CGPA: <strong>8.7&nbsp;/&nbsp;10.0</strong></span>
+                    <span class="node-score-text">CPI: <strong>8.15&nbsp;/&nbsp;10.0</strong></span>
                     <span class="node-score-separator" aria-hidden="true">·</span>
                     <span class="node-score-text">NGPE 2026: <strong>Rank 1</strong> (Institute Merit)</span>
                   </div>
@@ -228,7 +231,7 @@ const toolkits = [
                       loading="lazy"
                     />
                     <div>
-                      <a href="https://dpsbopal-ahd.edu.in/test-campaign-pg/" target="_blank" rel="noopener noreferrer" class="inst-link">
+                      <a href="https://dpsbopal-ahd.edu.in/" target="_blank" rel="noopener noreferrer" class="inst-link">
                         <h4 class="node-inst">Delhi Public School (DPS), Bopal ↗</h4>
                       </a>
                       <span class="node-period mono text-tertiary">COMPLETED 2021 · AHMEDABAD, GUJARAT</span>

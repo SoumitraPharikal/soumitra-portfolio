@@ -12,10 +12,10 @@
   <div class="plate-toolbar hairline-bottom">
     <div class="plate-title-group">
       <span class="pulse-dot" aria-hidden="true"></span>
-      <span class="mono-label">PHYSICS LABORATORY INSTRUMENT</span>
+      <span class="mono-label">INTERACTIVE SIMULATION DEMO</span>
       <div class="status-indicator-pill mono" id="status-indicator">
         <span class="status-ping"></span>
-        <span id="status-text">AUTO 60 FPS</span>
+        <span id="status-text">LIVE DEMO</span>
       </div>
     </div>
 
@@ -103,8 +103,7 @@
   <div class="canvas-viewport" id="canvas-wrapper">
     <canvas id="physics-canvas" width="560" height="320" aria-label="Interactive Astrophysics and Computational Simulation Plate"></canvas>
     <div class="canvas-grid-overlay" aria-hidden="true">
-      <span class="coord-tag coord-tl mono">GRID: POLAR-EQUATORIAL</span>
-      <span class="coord-tag coord-tr mono">FPS: 60 // CONTINUOUS SYNC</span>
+      <span class="coord-tag coord-tl mono" id="coord-grid-tag">AXES: PHASE φ ∈ [0, 1] vs. ΔMAG (CARTESIAN)</span>
     </div>
   </div>
 
@@ -725,6 +724,19 @@
         foldCycleBtn.style.display = currentMode === 'photometry' ? 'inline-flex' : 'none';
       }
 
+      const coordTag = document.getElementById('coord-grid-tag');
+      if (coordTag) {
+        if (currentMode === 'photometry') {
+          coordTag.textContent = 'AXES: PHASE φ ∈ [0, 1] vs. ΔMAG (CARTESIAN)';
+        } else if (currentMode === 'nbody') {
+          coordTag.textContent = 'COORDINATES: KEPLERIAN ORBIT [J2 PERTURBED]';
+        } else if (currentMode === 'radon') {
+          coordTag.textContent = 'PROJECTION: RADON TRANSLATION s vs ANGLE θ';
+        } else if (currentMode === 'mc') {
+          coordTag.textContent = 'LATTICE: 8x8 DISCRETE RADIOISOTOPE ENSEMBLE';
+        }
+      }
+
       if (!slider || !sliderLabel || !sliderReadout || !metricVal1 || !metricVal2) return;
 
       if (currentMode === 'photometry') {
@@ -878,6 +890,10 @@
     let tick = 0;
 
     function render() {
+      if (!isComponentVisible || prefersReducedMotion) {
+        animationId = 0;
+        return;
+      }
       ctx!.clearRect(0, 0, width, height);
 
       const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
@@ -886,8 +902,8 @@
       const slate = isDark ? '#64748B' : '#94A3B8';
 
       const isIdle = Date.now() - lastUserInteracted > 3000;
-      if (isIdle && statusText && statusText.textContent !== 'AUTO 60 FPS') {
-        statusText.textContent = 'AUTO 60 FPS';
+      if (isIdle && statusText && statusText.textContent !== 'LIVE DEMO') {
+        statusText.textContent = 'LIVE DEMO';
       }
 
       // Animate phase-fold reveal smoothly over 350ms

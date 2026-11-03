@@ -4,7 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <BaseLayout
   title="Contact & Academic Inquiries | Soumitra Pharikal"
-  description="Contact and collaboration hub for Soumitra Pharikal (IISER Berhampur). Direct email, phone, GitHub, LinkedIn, and message dispatch."
+  description="Contact and academic collaboration hub for Soumitra Pharikal (IISER Berhampur). Direct institutional email, GitHub, LinkedIn, and message dispatch."
 >
   <div class="monograph-container">
     <header class="page-header reveal-up" style="--stagger-index: 1;">
@@ -15,38 +15,28 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
       <h1 class="page-title">Contact &amp; Academic Collaboration</h1>
       <p class="page-subtitle reading-measure text-secondary">
-        I welcome inquiries regarding observational astrophysics research, computational physics collaborations, LaTeX compendiums, or student leadership.
+        I welcome inquiries regarding observational astrophysics research, computational physics collaborations, LaTeX course notes, or student leadership.
       </p>
     </header>
 
-    <!-- 4 Direct Spotlight Cards (Email, Phone, GitHub, LinkedIn) -->
+    <!-- 3 Direct Spotlight Cards (Primary Institutional Email, GitHub, LinkedIn) -->
     <section class="quick-contact-grid swiss-grid-12">
-      <!-- Card 1: Institutional Email with Copy Button -->
-      <div class="col-3 contact-spot-card hairline-box spotlight-card interactive-row reveal-up" style="--stagger-index: 2;">
-        <span class="meta-index">INSTITUTIONAL EMAIL</span>
-        <p class="contact-card-val mono">24123@iiserbpr.ac.in</p>
+      <!-- Card 1: Primary Institutional Email with Copy & Compose -->
+      <div class="col-6 contact-spot-card hairline-box spotlight-card interactive-row reveal-up border-beam-card" style="--stagger-index: 2;">
+        <span class="meta-index">PRIMARY CONTACT · INSTITUTIONAL EMAIL</span>
+        <p class="contact-card-val mono" style="font-size: 1.15rem; color: var(--text-primary); margin: 6px 0 12px 0;">24123@iiserbpr.ac.in</p>
         <div class="contact-actions">
-          <button type="button" class="editorial-btn copy-btn" data-copy="24123@iiserbpr.ac.in">
-            Copy Email ⎘
+          <button type="button" class="editorial-btn primary copy-btn" data-copy="24123@iiserbpr.ac.in">
+            Copy Email Address ⎘
           </button>
-          <a href="mailto:24123@iiserbpr.ac.in" class="editorial-link mono">Open Mail ↗</a>
+          <a href="mailto:24123@iiserbpr.ac.in" class="editorial-btn">
+            Launch Mail Client ↗
+          </a>
         </div>
       </div>
 
-      <!-- Card 2: Phone with Copy Button -->
+      <!-- Card 2: GitHub Spotlight -->
       <div class="col-3 contact-spot-card hairline-box spotlight-card interactive-row reveal-up" style="--stagger-index: 3;">
-        <span class="meta-index">TELEPHONE &amp; WHATSAPP</span>
-        <p class="contact-card-val mono">+91 8160785898</p>
-        <div class="contact-actions">
-          <button type="button" class="editorial-btn copy-btn" data-copy="+918160785898">
-            Copy Phone ⎘
-          </button>
-          <a href="tel:+918160785898" class="editorial-link mono">Call Direct ↗</a>
-        </div>
-      </div>
-
-      <!-- Card 3: GitHub Spotlight -->
-      <div class="col-3 contact-spot-card hairline-box spotlight-card interactive-row reveal-up" style="--stagger-index: 4;">
         <span class="meta-index">CODE REPOSITORIES</span>
         <p class="contact-card-val mono">github.com/SoumitraPharikal</p>
         <div class="contact-actions">
@@ -56,8 +46,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
       </div>
 
-      <!-- Card 4: LinkedIn Spotlight -->
-      <div class="col-3 contact-spot-card hairline-box spotlight-card interactive-row reveal-up" style="--stagger-index: 5;">
+      <!-- Card 3: LinkedIn Spotlight -->
+      <div class="col-3 contact-spot-card hairline-box spotlight-card interactive-row reveal-up" style="--stagger-index: 4;">
         <span class="meta-index">ACADEMIC NETWORK</span>
         <p class="contact-card-val mono">in/soumitra-pharikal</p>
         <div class="contact-actions">
@@ -114,11 +104,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
               <div class="form-group">
                 <label for="sender-topic" class="form-label mono">INQUIRY CATEGORY:</label>
                 <select id="sender-topic" name="topic" class="form-input mono form-select">
-                  <option value="Research Collaboration & Astrophysics">Observational Astronomy &amp; Research Collaboration</option>
-                  <option value="Computational Inverse Problems & CT">Computational Physics &amp; Numerical Pipelines</option>
-                  <option value="LaTeX Compendium PDF Request">LaTeX Course Compendium PDF Request</option>
-                  <option value="Student Leadership & Outreach">Student Leadership &amp; Scientific Outreach</option>
-                  <option value="General Academic Inquiry">General Academic Inquiry</option>
+                  <option value="Research & Collaboration">Research &amp; Collaboration</option>
+                  <option value="Code & Course Notes">Code &amp; Course Notes</option>
+                  <option value="General Inquiry">General Inquiry</option>
                 </select>
               </div>
 
@@ -164,8 +152,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <p class="station-address text-secondary">
               <strong>Indian Institute of Science Education and Research (IISER) Berhampur</strong><br />
               Permanent Campus: Vigyanpuri, At/PO: Laudigam, Konisi Tehsil<br />
-              Police Station: Golanthara, District: Ganjam<br />
-              Odisha 760003, India
+              District: Ganjam, Odisha 760003, India
             </p>
 
             <div class="coordinates-badge mono">
@@ -255,7 +242,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
       const fullSubject = encodeURIComponent(`[${topic}] ${subject}`);
       const body = encodeURIComponent(
-        `From: ${name} (${email})\nTopic: ${topic}\n\nMessage:\n${message}\n\n---\nDispatched via Academic Monograph Portfolio`
+        `From: ${name} (${email})\nTopic: ${topic}\n\nMessage:\n${message}\n\n---\nDispatched via Academic Research Portfolio`
       );
 
       window.location.href = `mailto:24123@iiserbpr.ac.in?subject=${fullSubject}&body=${body}`;

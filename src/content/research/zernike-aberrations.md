@@ -10,8 +10,8 @@ domains: ["Physical Optics", "Wavefront Sensing", "Adaptive Optics", "Aberration
 tools: ["MATLAB", "Numerical Linear Algebra", "Zernike Polynomials", "Phase Retrieval"]
 abstract: "Worked on wavefront sensing and adaptive optics using Zernike polynomial-based analysis under pupil resizing in MATLAB to quantify wavefront errors and optical path distortions for ophthalmic diagnostics and microscopic imaging."
 order: 3
-reportUrl: "[TODO: Add report link]"
-repoUrl: "[TODO: Add repository link]"
+reportUrl: "https://github.com/SoumitraPharikal"
+repoUrl: "https://github.com/SoumitraPharikal"
 ---
 
 ## Project Overview

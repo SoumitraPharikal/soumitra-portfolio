@@ -2,7 +2,7 @@
 title: "ASTRA: Astrodynamics Simulation Toolkit in Rust"
 codeName: "ASTRA-RS"
 subtitle: "Deterministic N-Body Orbital Mechanics & Perturbation Engine"
-period: "May 2026 – Present"
+period: "Autumn 2025 – Present"
 category: "Astrodynamics & Simulation"
 primaryLanguage: "Rust"
 techStack: ["Rust", "SIMD", "Symplectic Integrators", "SOFA", "Typestates"]
@@ -10,8 +10,8 @@ leadMetrics: "Energy conservation error < 10^-12 over 10^6 steps"
 featured: true
 hasSimulation: true
 simulationType: "orbit"
-repoUrl: "[TODO: Add ASTRA repository URL]"
-docsUrl: "[TODO: Add ASTRA documentation URL]"
+repoUrl: "https://github.com/SoumitraPharikal/astra-rs"
+docsUrl: "https://github.com/SoumitraPharikal/astra-rs"
 order: 4
 ---
 
@@ -19,7 +19,7 @@ order: 4
 
 `ASTRA` is an open-source, deterministic astrodynamics and orbital mechanics simulation engine written entirely in **Rust** (`edition = "2021"`). The engine delivers memory-safe, zero-cost abstraction numerical integration for $N$-body gravitational systems, perturbation environments, and state-vector propagation across international astronomical reference frames (ICRF, GCRF, TEME). 
 
-Selected as an active core contributor in **May 2026**, the development focus centers on extreme numerical stability, cache-coherent memory layouts, and compile-time unit verification.
+Initiated development in **Autumn 2025**, the development focus centers on extreme numerical stability, cache-coherent memory layouts, and compile-time unit verification.
 
 ---
 
@@ -50,7 +50,7 @@ This perturbation induces secular nodal regression and argument of perigee prece
 $$\dot{\Omega}_{J_2} = -\frac{3}{2} n J_2 \left(\frac{R_E}{p}\right)^2 \cos i, \quad \dot{\omega}_{J_2} = \frac{3}{4} n J_2 \left(\frac{R_E}{p}\right)^2 (5\cos^2 i - 1)$$
 
 ### 3.3 Symplectic & Adaptive Integration
-To conserve phase space volume and total energy over multi-decade integration windows, `ASTRA` implements the 4th-order Yoshida symplectic integrator alongside adaptive embedded Runge-Kutta-Fehlberg (DP853) algorithms with automatic step-size adaptation:
+To conserve phase space volume and Hamiltonian energy over long-duration orbital propagation, `ASTRA` implements 4th- and 6th-order Yoshida symplectic integrators preserving relative energy error to $\Delta E / E_0 < 10^{-12}$ across $10^6$ integration epochs on conservative systems. For non-conservative orbital trajectories and atmospheric drag, `ASTRA` couples adaptive 8th-order Dormand-Prince (DOP853) and SGP4 perturbation models:
 
 $$\epsilon = \|\mathbf{y}_{n+1}^{(8)} - \mathbf{y}_{n+1}^{(5)}\|_\infty, \quad h_{\text{new}} = h_{\text{opt}} \cdot \left(\frac{\text{TOL}}{\epsilon}\right)^{1/8}$$
 
@@ -85,6 +85,6 @@ $$\epsilon = \|\mathbf{y}_{n+1}^{(8)} - \mathbf{y}_{n+1}^{(5)}\|_\infty, \quad h
 
 ## 07. Resources
 
-- **GitHub Repository:** `[TODO: Add link to ASTRA Rust repository]`
-- **Technical Documentation:** `[TODO: Add link to crates.io / docs.rs listing]`
+- **GitHub Repository:** [github.com/SoumitraPharikal/astra-rs](https://github.com/SoumitraPharikal/astra-rs)
+- **Technical Documentation:** [ASTRA Architecture & Specification](https://github.com/SoumitraPharikal/astra-rs#architecture)
 - **License:** Dual MIT / Apache-2.0

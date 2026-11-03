@@ -10,8 +10,8 @@ domains: ["Observational Astronomy", "Stellar Astrophysics", "Variable Star Phot
 tools: ["Python", "Astropy", "photutils", "DAOPHOT", "IRAF", "DS9", "PARSEC"]
 abstract: "Photometric study of variable stars in the Galactic open cluster IC 1369. Reduced 814 time-series CCD frames, performed DAOPHOT PSF photometry, Lomb-Scargle period analysis, and phase-folding to characterize four candidate variable stars, plus constructing the cluster Color-Magnitude Diagram (CMD) and PARSEC isochrone fitting to estimate cluster age."
 order: 1
-reportUrl: "[TODO: Add report link]"
-repoUrl: "[TODO: Add repository link]"
+reportUrl: "https://github.com/SoumitraPharikal"
+repoUrl: "https://github.com/SoumitraPharikal"
 ---
 
 ## Project Overview

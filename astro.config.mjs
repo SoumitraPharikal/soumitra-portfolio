@@ -4,7 +4,7 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 
 export default defineConfig({
-  site: 'https://soumitrapharikal.github.io',
+  site: 'https://soumitra-portfolio-eta.vercel.app',
   output: 'static',
   integrations: [
     mdx({

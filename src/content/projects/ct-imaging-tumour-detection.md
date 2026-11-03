@@ -9,10 +9,12 @@ techStack: ["Python", "NumPy", "SciPy", "scikit-image", "scikit-learn", "Matplot
 leadMetrics: "Full Radon inversion pipeline · Hounsfield Unit mapping · Logistic regression classification"
 featured: true
 hasSimulation: false
-repoUrl: "[TODO: Add CT Imaging GitHub repository URL]"
-docsUrl: "[TODO: Add project documentation link]"
+repoUrl: "https://github.com/SoumitraPharikal"
+docsUrl: "https://github.com/SoumitraPharikal"
 order: 2
 ---
+
+> **Scientific Scope Note:** This project is a synthetic proof-of-concept pipeline utilizing mathematical Shepp-Logan phantoms and simulated Radon projections to investigate the inverse physics of Computed Tomography and statistical feature extraction; it is designed for physical simulation and does not process clinical human patient datasets.
 
 ## 01. Overview
 
@@ -75,5 +77,5 @@ $$P(y = 1 \mid \mathbf{x}) = \frac{1}{1 + \exp\left(-(\mathbf{w}^T \mathbf{x} + 
 
 ## 07. Resources
 
-- **GitHub Repository:** `[TODO: Add link to CT Imaging repository]`
+- **GitHub Repository:** [github.com/SoumitraPharikal](https://github.com/SoumitraPharikal)
 - **Interactive Demonstration:** Available in the homepage physics plate.

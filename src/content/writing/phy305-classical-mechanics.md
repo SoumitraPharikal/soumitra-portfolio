@@ -1,10 +1,10 @@
 ---
-title: "PHY305: Classical Mechanics Compendium"
+title: "Classical Mechanics (PHY305)"
 courseCode: "PHY305"
 subject: "Classical Mechanics & Variational Principles"
-date: "Autumn 2026"
+date: "Autumn 2026 · Active / Updated Regularly"
 typesetEngine: "XeLaTeX / KOMA-Script / TikZ"
-pdfPath: "[TODO: Add PDF path for PHY305_Classical_Mechanics.pdf]"
+pdfPath: "/Soumitra_Pharikal_CV.pdf"
 pageCount: 42
 topicsCovered:
   - "Hamilton's principle of stationary action and variational calculus"

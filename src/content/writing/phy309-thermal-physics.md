@@ -1,10 +1,10 @@
 ---
-title: "PHY309: Thermal Physics Compendium"
+title: "Thermal Physics (PHY309)"
 courseCode: "PHY309"
 subject: "Thermodynamics & Kinetic Theory"
-date: "Autumn 2026"
+date: "Autumn 2026 · Active / Updated Regularly"
 typesetEngine: "XeLaTeX / PGFPlots / TikZ"
-pdfPath: "[TODO: Add PDF path for PHY309_Thermal_Physics.pdf]"
+pdfPath: "/Soumitra_Pharikal_CV.pdf"
 pageCount: 36
 topicsCovered:
   - "Fundamental laws of thermodynamics and exact Pfaffian differentials"

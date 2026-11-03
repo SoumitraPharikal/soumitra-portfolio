@@ -10,8 +10,8 @@ leadMetrics: "Modal cross-coupling verified analytically up to radial order n = 
 featured: true
 hasSimulation: true
 simulationType: "zernike"
-repoUrl: "[TODO: Add Zernike Analyzer repository URL]"
-docsUrl: "[TODO: Add IISER Berhampur Summer Report link]"
+repoUrl: "https://github.com/SoumitraPharikal"
+docsUrl: "https://github.com/SoumitraPharikal"
 order: 5
 ---
 
@@ -91,6 +91,6 @@ $$S \approx \exp(-\sigma_\Phi^2), \quad \sigma_\Phi^2 = \sum_{j=2}^J |c'_j|^2$$
 
 ## 07. Resources
 
-- **GitHub Repository:** `[TODO: Add link to Zernike Analyzer repository]`
-- **Technical Report:** `[TODO: Add link to Summer 2025 IISER Berhampur Report]`
+- **GitHub Repository:** [github.com/SoumitraPharikal](https://github.com/SoumitraPharikal)
+- **Technical Report:** Available upon academic request from IISER Berhampur optics archive.
 - **Interactive Simulation:** Embedded on this case study page.

@@ -9,23 +9,23 @@ const sortedProjects = allProjects.sort((a, b) => a.data.order - b.data.order);
 const categories = [
   'All',
   'Observational Astrophysics',
+  'Astrodynamics & Simulation',
   'Computational Physics',
-  'Applied Optics',
-  'Astrodynamics & Systems'
+  'Computational Optics'
 ];
 
 const categoryCounts = categories.reduce((acc, cat) => {
   if (cat === 'All') {
     acc[cat] = sortedProjects.length;
   } else {
-    acc[cat] = sortedProjects.filter((p) => p.data.category === cat).length;
+    acc[cat] = sortedProjects.filter((p) => p.data.category.includes(cat) || p.data.category === cat).length;
   }
   return acc;
 }, {} as Record<string, number>);
 ---
 
 <BaseLayout
-  title="Projects & Computational Monograph | Soumitra Pharikal"
+  title="Computational Projects & Scientific Computing | Soumitra Pharikal"
   description="High-performance scientific computing, stellar photometry reduction pipelines, tomographic CT imaging reconstructions, and Monte Carlo stochastic simulations."
 >
   <div class="monograph-container">
@@ -100,8 +100,8 @@ const categoryCounts = categories.reduce((acc, cat) => {
                   <span class="mono tech-pill-more">+{project.data.techStack.length - 4}</span>
                 )}
               </div>
-              <a href={`/projects/${project.id}`} class="read-monograph-btn mono">
-                Read Monograph <span class="arrow" aria-hidden="true">→</span>
+              <a href={`/projects/${project.id}`} class="view-project-btn mono">
+                View Project <span class="arrow" aria-hidden="true">→</span>
               </a>
             </div>
           </div>
@@ -389,7 +389,7 @@ const categoryCounts = categories.reduce((acc, cat) => {
     align-self: center;
   }
 
-  .read-monograph-btn {
+  .view-project-btn {
     font-size: 0.75rem;
     color: var(--accent-gold);
     display: inline-flex;
@@ -399,7 +399,7 @@ const categoryCounts = categories.reduce((acc, cat) => {
     transition: color var(--transition-fast);
   }
 
-  .read-monograph-btn:hover {
+  .view-project-btn:hover {
     color: var(--accent-primary);
     text-decoration: underline;
   }

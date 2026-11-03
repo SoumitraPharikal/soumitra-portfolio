@@ -10,28 +10,28 @@ const eqDomainAstro = katex.renderToString(
   { displayMode: true, throwOnError: false }
 );
 
+const eqDomainAstrodynamics = katex.renderToString(
+  '\\ddot{\\mathbf{r}}_i = -G \\sum_{j \\ne i} \\frac{m_j(\\mathbf{r}_i - \\mathbf{r}_j)}{|\\mathbf{r}_i - \\mathbf{r}_j|^3} + \\mathbf{a}_{J_2}',
+  { displayMode: true, throwOnError: false }
+);
+
 const eqDomainComputational = katex.renderToString(
   '\\mathcal{R}f(s,\\theta) = \\iint f(x,y)\\,\\delta(x\\cos\\theta + y\\sin\\theta - s)\\,dx\\,dy',
   { displayMode: true, throwOnError: false }
 );
 
-const eqDomainOpticsRelativity = katex.renderToString(
-  'W(\\rho,\\theta) = \\sum_{n,m} c_n^m R_n^m(\\rho)\\cos(m\\theta)',
+const eqMonoAstro = katex.renderToString(
+  'P_{\\text{LS}}(\\omega) = \\frac{1}{2\\sigma^2} \\left[ \\frac{C^2(\\omega)}{C_0(\\omega)} + \\frac{S^2(\\omega)}{S_0(\\omega)} \\right]',
   { displayMode: true, throwOnError: false }
 );
 
-const eqMonoAstro = katex.renderToString(
-  'P_{\\text{LS}} = 1.4820\\text{ d} \\quad \\sigma_{\\text{phot}} \\le 0.014\\text{ mag}',
+const eqMonoASTRA = katex.renderToString(
+  'H = T(\\mathbf{p}) + V(\\mathbf{q}), \\quad \\frac{\\Delta E}{E_0} < 10^{-12} \\; (10^6 \\text{ steps})',
   { displayMode: true, throwOnError: false }
 );
 
 const eqMonoRadon = katex.renderToString(
   'f(x,y) = \\int_0^\\pi \\mathcal{F}^{-1}\\left\\{|w|\\,\\mathcal{F}\\{\\mathcal{R}f\\}\\right\\} d\\theta',
-  { displayMode: true, throwOnError: false }
-);
-
-const eqMonoMC = katex.renderToString(
-  'P_{\\text{decay}} = 1 - e^{-\\lambda \\Delta t} \\quad \\sigma_{\\text{RMS}} \\propto \\frac{1}{\\sqrt{N_0}}',
   { displayMode: true, throwOnError: false }
 );
 
@@ -42,15 +42,15 @@ const eqMonoZernike = katex.renderToString(
 ---
 
 <BaseLayout
-  title="Soumitra Pharikal | Academic Research Monograph & Portfolio"
-  description="Personal academic monograph and research portfolio of Soumitra Pharikal (IISER Berhampur). Observational astronomy, stellar photometry, tomographic CT reconstruction, and stochastic Monte Carlo modeling."
+  title="Soumitra Pharikal | Academic Research & Computational Portfolio"
+  description="Personal academic and research portfolio of Soumitra Pharikal (IISER Berhampur). Observational astrophysics, orbital mechanics, optical wavefront analysis, and computational physics."
 >
   <div class="monograph-container">
 
     <!-- ====================================================================
          SECTION 00: EDITORIAL HERO
          ==================================================================== -->
-    <section class="hero-section" aria-label="Monograph Introduction">
+    <section class="hero-section" aria-label="Introduction & Academic Overview">
       <ThreeSkyDome />
       <div class="swiss-grid-12 hero-grid">
         <!-- Columns 1–6: Narrative & Identity -->
@@ -63,19 +63,19 @@ const eqMonoZernike = katex.renderToString(
 
             <h1 class="hero-headline">
               Exploring physical systems through<br />
-              <span class="typewriter-container"><span id="hero-typewriter" class="typewriter-text"></span><span class="typewriter-cursor" aria-hidden="true">|</span></span>
+              <span class="typewriter-container"><span id="hero-typewriter" class="typewriter-text">computational astrophysics &amp; numerical modeling.</span><span class="typewriter-cursor" aria-hidden="true">|</span></span>
             </h1>
 
             <div class="hero-prose reading-measure">
               <p class="lead">
-                Hi, I'm Soumitra, a third-year BS-MS student at IISER Berhampur majoring in Physics with a minor in Computational and Data Sciences. I investigate astronomical time-series and variable stars at the Indian Centre for Space Physics, build GPU-accelerated ray tracing and wavefront engines, and develop physics-informed algorithms across optics and observational astrophysics.
+                Hi, I'm Soumitra, a third-year BS-MS student at IISER Berhampur majoring in Physics with a minor in Computational and Data Sciences. I develop Rust-based astrodynamics and orbital propagation toolkits (ASTRA), build observational CCD photometry pipelines for variable star discovery, and model optical wavefront aberrations and inverse problems.
               </p>
             </div>
 
-            <!-- Action Bar & Quick Monograph Links -->
+            <!-- Action Bar & Quick Links -->
             <div class="hero-actions">
               <a href="/research" class="editorial-btn primary">
-                Explore Research Monographs <span class="btn-arrow" aria-hidden="true">→</span>
+                Explore Research &amp; Projects <span class="btn-arrow" aria-hidden="true">→</span>
               </a>
               <a href="/projects" class="editorial-btn">
                 Inspect Code &amp; Projects <span class="btn-arrow" aria-hidden="true">→</span>
@@ -85,11 +85,11 @@ const eqMonoZernike = katex.renderToString(
             <div class="hero-meta-strip hairline-top">
               <div class="meta-item">
                 <span class="meta-index">CURRICULUM</span>
-                <a href="/cv" class="editorial-link">Academic CV (Dossier) ↗</a>
+                <a href="/cv" class="editorial-link">Curriculum Vitae (CV) ↗</a>
               </div>
               <div class="meta-item">
-                <span class="meta-index">PUBLICATIONS &amp; NOTES</span>
-                <a href="/writing" class="editorial-link">LaTeX Course Compendiums ↗</a>
+                <span class="meta-index">COURSE NOTES</span>
+                <a href="/writing" class="editorial-link">LaTeX Course Notes ↗</a>
               </div>
               <div class="meta-item">
                 <span class="meta-index">STATION</span>
@@ -129,10 +129,10 @@ const eqMonoZernike = katex.renderToString(
          ==================================================================== -->
     <section class="section-container" id="domains-section" aria-label="Research Domains">
       <div class="section-header-block reveal-up" style="--stagger-index: 1;">
-        <span class="meta-index">§ 01 / RESEARCH ARCHITECTURE</span>
+        <span class="meta-index">§ 01 / RESEARCH FOCUS</span>
         <h2 class="section-title">Core Investigative Domains</h2>
         <p class="section-subtitle reading-measure text-secondary">
-          Bridging empirical observational reduction pipelines, tomographic inverse problems, and analytical wave/relativistic mechanics.
+          Bridging empirical observational reduction pipelines, high-performance astrodynamics simulation, and inverse mathematical physics.
         </p>
       </div>
 
@@ -158,45 +158,43 @@ const eqMonoZernike = katex.renderToString(
           </div>
         </div>
 
-        <!-- 02 // COMPUTATIONAL PHYSICS -->
+        <!-- 02 // ASTRODYNAMICS & SIMULATION -->
         <div class="col-4 domain-card hairline-box spotlight-card interactive-row corner-crosshair reveal-up" style="--stagger-index: 3;">
           <div class="domain-header">
-            <span class="domain-code mono">02 // COMPUTATIONAL PHYSICS</span>
-            <span class="domain-period mono">INVERSE PROBLEMS &amp; MC</span>
+            <span class="domain-code mono">02 // ASTRODYNAMICS</span>
+            <span class="domain-period mono">HIGH-PERFORMANCE COMPUTE</span>
           </div>
-          <h3 class="domain-title">Tomographic Reconstruction &amp; Stochastic Monte Carlo</h3>
+          <h3 class="domain-title">ASTRA: Orbital Propagation &amp; Symplectic Solvers</h3>
           <p class="domain-desc text-secondary">
-            Analytical Radon transform inversion via filtered back-projection (FBP) on Shepp-Logan phantoms, 
-            physics-informed ML tumour classification in Hounsfield Units, and discrete Monte Carlo radioactive decay scaling.
+            Deterministic N-body orbital propagation in Rust with 4th/6th-order Yoshida symplectic integrators conserving Hamiltonian energy to &Delta;E/E_0 &lt; 10⁻¹², J₂ oblateness perturbations, and SGP4 propagation.
+          </p>
+          <div class="domain-math-box">
+            <div set:html={eqDomainAstrodynamics} />
+          </div>
+          <div class="domain-footer hairline-top">
+            <span class="meta-index">STACK:</span>
+            <span class="domain-tools mono">RUST · SIMD · SYMPLECTIC YOSHIDA · SGP4 · ASTRODYNAMICS</span>
+            <a href="/projects/astra-rust-toolkit" class="domain-link">View ASTRA Project →</a>
+          </div>
+        </div>
+
+        <!-- 03 // COMPUTATIONAL PHYSICS & OPTICS -->
+        <div class="col-4 domain-card hairline-box spotlight-card interactive-row corner-crosshair reveal-up" style="--stagger-index: 4;">
+          <div class="domain-header">
+            <span class="domain-code mono">03 // INVERSE PHYSICS</span>
+            <span class="domain-period mono">TOMOGRAPHY &amp; WAVEFRONTS</span>
+          </div>
+          <h3 class="domain-title">Tomographic Inversion &amp; Wavefront Sensing</h3>
+          <p class="domain-desc text-secondary">
+            Analytical Radon transform filtered back-projection (FBP) with Ram-Lak ramp filters on synthetic Shepp-Logan phantoms, coupled with orthogonal Zernike modal decomposition for adaptive optics.
           </p>
           <div class="domain-math-box">
             <div set:html={eqDomainComputational} />
           </div>
           <div class="domain-footer hairline-top">
             <span class="meta-index">STACK:</span>
-            <span class="domain-tools mono">NUMPY · SCIPY · SCIKIT-LEARN · RADON FBP · STATISTICAL PHYSICS</span>
-            <a href="/projects/ct-imaging-tumour-detection" class="domain-link">View Project Spec →</a>
-          </div>
-        </div>
-
-        <!-- 03 // OPTICS & RELATIVITY -->
-        <div class="col-4 domain-card hairline-box spotlight-card interactive-row corner-crosshair reveal-up" style="--stagger-index: 4;">
-          <div class="domain-header">
-            <span class="domain-code mono">03 // OPTICS &amp; RELATIVITY</span>
-            <span class="domain-period mono">WAVE MECHANICS &amp; SPACETIME</span>
-          </div>
-          <h3 class="domain-title">Adaptive Optics Wavefronts &amp; Relativistic Mechanics</h3>
-          <p class="domain-desc text-secondary">
-            Zernike polynomial modal decomposition <em>W</em>(ρ, θ) under dynamic pupil resizing in MATLAB for ophthalmic and microscopic imaging, 
-            alongside Lorentz transformation kinematics, Minkowski four-vectors, and relativistic mechanics.
-          </p>
-          <div class="domain-math-box">
-            <div set:html={eqDomainOpticsRelativity} />
-          </div>
-          <div class="domain-footer hairline-top">
-            <span class="meta-index">STACK:</span>
-            <span class="domain-tools mono">MATLAB · ZERNIKE MODES · MINKOWSKI METRIC · TENSORS</span>
-            <a href="/projects/zernike-wavefront-analyzer" class="domain-link">View Project Spec →</a>
+            <span class="domain-tools mono">NUMPY · SCIPY · SKIMAGE · MATLAB · ZERNIKE MODES</span>
+            <a href="/projects/ct-imaging-tumour-detection" class="domain-link">View Inversion Project →</a>
           </div>
         </div>
       </div>
@@ -221,14 +219,14 @@ const eqMonoZernike = katex.renderToString(
     </div>
 
     <!-- ====================================================================
-         SECTION 02: 2x2 BENTO GRID: 4 FEATURED TECHNICAL MONOGRAPHS
+         SECTION 02: 2x2 BENTO GRID: 4 FEATURED TECHNICAL PROJECTS
          ==================================================================== -->
-    <section class="section-container" aria-label="Featured Technical Monographs">
+    <section class="section-container" aria-label="Featured Technical Projects">
       <div class="section-header-block reveal-up" style="--stagger-index: 1;">
-        <span class="meta-index">§ 02 / MONOGRAPH PORTFOLIO</span>
-        <h2 class="section-title">Featured Research &amp; Computational Monographs</h2>
+        <span class="meta-index">§ 02 / SELECTED PROJECTS</span>
+        <h2 class="section-title">Featured Research &amp; Computational Projects</h2>
         <p class="section-subtitle reading-measure text-secondary">
-          Four flagship technical monographs with full mathematical models, algorithm architectures, and reproducible scientific toolchains.
+          Four flagship scientific computing and observational astrophysics projects with complete physical models, numerical algorithms, and reproducible pipelines.
         </p>
       </div>
 
@@ -259,19 +257,61 @@ const eqMonoZernike = katex.renderToString(
             <div set:html={eqMonoAstro} />
           </div>
 
+          <div class="bento-metrics-strip mono" style="margin-bottom: 14px; display: flex; gap: 8px; flex-wrap: wrap;">
+            <span class="mono text-gold" style="font-size: 0.75rem; background: var(--bg-surface-elevated); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-subtle);">PERIOD P = 1.4820 d</span>
+            <span class="mono text-accent" style="font-size: 0.75rem; background: var(--bg-surface-elevated); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-subtle);">PRECISION σ ≤ 0.014 mag</span>
+          </div>
+
           <div class="bento-card-footer hairline-top">
             <span class="bento-tools mono text-tertiary">PYTHON · ASTROPY · DAOPHOT · PARSEC</span>
             <a href="/projects/ic-1369-photometry-pipeline" class="editorial-btn">
-              Read Monograph <span class="btn-arrow" aria-hidden="true">→</span>
+              View Project <span class="btn-arrow" aria-hidden="true">→</span>
             </a>
           </div>
         </article>
 
-        <!-- Card 2: Radon CT Tumour Detection -->
+        <!-- Card 2: ASTRA Rust Toolkit -->
         <article class="bento-card hairline-box spotlight-card interactive-row corner-crosshair">
           <div class="bento-card-header">
             <div class="bento-tags mono">
               <span class="bento-num text-signal">02</span>
+              <span class="bento-domain">ASTRODYNAMICS &amp; SIMULATION</span>
+            </div>
+            <span class="bento-period mono text-tertiary">RUST ENGINE · 2026</span>
+          </div>
+
+          <h3 class="bento-card-title">
+            <a href="/projects/astra-rust-toolkit" class="title-link no-underline">
+              ASTRA: High-Performance Rust Astrodynamics Toolkit
+            </a>
+          </h3>
+
+          <p class="bento-card-desc text-secondary">
+            Deterministic N-body orbital propagation using Yoshida symplectic integrators preserving Hamiltonian energy to ΔE/E₀ &lt; 10⁻¹² over 10⁶ steps, J₂ oblateness perturbations, and SGP4 propagation.
+          </p>
+
+          <div class="bento-math-box">
+            <div set:html={eqMonoASTRA} />
+          </div>
+
+          <div class="bento-metrics-strip mono" style="margin-bottom: 14px; display: flex; gap: 8px; flex-wrap: wrap;">
+            <span class="mono text-gold" style="font-size: 0.75rem; background: var(--bg-surface-elevated); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-subtle);">ENERGY DRIFT &lt; 10⁻¹²</span>
+            <span class="mono text-accent" style="font-size: 0.75rem; background: var(--bg-surface-elevated); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-subtle);">INTEGRATOR: YOSHIDA / DOP853</span>
+          </div>
+
+          <div class="bento-card-footer hairline-top">
+            <span class="bento-tools mono text-tertiary">RUST · SIMD · SYMPLECTIC YOSHIDA · SGP4</span>
+            <a href="/projects/astra-rust-toolkit" class="editorial-btn">
+              View Project <span class="btn-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 3: Radon CT Tumour Detection -->
+        <article class="bento-card hairline-box spotlight-card interactive-row corner-crosshair">
+          <div class="bento-card-header">
+            <div class="bento-tags mono">
+              <span class="bento-num text-signal">03</span>
               <span class="bento-domain">COMPUTATIONAL TOMOGRAPHY</span>
             </div>
             <span class="bento-period mono text-tertiary">ALGEBRAIC INVERSION · 2025</span>
@@ -284,8 +324,8 @@ const eqMonoZernike = katex.renderToString(
           </h3>
 
           <p class="bento-card-desc text-secondary">
-            Continuous Radon projection transforms, Filtered Back-Projection (FBP) with Ram-Lak frequency filtering, 
-            and Hounsfield Unit neoplasm segmentation on synthetic phantoms.
+            Continuous Radon projection transforms, Filtered Back-Projection (FBP) with Ram-Lak ramp frequency filtering, 
+            and Hounsfield Unit neoplasm segmentation on synthetic Shepp-Logan phantoms.
           </p>
 
           <div class="bento-math-box">
@@ -295,40 +335,7 @@ const eqMonoZernike = katex.renderToString(
           <div class="bento-card-footer hairline-top">
             <span class="bento-tools mono text-tertiary">NUMPY · SCIPY · SKIMAGE · RADON FBP</span>
             <a href="/projects/ct-imaging-tumour-detection" class="editorial-btn">
-              Read Monograph <span class="btn-arrow" aria-hidden="true">→</span>
-            </a>
-          </div>
-        </article>
-
-        <!-- Card 3: Monte Carlo Stochastic Decay -->
-        <article class="bento-card hairline-box spotlight-card interactive-row corner-crosshair">
-          <div class="bento-card-header">
-            <div class="bento-tags mono">
-              <span class="bento-num text-signal">03</span>
-              <span class="bento-domain">STOCHASTIC PHYSICS</span>
-            </div>
-            <span class="bento-period mono text-tertiary">MONTE CARLO METHODS · 2025</span>
-          </div>
-
-          <h3 class="bento-card-title">
-            <a href="/projects/monte-carlo-stochastic-decay" class="title-link no-underline">
-              Discrete Decay Ensembles &amp; Poisson Limit Convergence
-            </a>
-          </h3>
-
-          <p class="bento-card-desc text-secondary">
-            Stochastic Monte Carlo simulation of nuclear decay cascades, tracking ensemble convergence from 
-            <em>N</em><sub>0</sub> = 10 to 10<sup>4</sup> onto macroscopic analytical exponentials.
-          </p>
-
-          <div class="bento-math-box">
-            <div set:html={eqMonoMC} />
-          </div>
-
-          <div class="bento-card-footer hairline-top">
-            <span class="bento-tools mono text-tertiary">PYTHON · NUMPY · MATPLOTLIB · POISSON</span>
-            <a href="/projects/monte-carlo-stochastic-decay" class="editorial-btn">
-              Read Monograph <span class="btn-arrow" aria-hidden="true">→</span>
+              View Project <span class="btn-arrow" aria-hidden="true">→</span>
             </a>
           </div>
         </article>
@@ -361,7 +368,7 @@ const eqMonoZernike = katex.renderToString(
           <div class="bento-card-footer hairline-top">
             <span class="bento-tools mono text-tertiary">MATLAB · ZERNIKE MODES · GRAM-SCHMIDT</span>
             <a href="/projects/zernike-wavefront-analyzer" class="editorial-btn">
-              Read Monograph <span class="btn-arrow" aria-hidden="true">→</span>
+              View Project <span class="btn-arrow" aria-hidden="true">→</span>
             </a>
           </div>
         </article>
@@ -446,11 +453,11 @@ const eqMonoZernike = katex.renderToString(
               <span class="portal-index mono text-gold">PORTAL // 01</span>
               <span class="portal-arrow mono">↗</span>
             </div>
-            <h3 class="portal-title">Research Ledger &amp; Internships</h3>
+            <h3 class="portal-title">Research Experience &amp; Internships</h3>
             <p class="portal-desc text-secondary">
-              Verified record of observational appointments at ICSP Kolkata, UH Manoa collaborations, and theoretical physics explorations.
+              Verified record of observational research at ICSP Kolkata, UH Manoa collaborations, and theoretical physics explorations.
             </p>
-            <span class="portal-action mono text-accent">Enter Research Ledger →</span>
+            <span class="portal-action mono text-accent">Enter Research Experience →</span>
           </a>
 
           <!-- Portal 2 -->
@@ -459,11 +466,11 @@ const eqMonoZernike = katex.renderToString(
               <span class="portal-index mono text-gold">PORTAL // 02</span>
               <span class="portal-arrow mono">↗</span>
             </div>
-            <h3 class="portal-title">Authored LaTeX Compendiums</h3>
+            <h3 class="portal-title">LaTeX Course Notes</h3>
             <p class="portal-desc text-secondary">
-              Five complete theoretical handbooks covering Quantum Mechanics, Thermal Physics, Classical Mechanics, Mathematical Methods, and Data Structures.
+              Comprehensive lecture and revision notes across Quantum Mechanics, Thermal Physics, Classical Mechanics, Mathematical Methods, and Data Structures.
             </p>
-            <span class="portal-action mono text-accent">Browse Compendiums →</span>
+            <span class="portal-action mono text-accent">Browse Course Notes →</span>
           </a>
 
           <!-- Portal 3 -->
@@ -472,9 +479,9 @@ const eqMonoZernike = katex.renderToString(
               <span class="portal-index mono text-gold">PORTAL // 03</span>
               <span class="portal-arrow mono">↗</span>
             </div>
-            <h3 class="portal-title">Leadership &amp; Visual Direction</h3>
+            <h3 class="portal-title">Leadership &amp; Institutional Governance</h3>
             <p class="portal-desc text-secondary">
-              Directing telescope nights in Naxatra, heading Pixophiles Photography Club (Best Club Award), and institutional governance.
+              Led Pixophiles Photography Club (Best Club Award 2026), coordinated telescope sessions in Naxatra, and serve on the Science Subcouncil.
             </p>
             <span class="portal-action mono text-accent">View Leadership Archive →</span>
           </a>
@@ -492,19 +499,18 @@ const eqMonoZernike = katex.renderToString(
     if (!target) return;
 
     const phrases = [
-      "observational astrophysics.",
-      "computational physics & ray tracing.",
-      "optical wavefront & Zernike modeling.",
-      "astronomical time-series analysis.",
-      "scientific computing in Julia, Python & C++."
+      "computational astrophysics & numerical modeling.",
+      "Rust astrodynamics & orbital simulation.",
+      "CCD photometry & variable star discovery.",
+      "optical wavefronts & Zernike decomposition.",
+      "tomographic inversion & inverse problems."
     ];
 
     let phraseIdx = 0;
-    let charIdx = 0;
-    let isDeleting = false;
-    let timer: number = 0;
-
     const el = target as HTMLElement;
+    let charIdx = phrases[0].length;
+    let isDeleting = true;
+    let timer: number = 0;
 
     function tick() {
       const current = phrases[phraseIdx];
@@ -530,7 +536,7 @@ const eqMonoZernike = katex.renderToString(
       }
     }
 
-    tick();
+    timer = window.setTimeout(tick, 2500);
 
     document.addEventListener('astro:before-swap', () => {
       clearTimeout(timer);

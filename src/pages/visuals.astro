@@ -42,7 +42,7 @@ const exhibitions = [
     category: 'Exhibition Curation',
     year: '2025',
     format: 'Action Photojournalism Summit · Pixophiles',
-    desc: 'Kinetic capture competition focused on fast shutter synchronization, pan-tracking moving athletic subjects, and freezing transient mechanical fluid droplets at microsecond shutter speeds.',
+    desc: 'Kinetic capture competition focused on fast shutter synchronization, pan-tracking moving athletic subjects, and freezing transient mechanical fluid droplets at sub-millisecond shutter speeds (250 µs).',
     specs: {
       camera: 'Canon EOS R6',
       lens: 'EF 70-200mm f/2.8L IS III',
@@ -76,7 +76,7 @@ const exhibitions = [
     category: 'Astrophotography',
     year: '2024 – 2026',
     format: 'Naxatra Telescopic Imaging Expeditions',
-    desc: 'Equatorial tracking and multi-frame stacking of the Sagittarius and Cygnus arm starfields, lunar crater astrometry via 8-inch Dobsonian reflectors, and nocturnal 3-hour circumpolar star trail reductions.',
+    desc: 'Equatorial tracking and multi-frame stacking of the Sagittarius and Cygnus arm starfields (via Sky-Watcher Adventurer mount), high-magnification lunar crater astrometry via 8-inch manual Dobsonian reflector, and nocturnal 3-hour circumpolar star trail reductions.',
     specs: {
       camera: 'Canon EOS 80D (Astro-Modified)',
       lens: '8" Dobsonian f/6 & 18-55mm IS STM',
@@ -118,7 +118,7 @@ const categories = [
 
 <BaseLayout
   title="Visual Arts & Astrophotography Archive | Soumitra Pharikal"
-  description="Exhibition archive of Soumitra Pharikal: Coordinator of Pixophiles Photography Club and Naxatra telescope astrophotographer. 6 curated archival exhibitions featuring dark glass frames, monospace EXIF plates, and modal zoom."
+  description="Astrophotography, observational sky frames, and architectural photography by Soumitra Pharikal."
 >
   <div class="monograph-container">
     <header class="page-header reveal-up" style="--stagger-index: 1;">
@@ -285,7 +285,7 @@ const categories = [
                   <!-- Circular Reticle Overlay -->
                   <circle cx="350" cy="110" r="28" fill="none" stroke="#00F0FF" stroke-width="1" stroke-dasharray="3 3" opacity="0.6" />
                   <text x="24" y="32" font-family="JetBrains Mono" font-size="11" fill="#00F0FF" letter-spacing="1.5">EXHIBITION 05 // DEEP-SKY SAGITTARIUS ARM</text>
-                  <text x="24" y="260" font-family="JetBrains Mono" font-size="9.5" fill="#64748B">8" DOBSONIAN · SKY-WATCHER ADVENTURER · 45x60S</text>
+                  <text x="24" y="260" font-family="JetBrains Mono" font-size="9.5" fill="#64748B">8" DOBSONIAN (LUNAR) · SKY-WATCHER ADVENTURER (DEEP SKY) · 45x60S</text>
                 </svg>
               )}
 
@@ -337,8 +337,8 @@ const categories = [
               <span class="exhibit-format mono text-secondary">{exhibit.format}</span>
               <p class="exhibit-desc text-secondary">{exhibit.desc}</p>
 
-              <!-- Technical Monospace EXIF Metadata Dossier -->
-              <div class="exif-dossier hairline-top mono">
+              <!-- Technical Monospace EXIF Metadata Plate -->
+              <div class="exif-plate hairline-top mono">
                 <div class="exif-row">
                   <span class="exif-label text-tertiary">OPTICAL SETUP:</span>
                   <span class="exif-val text-primary">{exhibit.specs.camera} · {exhibit.specs.lens}</span>
@@ -409,27 +409,33 @@ const categories = [
       });
     });
 
-    // 2. Modal Zoom Lightbox
+    // 2. Modal Zoom Lightbox with Keyboard Arrow & Escape Navigation
     const modal = document.getElementById('exhibit-modal') as HTMLDialogElement | null;
     const modalCloseBtn = document.getElementById('modal-close-btn');
     const modalViewport = document.getElementById('modal-viewport');
     const modalCaption = document.getElementById('modal-caption');
     const zoomBtns = document.querySelectorAll('.zoom-trigger-btn');
+    const exhibitCards = Array.from(document.querySelectorAll('.exhibit-card'));
+    let currentExhibitIndex = 0;
+
+    function openModalForCard(card: Element) {
+      if (!modal || !modalViewport || !modalCaption) return;
+      currentExhibitIndex = exhibitCards.indexOf(card as HTMLElement);
+      const svg = card.querySelector('.exhibit-svg');
+      const title = card.querySelector('.exhibit-title')?.textContent || '';
+      const format = card.querySelector('.exhibit-format')?.textContent || '';
+
+      if (svg) {
+        modalViewport.innerHTML = svg.outerHTML;
+      }
+      modalCaption.textContent = `${title} · ${format} [${currentExhibitIndex + 1} / ${exhibitCards.length}] (← / → to navigate)`;
+      if (!modal.open) modal.showModal();
+    }
 
     zoomBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
         const card = btn.closest('.exhibit-card');
-        if (!card || !modal || !modalViewport || !modalCaption) return;
-
-        const svg = card.querySelector('.exhibit-svg');
-        const title = card.querySelector('.exhibit-title')?.textContent || '';
-        const format = card.querySelector('.exhibit-format')?.textContent || '';
-
-        if (svg) {
-          modalViewport.innerHTML = svg.outerHTML;
-        }
-        modalCaption.textContent = `${title} | ${format}`;
-        modal.showModal();
+        if (card) openModalForCard(card);
       });
     });
 
@@ -440,6 +446,21 @@ const categories = [
     modal?.addEventListener('click', (e) => {
       if (e.target === modal) {
         modal.close();
+      }
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (!modal?.open) return;
+      if (e.key === 'Escape') {
+        modal.close();
+      } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        currentExhibitIndex = (currentExhibitIndex + 1) % exhibitCards.length;
+        openModalForCard(exhibitCards[currentExhibitIndex]);
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        currentExhibitIndex = (currentExhibitIndex - 1 + exhibitCards.length) % exhibitCards.length;
+        openModalForCard(exhibitCards[currentExhibitIndex]);
       }
     });
   }
@@ -613,7 +634,7 @@ const categories = [
   }
 
   /* EXIF Metadata Plate */
-  .exif-dossier {
+  .exif-plate {
     margin-top: auto;
     padding-top: var(--space-3);
     display: flex;

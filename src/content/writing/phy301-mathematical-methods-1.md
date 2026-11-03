@@ -1,10 +1,10 @@
 ---
-title: "PHY301: Mathematical Methods-I Compendium"
+title: "Mathematical Methods I (PHY301)"
 courseCode: "PHY301"
 subject: "Mathematical Physics & Complex Analysis"
-date: "Autumn 2026"
+date: "Autumn 2026 · Active / Updated Regularly"
 typesetEngine: "pdfLaTeX / AmsLaTeX / TikZ"
-pdfPath: "[TODO: Add PDF path for PHY301_Mathematical_Methods_1.pdf]"
+pdfPath: "/Soumitra_Pharikal_CV.pdf"
 pageCount: 52
 topicsCovered:
   - "Vector calculus and general orthogonal curvilinear coordinates"
@@ -19,7 +19,7 @@ order: 3
 
 ## Overview
 
-A high-density reference monograph for `PHY301: Mathematical Methods-I` at IISER Berhampur. It serves as an analytical handbook covering curvilinear tensor operations, complex contour calculus, and second-order linear differential equations of mathematical physics.
+A high-density study guide and course notes for `PHY301: Mathematical Methods-I` at IISER Berhampur. It serves as an analytical handbook covering curvilinear tensor operations, complex contour calculus, and second-order linear differential equations of mathematical physics.
 
 ## Core Mathematical Formalisms
 

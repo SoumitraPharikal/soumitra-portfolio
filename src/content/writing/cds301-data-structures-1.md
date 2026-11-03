@@ -1,10 +1,10 @@
 ---
-title: "CDS301: Data Structures-I Compendium"
+title: "Programming and Data Structures I (CDS301)"
 courseCode: "CDS301"
 subject: "Data Structures & Computational Complexity"
-date: "Autumn 2026"
+date: "Autumn 2026 · Active / Updated Regularly"
 typesetEngine: "pdfLaTeX / minted / Algorithm2e"
-pdfPath: "[TODO: Add PDF path for CDS301_Data_Structures_1.pdf]"
+pdfPath: "/Soumitra_Pharikal_CV.pdf"
 pageCount: 38
 topicsCovered:
   - "Pointers, memory layout, stack vs heap allocation, and memory management in C"
@@ -19,7 +19,7 @@ order: 5
 
 ## Overview
 
-Reference handbook and computational monograph for `CDS301: Programming and Data Structures I` at the Center for Computational and Data Sciences, IISER Berhampur. Covers pointer-level memory models in C, algorithmic time-space complexity, and balanced data structure operations.
+Reference course notes and study guide for `CDS301: Programming and Data Structures I` at the Center for Computational and Data Sciences, IISER Berhampur. Covers pointer-level memory models in C, algorithmic time-space complexity, and balanced data structure operations.
 
 ## Core Implementations & Complexity
 

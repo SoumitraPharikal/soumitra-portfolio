@@ -25,7 +25,7 @@ const eqRelativity = katex.renderToString(
 ---
 
 <BaseLayout
-  title="Academic Research Dossier | Soumitra Pharikal"
+  title="Research Experience & Projects | Soumitra Pharikal"
   description="Supervised observational astrophysics internships, exoplanetary transit data analysis, wavefront sensing, and theoretical relativistic mechanics."
 >
   <div class="monograph-container">
@@ -33,7 +33,7 @@ const eqRelativity = katex.renderToString(
     <header class="page-header reveal-up" style="--stagger-index: 1;">
       <div class="page-meta-strip">
         <span class="pulse-dot" aria-hidden="true"></span>
-        <span class="meta-index">§ 01 // INVESTIGATIVE DOSSIER</span>
+        <span class="meta-index">§ 01 // RESEARCH EXPERIENCE</span>
       </div>
       <h1 class="page-title">Supervised Research &amp; Academic Investigations</h1>
       <p class="page-subtitle reading-measure text-secondary">
@@ -58,7 +58,7 @@ const eqRelativity = katex.renderToString(
         <article class="research-card hairline-box spotlight-card interactive-row corner-crosshair reveal-up" id="ic1369" style="--stagger-index: 3;">
           <div class="card-masthead">
             <div class="card-tags">
-              <span class="mono research-code text-signal">APPOINTMENT 01</span>
+              <span class="mono research-code text-signal">ROLE 01</span>
               <span class="mono research-role">OBSERVATIONAL ASTRONOMY RESEARCH INTERN</span>
             </div>
             <span class="mono research-period text-secondary">JUN 2026 – AUG 2026</span>
@@ -91,7 +91,7 @@ const eqRelativity = katex.renderToString(
               <div class="drawer-content text-secondary">
                 <ol class="methodology-list">
                   <li>
-                    <strong>Raw Calibration &amp; Pre-processing:</strong> Standard bias-frame subtraction, thermal dark current correction, and median-combined twilight flat-field division across 814 FITS image frames.
+                    <strong>Raw Calibration &amp; Pre-processing:</strong> Calibration of 814 FITS frames via master bias subtraction, scaled dark subtraction, and normalized twilight flat division: <em>I</em><sub>cal</sub> = (<em>I</em><sub>raw</sub> − Bias − Dark<sub>scaled</sub>) / Flat<sub>norm</sub>, where the master dark is bias-subtracted and exposure-scaled.
                   </li>
                   <li>
                     <strong>PSF Modeling in Crowded Fields:</strong> Selection of 25 uncrowded reference stars across the IC 1369 cluster frame to build empirical Moffat/Gaussian PSF convolution kernels using DAOPHOT II/ALLSTAR.
@@ -100,10 +100,10 @@ const eqRelativity = katex.renderToString(
                     <strong>Differential Photometry:</strong> Selection of non-variable comparison and check stars to eliminate atmospheric extinction variations and transparency fluctuations.
                   </li>
                   <li>
-                    <strong>Fourier &amp; Periodogram Analysis:</strong> Lomb-Scargle spectral decomposition scanning frequency ranges <span class="mono">f ∈ [0.1, 15] d⁻¹</span>, calculating False Alarm Probabilities (FAP) below <span class="mono">10⁻⁶</span> and phase-folding the best-fit periods.
+                    <strong>Fourier &amp; Periodogram Analysis:</strong> Lomb-Scargle spectral decomposition scanning frequency ranges <span class="mono">f ∈ [0.05, 30] c/d</span>, calculating False Alarm Probabilities (FAP) below <span class="mono">10⁻⁶</span> and phase-folding the best-fit periods.
                   </li>
                   <li>
-                    <strong>Isochrone Fitting &amp; Distance Modulus:</strong> Fitting PARSEC solar metallicity ($Z = 0.019$) isochrone grids to the $V$ vs. $(B-V)$ color-magnitude distribution to estimate cluster age, reddening $E(B-V)$, and heliocentric distance.
+                    <strong>Isochrone Fitting &amp; Distance Modulus:</strong> Fitting PARSEC solar metallicity (<em>Z</em><sub>⊙</sub> = 0.0152 for PARSEC v1.2S) isochrone grids to the <em>V</em> vs. (<em>B</em> − <em>V</em>) color-magnitude distribution to estimate cluster age, reddening $E(B-V)$, and heliocentric distance.
                   </li>
                 </ol>
               </div>
@@ -126,7 +126,7 @@ const eqRelativity = katex.renderToString(
         <article class="research-card hairline-box spotlight-card interactive-row corner-crosshair reveal-up" id="uh-manoa" style="--stagger-index: 4;">
           <div class="card-masthead">
             <div class="card-tags">
-              <span class="mono research-code text-signal">APPOINTMENT 02</span>
+              <span class="mono research-code text-signal">ROLE 02</span>
               <span class="mono research-role">ASTRONOMY RESEARCH TRAINEE</span>
             </div>
             <span class="mono research-period text-secondary">JUL 2025 – AUG 2025</span>
@@ -160,10 +160,10 @@ const eqRelativity = katex.renderToString(
                     <strong>MAST Light-Curve Ingestion:</strong> Automated download and detrending of 2-minute cadence TESS Simple Aperture Photometry (SAP) and Pre-search Data Conditioning (PDCSAP) fluxes.
                   </li>
                   <li>
-                    <strong>Transit Signal Detection:</strong> Applying Box Least Squares (BLS) period searching across duration ranges $q \in [0.01, 0.1]$ to isolate periodic planetary transits from stellar flare and spot artifacts.
+                    <strong>Transit Signal Detection:</strong> Applying Box Least Squares (BLS) period searching across duration ranges <em>q</em> ∈ [0.01, 0.1] to isolate periodic planetary transits from stellar flare and spot artifacts.
                   </li>
                   <li>
-                    <strong>Limb-Darkening &amp; Geometric Modeling:</strong> Nonlinear quadratic limb darkening coefficient extraction for host star effective temperatures <span class="mono">T_eff</span>, fitting orbital inclination <em>i</em>, and impact parameter <em>b</em>.
+                    <strong>Limb-Darkening &amp; Geometric Modeling:</strong> Quadratic limb-darkening law coefficient extraction for host star effective temperatures <span class="mono">T_eff</span>, fitting orbital inclination <em>i</em>, and impact parameter <em>b</em>.
                   </li>
                   <li>
                     <strong>Sagan Summer Workshop:</strong> Engaging with cutting-edge exoplanet demographic synthesis, radial velocity jitter models, and transmission spectroscopy architectures hosted by the NASA Exoplanet Science Institute at Caltech.
@@ -189,7 +189,7 @@ const eqRelativity = katex.renderToString(
         <article class="research-card hairline-box spotlight-card interactive-row corner-crosshair reveal-up" id="zernike" style="--stagger-index: 5;">
           <div class="card-masthead">
             <div class="card-tags">
-              <span class="mono research-code text-signal">APPOINTMENT 03</span>
+              <span class="mono research-code text-signal">ROLE 03</span>
               <span class="mono research-role">SUMMER RESEARCH INTERN</span>
             </div>
             <span class="mono research-period text-secondary">MAY 2025 – JUL 2025</span>
@@ -204,7 +204,7 @@ const eqRelativity = katex.renderToString(
             </div>
 
             <p class="research-abstract text-secondary">
-              Investigated modal wavefront reconstruction in optical instrumentation and ophthalmic imaging. Developed MATLAB numerical routines to decompose arbitrary optical phase distortions into orthogonal Zernike circular polynomials $Z_n^m(\rho, \theta)$, analyzed modal cross-coupling when scaling pupil apertures, and simulated phase-variance correction under adaptive optics deformable mirror architectures.
+              Investigated modal wavefront reconstruction in optical instrumentation and ophthalmic imaging. Developed MATLAB numerical routines to decompose arbitrary optical phase distortions into orthogonal Zernike circular polynomials <em>Z<sub>n</sub><sup>m</sup></em>(<em>ρ</em>, <em>θ</em>), analyzed modal cross-coupling when scaling pupil apertures, and simulated phase-variance correction under adaptive optics deformable mirror architectures.
             </p>
 
             <div class="math-callout-plate">

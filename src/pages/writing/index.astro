@@ -7,23 +7,23 @@ const sortedWriting = allWriting.sort((a, b) => a.data.order - b.data.order);
 ---
 
 <BaseLayout
-  title="LaTeX Course Compendiums & Theoretical Reference Archive | Soumitra Pharikal"
-  description="Publication-grade LaTeX course compendiums authored by Soumitra Pharikal covering quantum mechanics, thermal physics, mathematical methods, classical mechanics, and data structures."
+  title="LaTeX Course Notes & Study Compendiums | Soumitra Pharikal"
+  description="Rigorous LaTeX course notes and study compendiums authored by Soumitra Pharikal covering quantum mechanics, thermal physics, mathematical methods, classical mechanics, and computing architectures."
 >
   <div class="monograph-container">
     <header class="page-header reveal-up" style="--stagger-index: 1;">
       <div class="page-meta-strip">
         <span class="pulse-dot" aria-hidden="true"></span>
-        <span class="meta-index">§ 03 // COMPENDIUM ARCHIVE</span>
+        <span class="meta-index">§ 03 // COURSE NOTES ARCHIVE</span>
       </div>
-      <h1 class="page-title">Authored Course Compendiums &amp; Theoretical Handbooks</h1>
+      <h1 class="page-title">LaTeX Course Notes &amp; Study Compendiums</h1>
       <p class="page-subtitle reading-measure text-secondary">
-        Comprehensive academic compendiums authored in modular LaTeX, unifying rigorous mathematical derivations, operator algebra, tensor kinematics, and data structures.
+        Comprehensive academic course notes authored in modular LaTeX, unifying rigorous mathematical derivations, operator algebra, tensor kinematics, and computing architectures. Active for 5th semester and updated regularly.
       </p>
     </header>
 
     <!-- Compendium List -->
-    <div class="compendiums-ledger">
+    <div class="compendiums-list">
       {sortedWriting.map((item, idx) => (
         <article
           class="compendium-plate hairline-box spotlight-card interactive-row corner-crosshair reveal-up"
@@ -62,7 +62,7 @@ const sortedWriting = allWriting.sort((a, b) => a.data.order - b.data.order);
               </div>
 
               <a href={`/writing/${item.id}`} class="editorial-btn">
-                Read Specification <span class="btn-arrow" aria-hidden="true">→</span>
+                View Notes / PDF <span class="btn-arrow" aria-hidden="true">→</span>
               </a>
             </div>
           </div>
@@ -97,7 +97,7 @@ const sortedWriting = allWriting.sort((a, b) => a.data.order - b.data.order);
     margin: 0;
   }
 
-  .compendiums-ledger {
+  .compendiums-list {
     display: flex;
     flex-direction: column;
     gap: var(--space-5);

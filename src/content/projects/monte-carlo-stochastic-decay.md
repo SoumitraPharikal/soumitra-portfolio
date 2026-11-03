@@ -9,8 +9,8 @@ techStack: ["Python", "NumPy", "SciPy", "Matplotlib", "Statistical Physics"]
 leadMetrics: "Discrete population sampling N0 in [10, 10^4] · RMS fluctuation scaling ~ 1/sqrt(N0)"
 featured: true
 hasSimulation: false
-repoUrl: "[TODO: Add Monte Carlo Decay GitHub repository URL]"
-docsUrl: "[TODO: Add project documentation link]"
+repoUrl: "https://github.com/SoumitraPharikal"
+docsUrl: "https://github.com/SoumitraPharikal"
 order: 3
 ---
 
@@ -47,7 +47,7 @@ with theoretical Poisson variance $\text{Var}(N(t)) = N_0 e^{-\lambda t}(1 - e^{
 ### 3.3 Relative RMS Fluctuation Scaling
 To quantify stochastic noise as a function of system size, the normalized root-mean-square residual between stochastic trajectory $N(t)$ and theoretical curve $\langle N(t) \rangle$ is computed across $M$ Monte Carlo trials:
 
-$$\sigma_{\text{RMS}} = \sqrt{\frac{1}{T} \int_0^T \left( \frac{N(t) - N_0 e^{-\lambda t}}{N_0} \right)^2 dt} \propto \frac{1}{\sqrt{N_0}}$$
+$$\frac{\sigma_N(t)}{N_0} = \frac{\sqrt{N_0 e^{-\lambda t}(1 - e^{-\lambda t})}}{N_0} \propto \frac{1}{\sqrt{N_0}}$$
 
 ---
 
@@ -62,7 +62,7 @@ $$\sigma_{\text{RMS}} = \sqrt{\frac{1}{T} \int_0^T \left( \frac{N(t) - N_0 e^{-\
 ## 05. Results & Visual Verification
 
 - Demonstrated that for $N_0 = 10$, individual trajectories exhibit significant discrete step-discontinuities and variance, departing noticeably from smooth exponential curves.
-- Numerically confirmed that as $N_0$ scales from $10^1 \to 10^4$, relative fluctuation amplitude $\sigma_{\text{RMS}}$ scales precisely as $1/\sqrt{N_0}$, conforming to the central limit theorem with power-law exponent $-0.498 \pm 0.012$.
+- Numerically confirmed that as $N_0$ scales from $10^1 \to 10^4$, fractional RMS fluctuation amplitude $\sigma_N / N_0$ scales precisely as $1/\sqrt{N_0}$, conforming to the central limit theorem with power-law exponent $-0.498 \pm 0.012$.
 - Successfully modeled secular and transient equilibria in two-stage radioactive decay chains.
 
 ---
@@ -76,5 +76,5 @@ $$\sigma_{\text{RMS}} = \sqrt{\frac{1}{T} \int_0^T \left( \frac{N(t) - N_0 e^{-\
 
 ## 07. Resources
 
-- **GitHub Repository:** `[TODO: Add link to Monte Carlo Decay repository]`
+- **GitHub Repository:** [github.com/SoumitraPharikal](https://github.com/SoumitraPharikal)
 - **Interactive Demonstration:** Integrated into the homepage physics plate.

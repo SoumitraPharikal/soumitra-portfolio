@@ -1,5 +1,5 @@
 // src/data/thumbnails.ts
-// Unified Thumbnail Manifest for Academic Monographs, Computational Projects, and Creative Archives
+// Unified Thumbnail Manifest for Research Projects, Computational Pipelines, and Creative Archives
 
 export interface ThumbnailItem {
   id: string;
@@ -12,7 +12,7 @@ export interface ThumbnailItem {
 }
 
 export const thumbnailManifest: Record<string, ThumbnailItem> = {
-  // Monographs
+  // Flagship Research Projects
   'monograph-01-ic1369': {
     id: 'monograph-01-ic1369',
     src: '/images/thumbnails/monograph-01-ic1369.webp',

@@ -16,12 +16,12 @@ const { Content } = await render(entry);
 
 <BaseLayout
   title={`${entry.data.title} | Soumitra Pharikal`}
-  description={`Comprehensive LaTeX compendium for ${entry.data.subject} at IISER Berhampur.`}
+  description={`Comprehensive LaTeX course notes for ${entry.data.subject} at IISER Berhampur.`}
 >
   <div class="monograph-container">
     <!-- Breadcrumb Header -->
     <nav class="monograph-breadcrumb mono reveal-up" style="--stagger-index: 1;" aria-label="Breadcrumb">
-      <a href="/writing" class="breadcrumb-link">Compendiums</a>
+      <a href="/writing" class="breadcrumb-link">Course Notes</a>
       <span class="breadcrumb-sep">/</span>
       <span class="breadcrumb-current text-gold">{entry.data.courseCode || 'COMP'}</span>
     </nav>
@@ -71,9 +71,9 @@ const { Content } = await render(entry);
           <div class="access-notice hairline-top mono">
             <span class="meta-index">ACCESS NOTICE</span>
             <p class="access-text text-secondary">
-              Compendium PDFs and complete TeX source bundles are maintained in the local archive and shared upon academic request.
+              Course note PDFs and complete LaTeX source bundles are maintained in the academic archive and shared upon institutional request.
             </p>
-            <a href="mailto:24123@iiserbpr.ac.in?subject=Compendium%20Access%20Request%20-%20" class="editorial-btn">
+            <a href="mailto:24123@iiserbpr.ac.in?subject=Course%20Notes%20Access%20Request%20-%20" class="editorial-btn">
               Request Full PDF ↗
             </a>
           </div>
@@ -89,7 +89,7 @@ const { Content } = await render(entry);
         <!-- Back to Archive -->
         <div class="compendium-footer-bar hairline-box hairline-top">
           <a href="/writing" class="editorial-btn">
-            ← Back to All Compendiums
+            ← Back to Course Notes
           </a>
           <a href="/projects" class="editorial-link mono">
             View Projects Archive →

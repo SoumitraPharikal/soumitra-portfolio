@@ -9,8 +9,8 @@ techStack: ["Python", "Astropy", "photutils", "DAOPHOT", "IRAF", "DS9", "PARSEC 
 leadMetrics: "814 CCD frames reduced · 4 candidate variable stars isolated · Period FAP < 10^-6"
 featured: true
 hasSimulation: false
-repoUrl: "[TODO: Add IC 1369 Pipeline repository URL]"
-docsUrl: "[TODO: Add ICSP Research Report link]"
+repoUrl: "https://github.com/SoumitraPharikal"
+docsUrl: "https://github.com/SoumitraPharikal"
 order: 1
 ---
 
@@ -31,7 +31,7 @@ Open clusters serve as celestial benchmarks for stellar evolution models because
 ### 3.1 Time-Series Instrumental Photometry & Noise Calibration
 Raw CCD image frames $I_{\text{raw}}$ are corrected for electronic bias offsets and flat-field illumination variations:
 
-$$I_{\text{calibrated}} = \frac{I_{\text{raw}} - \bar{I}_{\text{dark}} - \bar{I}_{\text{bias}}}{\bar{I}_{\text{flat}} - \bar{I}_{\text{bias}}}$$
+$$I_{\text{cal}} = \frac{I_{\text{raw}} - \text{Bias} - \text{Dark}_{\text{scaled}}}{\text{Flat}_{\text{norm}}}$$
 
 Net stellar fluxes $F_*$ are evaluated via Gaussian and Moffat PSF fitting, converting to standard magnitude scales:
 
@@ -57,7 +57,7 @@ $$V - M_V = 5 \log_{10}(d) - 5 + R_V E(B-V)$$
 
 - **Data Ingestion:** Batch processing of 814 raw FITS frames with header sanitization and outlier cosmic-ray rejection.
 - **PSF Extraction:** `DAOPHOT` profile modeling coupled with automated local sky background estimation using concentric annuli.
-- **Periodogram Engine:** Vectorized Lomb-Scargle computation over frequency grids spanning $0.05 \text{ to } 30 \text{ cycles/day}$.
+- **Periodogram Engine:** Vectorized Lomb-Scargle computation over frequency grids spanning $0.05 \text{ to } 30 \text{ cycles/day (c/d)}$.
 - **Phase-Folding Routine:** Phase folding observations $\phi_i = \left(\frac{t_i - t_0}{P}\right) \pmod 1$ and robust spline fitting.
 
 ---
@@ -79,5 +79,5 @@ $$V - M_V = 5 \log_{10}(d) - 5 + R_V E(B-V)$$
 
 ## 07. Resources
 
-- **Repository:** `[TODO: Add link to IC 1369 Photometry Pipeline GitHub repository]`
+- **Repository:** [github.com/SoumitraPharikal](https://github.com/SoumitraPharikal)
 - **Technical Report:** Available from ICSP Kolkata research archives.

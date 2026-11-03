@@ -13,11 +13,12 @@ interface Props {
 }
 
 const {
-  title = "Soumitra Pharikal | Academic Research Monograph & Portfolio",
-  description = "Personal academic monograph, observational astrophysics research, optical wavefront modeling, and computational physics portfolio of Soumitra Pharikal (IISER Berhampur)."
+  title = "Soumitra Pharikal | Academic Research & Computational Portfolio",
+  description = "Personal academic and computational research portfolio of Soumitra Pharikal (IISER Berhampur). Observational astrophysics, orbital mechanics, optical wavefront analysis, and computational physics."
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'http://localhost:4321');
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://soumitra-portfolio-eta.vercel.app');
+const previewImage = new URL('/assets/portrait.png', Astro.site || 'https://soumitra-portfolio-eta.vercel.app');
 ---
 
 <!doctype html>
@@ -39,12 +40,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'http://localhost
     <meta property="og:url" content={Astro.url} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:image" content={previewImage} />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={Astro.url} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={previewImage} />
 
     <!-- View Transitions -->
     <ClientRouter />
@@ -253,9 +256,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'http://localhost
             const target = (e.target as HTMLElement).closest('a, button');
             if (!target) return;
 
-            // 1. "Explore research monographs"
-            if (target.matches('a[href="/research"]') || target.textContent?.includes('Explore Research Monographs')) {
-              window.trackEvent?.('explore_monographs', { location: window.location.pathname });
+            // 1. "Explore research & projects"
+            if (target.matches('a[href="/research"]') || target.textContent?.includes('Explore Research & Projects')) {
+              window.trackEvent?.('explore_research', { location: window.location.pathname });
             }
             // 2. CV Download
             else if (target.matches('.cv-download-btn') || target.hasAttribute('download') || target.getAttribute('href')?.includes('.pdf')) {
@@ -378,6 +381,19 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'http://localhost
           alpha: Math.random() * 0.6 + 0.25,
         }));
 
+        let heroActive = false;
+        const heroPlate = document.getElementById('physics-instrument-container');
+        let heroObserver: IntersectionObserver | null = null;
+        if (heroPlate && 'IntersectionObserver' in window) {
+          heroObserver = new IntersectionObserver((entries) => {
+            heroActive = entries.some(e => e.isIntersecting);
+            if (!heroActive && !prefersReduced && !animationFrameId) {
+              animationFrameId = requestAnimationFrame(renderConstellation);
+            }
+          }, { threshold: 0.05 });
+          heroObserver.observe(heroPlate);
+        }
+
         function renderConstellation() {
           ctx!.clearRect(0, 0, width, height);
 
@@ -438,8 +454,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'http://localhost
             }
           }
 
-          if (!prefersReduced) {
+          if (!prefersReduced && !heroActive) {
             animationFrameId = requestAnimationFrame(renderConstellation);
+          } else {
+            animationFrameId = 0;
           }
         }
 
@@ -448,6 +466,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'http://localhost
         document.addEventListener('astro:before-swap', () => {
           cancelAnimationFrame(animationFrameId);
           window.removeEventListener('resize', resize);
+          heroObserver?.disconnect();
         }, { once: true });
       }
 
