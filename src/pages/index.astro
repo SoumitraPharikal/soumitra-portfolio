@@ -788,9 +788,9 @@ const eqMonoZernike = katex.renderToString(
   }
 
   .domain-period {
-    font-size: 0.625rem;
+    font-size: 0.75rem;
     color: var(--text-tertiary);
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
   }
 
   .domain-title {
@@ -806,12 +806,15 @@ const eqMonoZernike = katex.renderToString(
   }
 
   .domain-math-box {
-    background-color: var(--bg-surface-sunken);
+    background-color: var(--bg-recessed);
     border: 1px solid var(--border-subtle);
-    border-radius: 12px;
-    padding: 12px 14px;
+    border-left: 2px solid var(--accent-primary);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
     margin-bottom: var(--space-4);
-    overflow: hidden !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    color: var(--text-primary);
     font-size: 0.88rem;
   }
 
@@ -823,7 +826,7 @@ const eqMonoZernike = katex.renderToString(
   }
 
   .domain-tools {
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     letter-spacing: 0.05em;
     color: var(--text-secondary);
   }
@@ -895,7 +898,7 @@ const eqMonoZernike = katex.renderToString(
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     letter-spacing: 0.05em;
   }
 
@@ -904,7 +907,7 @@ const eqMonoZernike = katex.renderToString(
   }
 
   .bento-period {
-    font-size: 0.625rem;
+    font-size: 0.75rem;
   }
 
   .bento-card-title {
@@ -929,12 +932,15 @@ const eqMonoZernike = katex.renderToString(
   }
 
   .bento-math-box {
-    background-color: var(--bg-surface-sunken);
+    background-color: var(--bg-recessed);
     border: 1px solid var(--border-subtle);
-    border-radius: 10px;
+    border-left: 2px solid var(--accent-primary);
+    border-radius: var(--radius-sm);
     padding: 10px 14px;
     margin-bottom: var(--space-4);
-    overflow: hidden !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    color: var(--text-primary);
     font-size: 0.85rem;
   }
 
@@ -948,7 +954,7 @@ const eqMonoZernike = katex.renderToString(
   }
 
   .bento-tools {
-    font-size: 0.625rem;
+    font-size: 0.75rem;
     letter-spacing: 0.05em;
   }
 
@@ -981,7 +987,7 @@ const eqMonoZernike = katex.renderToString(
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
   }
 
   .merit-badge {
@@ -1024,11 +1030,11 @@ const eqMonoZernike = katex.renderToString(
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
   }
 
   .portal-index {
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
   }
 
   .portal-arrow {

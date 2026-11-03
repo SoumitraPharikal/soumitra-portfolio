@@ -173,7 +173,7 @@
 
   .mono-label {
     font-family: var(--font-mono);
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     letter-spacing: var(--tracking-wider);
     color: var(--text-secondary);
     font-weight: 500;
@@ -182,28 +182,22 @@
   .status-indicator-pill {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    padding: 2px 7px;
-    background: var(--bg-surface-sunken);
-    border: 1px solid var(--border-subtle);
+    gap: 6px;
+    padding: 3px 8px;
+    background: #070A10;
+    border: 1px solid #1E293B;
     border-radius: var(--radius-pill);
-    font-size: 0.5625rem;
-    color: var(--accent-primary);
-    letter-spacing: 0.04em;
+    font-size: 0.75rem;
+    color: #94A3B8;
+    letter-spacing: 0.05em;
   }
 
   .status-ping {
-    width: 5px;
-    height: 5px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-    background: var(--accent-primary);
-    box-shadow: 0 0 6px var(--accent-primary);
-    animation: statusPulse 1.8s infinite;
-  }
-
-  @keyframes statusPulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(1.3); }
+    background: #E5A93C;
+    display: inline-block;
   }
 
   .plate-mode-tabs {
@@ -222,7 +216,7 @@
     border-radius: var(--radius-pill);
     padding: 5px 8px;
     font-family: var(--font-mono);
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     letter-spacing: 0.02em;
     color: #CBD5E1;
     cursor: pointer;
@@ -257,32 +251,31 @@
 
   /* Light Theme High-Contrast Overrides */
   :global(html[data-theme="light"]) .mode-pill {
-    background: #FFFFFF !important;
-    border: 1px solid rgba(14, 26, 43, 0.22) !important;
-    color: #0E1A2B !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid #1E293B !important;
+    color: #CBD5E1 !important;
   }
 
   :global(html[data-theme="light"]) .mode-pill .mode-number {
-    color: #475569 !important;
+    color: #94A3B8 !important;
   }
 
   :global(html[data-theme="light"]) .mode-pill:hover {
-    background: #F1EFE9 !important;
-    border-color: #1B2E6B !important;
-    color: #1B2E6B !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: #334155 !important;
+    color: #E6EAF2 !important;
   }
 
   :global(html[data-theme="light"]) .mode-pill.is-active {
-    background-color: #1B2E6B !important;
-    color: #FFFFFF !important;
-    border-color: #1B2E6B !important;
+    background-color: #E5A93C !important;
+    color: #0B0F17 !important;
+    border-color: #E5A93C !important;
     font-weight: 700 !important;
-    box-shadow: 0 2px 8px rgba(27, 46, 107, 0.28) !important;
+    box-shadow: 0 0 12px rgba(229, 169, 60, 0.3) !important;
   }
 
   :global(html[data-theme="light"]) .mode-pill.is-active .mode-number {
-    color: #93C5FD !important;
+    color: #0B0F17 !important;
   }
 
   .mode-pill:focus-visible {
@@ -299,7 +292,7 @@
     padding: 6px var(--space-4);
     background: var(--bg-surface-sunken);
     border-bottom: 1px solid var(--border-subtle);
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     color: var(--text-secondary);
   }
 
@@ -325,7 +318,7 @@
     border-radius: var(--radius-pill);
     padding: 2px 8px;
     font-family: var(--font-mono);
-    font-size: 0.625rem;
+    font-size: 0.75rem;
     letter-spacing: 0.04em;
     color: var(--accent-primary);
     cursor: pointer;
@@ -339,15 +332,14 @@
   }
 
   :global(html[data-theme="light"]) .mini-control-btn {
-    background: #FFFFFF !important;
-    border: 1px solid rgba(14, 26, 43, 0.22) !important;
-    color: #1B2E6B !important;
-    font-weight: 600 !important;
+    background: #111826 !important;
+    border: 1px solid #1E293B !important;
+    color: #E5A93C !important;
   }
 
   .caption-icon {
     color: var(--accent-amber);
-    font-size: 0.625rem;
+    font-size: 0.75rem;
   }
 
   /* Center Canvas Viewport */
@@ -377,7 +369,7 @@
 
   .coord-tag {
     position: absolute;
-    font-size: 0.5625rem;
+    font-size: 0.75rem;
     color: var(--text-tertiary);
     opacity: 0.6;
     letter-spacing: 0.05em;
@@ -406,7 +398,7 @@
   }
 
   .fine-label {
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     color: var(--text-secondary);
     white-space: nowrap;
     letter-spacing: 0.04em;
@@ -457,7 +449,7 @@
   }
 
   .fine-readout {
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     color: var(--accent-gold);
     white-space: nowrap;
     min-width: 100px;
@@ -477,7 +469,7 @@
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-pill);
     padding: 3px 10px;
-    font-size: 0.625rem;
+    font-size: 0.75rem;
     letter-spacing: 0.04em;
     color: var(--text-primary);
     white-space: nowrap;
@@ -520,61 +512,58 @@
     }
   }
 
-  /* Solid Theme Chrome for Light Mode */
-  [data-theme="light"] .physics-plate {
-    background-color: #FAF8F3;
-    border: 1px solid rgba(14, 26, 43, 0.14);
-    box-shadow: 0 16px 40px rgba(14, 26, 43, 0.08);
+  /* Requirement 4: Protect the Interactive Simulation <canvas> in Light Mode */
+  .physics-plate,
+  :global(html[data-theme="light"]) .physics-plate {
+    background-color: #0B0F17 !important;
+    color: #E6EAF2 !important;
+    border: 1px solid #1E293B !important;
+    box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.6) !important;
   }
 
-  [data-theme="light"] .plate-toolbar,
-  [data-theme="light"] .plate-footer {
-    background-color: #EDE8DC;
-    border-color: rgba(14, 26, 43, 0.12);
+  .plate-toolbar,
+  :global(html[data-theme="light"]) .plate-toolbar,
+  .plate-footer,
+  :global(html[data-theme="light"]) .plate-footer {
+    background-color: #111826 !important;
+    border-color: #1E293B !important;
+    color: #E6EAF2 !important;
   }
 
-  [data-theme="light"] .plate-caption-strip {
-    background-color: #F5F2EA;
-    border-color: rgba(14, 26, 43, 0.10);
-    color: #3B4658;
+  .plate-caption-strip,
+  :global(html[data-theme="light"]) .plate-caption-strip {
+    background-color: #070A10 !important;
+    border-color: #1E293B !important;
+    color: #CBD5E1 !important;
   }
 
-  [data-theme="light"] .mini-control-btn {
-    background: #EDE8DC;
-    border-color: rgba(14, 26, 43, 0.16);
-    color: #1B2E6B;
+  .canvas-viewport,
+  :global(html[data-theme="light"]) .canvas-viewport {
+    background-color: #0B0F17 !important;
   }
 
-  [data-theme="light"] .mini-control-btn:hover {
-    border-color: #1B2E6B;
-    background: #E4E0D4;
+  .fine-label,
+  .mono-label,
+  .fine-tag,
+  :global(html[data-theme="light"]) .fine-label,
+  :global(html[data-theme="light"]) .mono-label,
+  :global(html[data-theme="light"]) .fine-tag {
+    color: #94A3B8 !important;
+    font-size: 0.75rem !important;
   }
 
-  [data-theme="light"] .mode-pill {
-    background: #FAF8F3;
-    border: 1px solid rgba(14, 26, 43, 0.16);
-    color: #3B4658;
+  .fine-readout,
+  :global(html[data-theme="light"]) .fine-readout {
+    color: #E5A93C !important;
+    font-size: 0.75rem !important;
   }
 
-  [data-theme="light"] .mode-pill:hover {
-    color: #0E1A2B;
-    border-color: #D97706;
-  }
-
-  [data-theme="light"] .mode-pill.is-active {
-    background: #1B2E6B;
-    color: #FFFFFF;
-    border-color: #1B2E6B;
-    box-shadow: 0 2px 8px rgba(27, 46, 107, 0.3);
-  }
-
-  [data-theme="light"] .fine-label,
-  [data-theme="light"] .mono-label {
-    color: #0E1A2B;
-  }
-
-  [data-theme="light"] .fine-readout {
-    color: #B45309;
+  .plate-metric-chip,
+  :global(html[data-theme="light"]) .plate-metric-chip {
+    background: #070A10 !important;
+    border: 1px solid #1E293B !important;
+    color: #E6EAF2 !important;
+    font-size: 0.75rem !important;
   }
 </style>
 
@@ -896,10 +885,11 @@
       }
       ctx!.clearRect(0, 0, width, height);
 
-      const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
-      const cyan = isDark ? '#38BDF8' : '#0284C7';
-      const gold = isDark ? '#F59E0B' : '#D97706';
-      const slate = isDark ? '#64748B' : '#94A3B8';
+      // Protected Observatory Canvas Contrast (Always dark background)
+      const isDark = true;
+      const cyan = '#38BDF8';
+      const gold = '#E5A93C';
+      const slate = '#94A3B8';
 
       const isIdle = Date.now() - lastUserInteracted > 3000;
       if (isIdle && statusText && statusText.textContent !== 'LIVE DEMO') {

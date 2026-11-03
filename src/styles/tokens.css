@@ -1,76 +1,60 @@
 /* ==========================================================================
-   DESIGN TOKENS: COSMIC OBSERVATORY & OLD-MONEY ALABASTER
+   DESIGN TOKENS: EDITORIAL OBSERVATORY PALETTE (WCAG AA COMPLIANT)
    Flagship Design System for Soumitra Pharikal
    ========================================================================== */
 
 :root,
 [data-theme="dark"] {
-  /* ==========================================================================
-     COSMIC OBSERVATORY (DEFAULT DARK MODE)
-     Contrast Check (vs #0B1220):
-       --text-primary (#EEF1F6): 15.8:1 (AAA)
-       --text-secondary (#94A3B8): 7.6:1 (AAA)
-       --accent-amber (#F59E0B): 7.8:1 (AAA)
-       --accent-success (#10B981): 7.2:1 (AAA)
-       --accent-primary (#38BDF8): 9.4:1 (AAA)
-     ========================================================================== */
-  --bg-primary: #0B1220;                       /* Deep observatory ink */
-  --bg-surface: rgba(16, 24, 40, 0.75);         /* Translucent glass surface */
-  --bg-elevated: rgba(22, 33, 56, 0.85);        /* Elevated glass card */
-  --bg-surface-elevated: rgba(22, 33, 56, 0.85);
-  --bg-surface-sunken: rgba(10, 16, 28, 0.85);  /* Deep inset plate / terminal */
+  /* Restrained, High-Contrast Observatory Palette (Dark Mode) */
+  --bg-primary: #0B0F17;       /* Deep obsidian navy, not pure #000 */
+  --bg-surface: #111826;       /* Elevated card surface */
+  --bg-recessed: #070A10;      /* Equation boxes & code blocks */
+  --border-subtle: #1E293B;    /* Quiet 1px structural hairline */
+  --border-hover: #334155;     /* Card hover border */
+  --text-primary: #E6EAF2;     /* Crisp off-white for body & equations */
+  --text-secondary: #CBD5E1;   /* Subheadings and descriptions */
+  --text-muted: #94A3B8;       /* Metadata/labels - strictly >= 4.5:1 contrast */
+  --accent-primary: #E5A93C;   /* Warm astronomical gold/amber */
+  --accent-secondary: #38BDF8; /* Secondary data-plot highlight only */
 
-  --text-primary: #EEF1F6;                     /* Clean off-white text */
-  --text-secondary: #94A3B8;                   /* Muted celestial slate */
-  --text-tertiary: #64748B;                    /* Monospace indices, figure labels */
-  --text-inverse: #0B1220;                     /* Inverted high-contrast text */
+  /* Semantic Aliases & Compatibility Tokens */
+  --bg-elevated: #162032;
+  --bg-surface-elevated: #162032;
+  --bg-surface-sunken: var(--bg-recessed);
 
-  --border-subtle: rgba(255, 255, 255, 0.09);  /* Apple hairline grid boundary */
-  --border-strong: rgba(255, 255, 255, 0.18);  /* Emphasized structural grid line */
-  --border-specular: rgba(255, 255, 255, 0.22);/* Top-edge Apple specular highlight */
-  --border-focus: #38BDF8;                     /* Keyboard focus ring token */
+  --text-tertiary: var(--text-muted);
+  --text-inverse: #0B0F17;
 
-  --accent-primary: #38BDF8;                   /* Astrophysical spectral cyan */
-  --accent-primary-hover: #7DD3FC;             /* Bright spectral cyan */
-  --accent-primary-tint: rgba(56, 189, 248, 0.12);
+  --border-strong: var(--border-hover);
+  --border-specular: rgba(255, 255, 255, 0.12);
+  --border-focus: var(--accent-primary);
 
-  --accent-gold: #D4AF37;                      /* Old-money champagne gold */
-  --accent-gold-hover: #E6C86E;
-  --accent-gold-tint: rgba(212, 175, 55, 0.14);
+  --accent-primary-hover: #FBBF24;
+  --accent-primary-tint: rgba(229, 169, 60, 0.12);
 
-  --accent-amber: #F59E0B;                     /* Warm amber accent */
+  --accent-gold: var(--accent-primary);
+  --accent-gold-hover: #FBBF24;
+  --accent-gold-tint: rgba(229, 169, 60, 0.12);
+
+  --accent-amber: var(--accent-primary);
   --accent-amber-hover: #FBBF24;
-  --accent-amber-tint: rgba(245, 158, 11, 0.14);
+  --accent-amber-tint: rgba(229, 169, 60, 0.12);
 
-  --accent-success: #10B981;                   /* Lime/teal success */
+  --accent-cyan: var(--accent-secondary);
+  --accent-cyan-bright: var(--accent-secondary);
+
+  --accent-success: #10B981;
   --accent-success-hover: #34D399;
-  --accent-success-tint: rgba(16, 185, 129, 0.14);
+  --accent-success-tint: rgba(16, 185, 129, 0.12);
 
-  --accent-signal: #F97316;                    /* Solar flare orange/vermilion */
+  --accent-signal: #F97316;
   --accent-signal-hover: #FB923C;
-  --accent-signal-tint: rgba(249, 115, 22, 0.14);
+  --accent-signal-tint: rgba(249, 115, 22, 0.12);
 
-  /* Multi-Accent Vivid Cosmic & Aurora Color Schemes */
-  --accent-cyan: #00F0FF;
-  --accent-cyan-bright: #38BDF8;
-  --accent-gold-bright: #F59E0B;
-  --accent-emerald: #10B981;
-  --accent-emerald-bright: #34D399;
-  --accent-rose: #F43F5E;
-  --accent-rose-bright: #FB7185;
-  --accent-indigo: #6366F1;
-  --accent-violet: #A855F7;
-  --accent-violet-bright: #C084FC;
-
-  --gradient-cosmic: linear-gradient(135deg, #00F0FF 0%, #3B82F6 50%, #A855F7 100%);
-  --gradient-aurora: linear-gradient(135deg, #10B981 0%, #00F0FF 50%, #6366F1 100%);
-  --gradient-solar: linear-gradient(135deg, #F59E0B 0%, #EF4444 50%, #EC4899 100%);
-  --gradient-pulsar: linear-gradient(135deg, #A855F7 0%, #EC4899 50%, #F59E0B 100%);
-
-  --glass-blur: blur(20px) saturate(180%);
-  --glass-shadow: inset 0 1px 0 0 var(--border-specular), 0 20px 40px -15px rgba(0, 0, 0, 0.55);
-  --card-spotlight-tint: rgba(56, 189, 248, 0.12);
-  --contour-color: rgba(56, 189, 248, 0.04);
+  --glass-blur: blur(16px);
+  --glass-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--border-subtle);
+  --card-spotlight-tint: rgba(229, 169, 60, 0.06);
+  --contour-color: rgba(56, 189, 248, 0.03);
 
   /* ==========================================================================
      TYPOGRAPHY FAMILIES (STRICT 3-FONT PALETTE + KATEX)
@@ -80,23 +64,23 @@
   --font-mono: 'JetBrains Mono', Menlo, Monaco, Consolas, 'Courier New', monospace;
 
   /* ==========================================================================
-     FLUID TYPOGRAPHY SCALE (clamp-calculated for 360px -> 1280px)
+     TYPOGRAPHY SCALE (Standardized, Min 12px Mono, 16-17px Body)
      ========================================================================== */
-  --text-micro: clamp(0.6875rem, 0.65rem + 0.15vw, 0.75rem);      /* 11px -> 12px */
-  --text-xs: clamp(0.75rem, 0.72rem + 0.15vw, 0.8125rem);         /* 12px -> 13px */
-  --text-sm: clamp(0.8125rem, 0.78rem + 0.2vw, 0.875rem);          /* 13px -> 14px */
-  --text-base: clamp(1rem, 0.96rem + 0.22vw, 1.0625rem);          /* 16px -> 17px */
-  --text-lead: clamp(1.125rem, 1.06rem + 0.35vw, 1.25rem);         /* 18px -> 20px */
-  --text-h4: clamp(1.1875rem, 1.12rem + 0.4vw, 1.35rem);          /* 19px -> 21.6px */
-  --text-h3: clamp(1.35rem, 1.22rem + 0.7vw, 1.65rem);            /* 21.6px -> 26.4px */
-  --text-h2: clamp(1.65rem, 1.45rem + 1.2vw, 2.25rem);            /* 26.4px -> 36px */
-  --text-h1: clamp(2.25rem, 1.85rem + 2.2vw, 3.5rem);             /* 36px -> 56px */
-  --text-display: clamp(2.75rem, 2.1rem + 3.2vw, 4.5rem);        /* 44px -> 72px */
+  --text-micro: 0.75rem;                                          /* 12px strictly min */
+  --text-xs: 0.75rem;                                             /* 12px */
+  --text-sm: 0.8125rem;                                           /* 13px */
+  --text-base: clamp(1rem, 0.98rem + 0.1vw, 1.0625rem);           /* 16px–17px */
+  --text-lead: clamp(1.125rem, 1.08rem + 0.2vw, 1.25rem);         /* 18px–20px */
+  --text-h4: clamp(1.2rem, 1.15rem + 0.3vw, 1.35rem);             /* 19.2px–21.6px */
+  --text-h3: clamp(1.35rem, 1.25rem + 0.5vw, 1.65rem);            /* 21.6px–26.4px */
+  --text-h2: clamp(1.65rem, 1.5rem + 0.8vw, 2.25rem);             /* 26.4px–36px */
+  --text-h1: clamp(2.25rem, 1.9rem + 1.6vw, 3.25rem);             /* 36px–52px */
+  --text-display: clamp(2.5rem, 2.1rem + 2.4vw, 4.0rem);          /* 40px–64px */
 
   /* Line Heights */
   --leading-tight: 1.15;
   --leading-snug: 1.28;
-  --leading-body: 1.68;
+  --leading-body: 1.65;
   --leading-loose: 1.8;
 
   /* Letter Spacing */
@@ -104,105 +88,95 @@
   --tracking-tight: -0.02em; /* Newsreader headings */
   --tracking-normal: 0em;
   --tracking-wide: 0.04em;
-  --tracking-wider: 0.06em;  /* JetBrains Mono uppercase metadata */
+  --tracking-wider: 0.05em;  /* Monospace uppercase metadata strictly <= 0.05em */
 
   /* ==========================================================================
      SPATIAL MODULAR SCALE (8px Base Unit)
      ========================================================================== */
   --space-1: 0.25rem;  /* 4px */
-  --space-2: 0.5rem;   /* 8px - Base Spatial Unit */
+  --space-2: 0.5rem;   /* 8px */
   --space-3: 0.75rem;  /* 12px */
   --space-4: 1rem;     /* 16px */
-  --space-5: 1.5rem;   /* 24px - Standard Grid Gap */
+  --space-5: 1.5rem;   /* 24px */
   --space-6: 2rem;     /* 32px */
   --space-7: 2.5rem;   /* 40px */
   --space-8: 3rem;     /* 48px */
   --space-10: 4rem;    /* 64px */
   --space-12: 5rem;    /* 80px */
-  --space-14: 6rem;    /* 96px - Section Vertical Rhythm */
-  --space-16: 7.5rem;  /* 120px - Section Vertical Rhythm */
+  --space-14: 6rem;    /* 96px */
+  --space-16: 7.5rem;  /* 120px */
 
   /* Structural Geometry */
   --max-width-container: 1140px;
   --reading-measure-narrow: 56ch;
   --reading-measure: 68ch;
-  --reading-measure-wide: 74ch;
+  --reading-measure-wide: 72ch;
 
-  /* Apple Squircles & Geometry */
+  /* Corner Radii */
   --hairline-width: 1px;
   --radius-none: 0px;
   --radius-sm: 4px;
-  --radius-md: 10px;
-  --radius-card: 16px;
+  --radius-md: 8px;
+  --radius-card: 12px;
   --radius-pill: 999px;
 
-  /* Explicit Timing Variables & Exponential Easing */
+  /* Transitions */
   --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
-  --transition-fast: 150ms cubic-bezier(0.22, 1, 0.36, 1);
-  --transition-base: 300ms cubic-bezier(0.22, 1, 0.36, 1);
-  --transition-slow: 600ms cubic-bezier(0.22, 1, 0.36, 1);
-  --transition-spring: 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-fast: 140ms cubic-bezier(0.22, 1, 0.36, 1);
+  --transition-base: 240ms cubic-bezier(0.22, 1, 0.36, 1);
+  --transition-slow: 400ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* ==========================================================================
-   OLD-MONEY ALABASTER (LIGHT MODE)
-   Contrast Check (vs #F5F2EA):
-     --text-primary (#0E1A2B): 15.2:1 (AAA)
-     --text-secondary (#3B4658): 8.1:1 (AAA)
-     --text-tertiary (#526075): 5.3:1 (AA)
-     --accent-primary / CTA (#1B2E6B with #FFFFFF text): 11.5:1 (AAA)
-     --accent-amber (#D97706 on #F5F2EA): 3.6:1 (UI AA >= 3:1)
-     --accent-gold-bright (#B45309 on #F5F2EA): 4.7:1 (AA >= 4.5:1)
-     --accent-emerald (#047857 on #F5F2EA): 4.8:1 (AA)
+   WARM ARCHIVAL PAPER (LIGHT MODE)
    ========================================================================== */
 [data-theme="light"] {
-  --bg-primary: #F5F2EA;                       /* Warm paper background */
-  --bg-surface: #FAF8F3;                       /* Solid warm paper surface */
-  --bg-elevated: #EDE8DC;                      /* Elevated plate */
-  --bg-surface-elevated: #EDE8DC;
-  --bg-surface-sunken: #E4DEC8;                /* Inset plate */
+  --bg-primary: #FAFAF7;       /* Warm archival paper ivory */
+  --bg-surface: #FFFFFF;       /* Clean card surface */
+  --bg-recessed: #F1F3F5;      /* Equation & code blocks */
+  --border-subtle: #E2E8F0;    /* Quiet 1px structural hairline */
+  --border-hover: #CBD5E1;     /* Card hover border */
+  --text-primary: #14181F;     /* High-contrast ink text */
+  --text-secondary: #334155;   /* Subheadings and descriptions */
+  --text-muted: #5B6472;       /* Strictly >= 4.5:1 contrast on ivory */
+  --accent-primary: #B45309;   /* Deep amber/ochre for light-mode legibility */
+  --accent-secondary: #0284C7; /* Secondary data-plot highlight */
 
-  --text-primary: #0E1A2B;                     /* Crisp dark ink typography */
-  --text-secondary: #3B4658;                   /* Muted slate text */
-  --text-tertiary: #526075;                    /* Monospace indices */
-  --text-inverse: #F5F2EA;
+  /* Semantic Aliases & Compatibility Tokens */
+  --bg-elevated: #F8F9FA;
+  --bg-surface-elevated: #F8F9FA;
+  --bg-surface-sunken: var(--bg-recessed);
 
-  --border-subtle: rgba(14, 26, 43, 0.12);     /* Hairline boundary */
-  --border-strong: rgba(14, 26, 43, 0.22);     /* Emphasized structural line */
-  --border-specular: rgba(255, 255, 255, 0.95);/* Pure specular highlight */
-  --border-focus: #1B2E6B;
+  --text-tertiary: var(--text-muted);
+  --text-inverse: #FAFAF7;
 
-  --accent-primary: #1B2E6B;                   /* Deep navy primary CTA */
-  --accent-primary-hover: #132252;             /* Darker navy */
-  --accent-primary-tint: rgba(27, 46, 107, 0.08);
+  --border-strong: var(--border-hover);
+  --border-specular: rgba(255, 255, 255, 0.95);
+  --border-focus: var(--accent-primary);
 
-  --accent-gold: #9A7B2C;                      /* Antique brass / gold */
-  --accent-gold-hover: #B5933A;
-  --accent-gold-tint: rgba(154, 123, 44, 0.12);
+  --accent-primary-hover: #92400E;
+  --accent-primary-tint: rgba(180, 83, 9, 0.08);
 
-  --accent-amber: #D97706;                     /* Warm amber toggle accent */
-  --accent-amber-hover: #B45309;
-  --accent-amber-tint: rgba(217, 119, 6, 0.12);
+  --accent-gold: var(--accent-primary);
+  --accent-gold-hover: #92400E;
+  --accent-gold-tint: rgba(180, 83, 9, 0.08);
 
-  --accent-success: #047857;                   /* Deep emerald success */
+  --accent-amber: var(--accent-primary);
+  --accent-amber-hover: #92400E;
+  --accent-amber-tint: rgba(180, 83, 9, 0.08);
+
+  --accent-cyan: var(--accent-secondary);
+  --accent-cyan-bright: var(--accent-secondary);
+
+  --accent-success: #047857;
   --accent-success-hover: #065F46;
-  --accent-success-tint: rgba(4, 120, 87, 0.12);
+  --accent-success-tint: rgba(4, 120, 87, 0.08);
 
-  --accent-signal: #C2410C;                    /* Editorial vermilion */
+  --accent-signal: #C2410C;
   --accent-signal-hover: #9A3412;
-  --accent-signal-tint: rgba(194, 65, 12, 0.10);
+  --accent-signal-tint: rgba(194, 65, 12, 0.08);
 
-  /* Multi-Accent Light Tokens */
-  --accent-cyan: #0369A1;
-  --accent-cyan-bright: #0284C7;
-  --accent-gold-bright: #B45309;               /* Darkened amber for text readability */
-  --accent-emerald: #047857;
-  --accent-emerald-bright: #059669;
-  --accent-rose: #BE123C;
-  --accent-indigo: #3730A3;
-  --accent-violet: #6D28D9;
-
-  --glass-shadow: inset 0 1px 0 0 var(--border-specular), 0 20px 40px -15px rgba(14, 26, 43, 0.08);
-  --card-spotlight-tint: rgba(27, 46, 107, 0.06);
-  --contour-color: rgba(14, 26, 43, 0.04);
+  --glass-shadow: 0 4px 20px -2px rgba(20, 24, 31, 0.06), 0 0 0 1px var(--border-subtle);
+  --card-spotlight-tint: rgba(180, 83, 9, 0.04);
+  --contour-color: rgba(20, 24, 31, 0.03);
 }

@@ -74,6 +74,8 @@ h4 {
 p {
   margin-bottom: var(--space-4);
   color: var(--text-primary);
+  max-width: var(--reading-measure);
+  line-height: var(--leading-body);
 }
 
 .lead {
@@ -122,10 +124,11 @@ pre {
 /* Monospace Technical Labels */
 .meta-index {
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
+  font-size: 0.75rem;
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
-  color: var(--text-tertiary);
+  color: var(--accent-primary);
+  font-weight: 600;
 }
 
 /* Hyperlinks */
@@ -248,7 +251,7 @@ a:hover {
   content: "+";
   position: absolute;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   color: var(--border-strong);
   line-height: 1;
   pointer-events: none;
@@ -322,7 +325,7 @@ a:hover {
   border-radius: var(--radius-pill);
   padding: 6px 14px;
   font-family: var(--font-mono);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   color: var(--text-primary);
   letter-spacing: 0.05em;
   z-index: 999;
@@ -511,12 +514,12 @@ a:hover {
   padding: 4px 12px;
   border-radius: var(--radius-pill);
   font-family: var(--font-mono);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
   border: 1px solid var(--border-subtle);
   background: var(--bg-surface);
-  color: var(--text-secondary);
+  color: var(--text-muted);
 }
 
 /* 6. KaTeX Integration & Overrides */
@@ -527,19 +530,28 @@ a:hover {
 
 .katex-display {
   margin: var(--space-4) 0 !important;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: var(--space-2) 0;
+  padding: var(--space-3) var(--space-4) !important;
+  background: var(--bg-recessed) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-left: 2px solid var(--accent-primary) !important;
+  color: var(--text-primary) !important;
+  border-radius: var(--radius-sm);
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100% !important;
 }
 
 .equation-plate {
   margin: var(--space-5) 0;
   padding: var(--space-4) var(--space-6);
+  border: 1px solid var(--border-subtle);
   border-left: 2px solid var(--accent-primary);
-  background: var(--bg-surface);
-  backdrop-filter: var(--glass-blur);
+  background: var(--bg-recessed);
+  color: var(--text-primary);
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* 7. Focus & Accessibility */
@@ -571,28 +583,49 @@ a:hover {
 }
 
 /* 8. Utility Classes */
+.text-primary   { color: var(--text-primary); }
 .text-secondary { color: var(--text-secondary); }
-.text-tertiary  { color: var(--text-tertiary); }
+.text-muted     { color: var(--text-muted); }
+.text-tertiary  { color: var(--text-muted); }
 .text-accent    { color: var(--accent-primary); }
 .text-signal    { color: var(--accent-signal); }
-.text-gold      { color: var(--accent-gold); }
-.border-gold    { border-color: var(--accent-gold); }
-.bg-gold-tint   { background-color: var(--accent-gold-tint); }
+.text-gold      { color: var(--accent-primary); }
+.border-gold    { border-color: var(--accent-primary); }
+.bg-gold-tint   { background-color: var(--accent-primary-tint); }
 .bg-surface     { background-color: var(--bg-surface); }
 .bg-primary     { background-color: var(--bg-primary); }
+.bg-recessed    { background-color: var(--bg-recessed); }
 
 /* 9. Strict KaTeX & Math Container Overflow Shield */
 .domain-math-box,
-.domain-math-box .katex-display,
-.katex-display {
-  overflow-x: hidden !important;
+.bento-math-box,
+.math-callout-plate {
+  background: var(--bg-recessed) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-left: 2px solid var(--accent-primary) !important;
+  color: var(--text-primary) !important;
+  overflow-x: auto !important;
   overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch;
   max-width: 100% !important;
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
 }
 
-.domain-math-box .katex {
-  font-size: 0.9em;
-  white-space: nowrap;
+.domain-math-box .katex-display,
+.bento-math-box .katex-display,
+.math-callout-plate .katex-display {
+  background: transparent !important;
+  border: none !important;
+  border-left: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.domain-math-box .katex,
+.bento-math-box .katex,
+.math-callout-plate .katex {
+  font-size: 0.95em;
 }
 
 /* 10. Desktop Custom Magnetic Cursor Architecture */
