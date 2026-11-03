@@ -12,10 +12,10 @@
   <div class="plate-toolbar hairline-bottom">
     <div class="plate-title-group">
       <span class="pulse-dot" aria-hidden="true"></span>
-      <span class="mono-label">INTERACTIVE SIMULATION DEMO</span>
+      <span class="mono-label">INTERACTIVE PHYSICS LAB</span>
       <div class="status-indicator-pill mono" id="status-indicator">
         <span class="status-ping"></span>
-        <span id="status-text">LIVE DEMO</span>
+        <span id="status-text">REAL-TIME ENGINE</span>
       </div>
     </div>
 
@@ -43,7 +43,7 @@
         data-mode="nbody"
         title="Mode 02: Runge-Kutta 4th-order (RK4) orbital propagation incorporating Earth oblateness J2 = 1.08263e-3 perturbation."
       >
-        <span class="mode-number">02</span> N-Body Orbit
+        <span class="mode-number">02</span> N-Body
       </button>
       <button
         type="button"
@@ -201,27 +201,38 @@
   }
 
   .plate-mode-tabs {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-    width: 100%;
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 0.375rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  @media (max-width: 480px) {
+    .plate-mode-tabs {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
   }
 
   .mode-pill {
-    flex: 1 1 0;
-    min-width: 0;
-    text-align: center;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: var(--radius-pill);
-    padding: 5px 8px;
+    width: 100% !important;
+    padding: 0.42rem 0.5rem !important;
+    font-size: 0.73rem !important;
+    line-height: 1.15 !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    border-radius: 9999px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.3rem !important;
+    box-sizing: border-box !important;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid #1E293B;
     font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.02em;
     color: #CBD5E1;
     cursor: pointer;
     transition: all 140ms ease;
-    white-space: nowrap;
     font-weight: 500;
   }
 
@@ -565,6 +576,90 @@
     color: #E6EAF2 !important;
     font-size: 0.75rem !important;
   }
+
+  /* Aceternity / Componentry Perimeter Border Beam */
+  .border-beam-card {
+    position: relative;
+  }
+  .border-beam-card::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(from var(--beam-angle, 0deg) at 50% 50%, transparent 0%, transparent 70%, rgba(229, 169, 60, 0.65) 88%, transparent 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    animation: borderBeamOrbit 9s linear infinite;
+    opacity: 0.75;
+    z-index: 3;
+  }
+  @property --beam-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+  @keyframes borderBeamOrbit {
+    from { --beam-angle: 0deg; }
+    to { --beam-angle: 360deg; }
+  }
+
+  /* Cult-UI Tactile Slider */
+  .tactile-range-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+  .tactile-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+    outline: none;
+    cursor: grab;
+    transition: background 0.15s ease;
+  }
+  .tactile-slider:active {
+    cursor: grabbing;
+  }
+  .tactile-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    box-shadow: 0 0 10px rgba(229, 169, 60, 0.7);
+    border: 2px solid #0B0F17;
+    cursor: grab;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .tactile-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.25);
+    box-shadow: 0 0 14px rgba(229, 169, 60, 0.9);
+  }
+  .tactile-slider::-moz-range-thumb {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    box-shadow: 0 0 10px rgba(229, 169, 60, 0.7);
+    border: 2px solid #0B0F17;
+    cursor: grab;
+  }
+
+  /* MotionSites.ai Smooth Transition State */
+  .mode-anim-element {
+    transition: opacity 180ms cubic-bezier(0.22, 1, 0.36, 1), transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .mode-anim-fade {
+    opacity: 0 !important;
+    transform: translateY(3px) !important;
+  }
 </style>
 
 <script>
@@ -620,11 +715,11 @@
     resize();
     window.addEventListener('resize', resize, { passive: true });
 
-    // Mode Parameters
-    let paramPhotometry = 1.0;  // Multiplier on 1.4820d
-    let paramNbody = 0.35;       // Eccentricity e
-    let paramRadon = 45.0;       // Projection angle deg
-    let paramMc = 0.85;          // Decay constant lambda
+    // Cult-UI Physical Parameters
+    let paramPhotometry = 1.4820; // Period in days [1.400 -> 1.560]
+    let paramNbody = 0.35;        // Eccentricity e [0.00 -> 0.65]
+    let paramRadon = 180.0;       // Gantry sweep theta [30 -> 180 deg]
+    let paramMc = 3.60;           // Log10(N0) ensemble size [2.00 -> 4.00]
 
     // Mode 03 Filter State: Ram-Lak vs Unfiltered
     let isRamLakFiltered = true;
@@ -730,41 +825,47 @@
 
       if (currentMode === 'photometry') {
         sliderLabel.textContent = 'TRIAL PERIOD P:';
-        slider.min = '0.80';
-        slider.max = '1.20';
-        slider.step = '0.001';
-        slider.value = paramPhotometry.toString();
-        const pDays = (1.4820 * paramPhotometry).toFixed(4);
-        sliderReadout.textContent = `${pDays} d ${Math.abs(paramPhotometry - 1.0) < 0.008 ? '(Resonance)' : ''}`;
-        metricVal1.textContent = 'PHASE RMS: 0.014 mag';
-        metricVal2.textContent = `PERIOD: ${pDays} d`;
+        slider.min = '1.400';
+        slider.max = '1.560';
+        slider.step = '0.0005';
+        slider.value = paramPhotometry.toFixed(4);
+        const isResonance = Math.abs(paramPhotometry - 1.4820) < 0.002;
+        const detune = Math.abs(paramPhotometry - 1.4820);
+        const rms = isResonance ? 0.014 : (0.014 + Math.min(0.082, detune * 1.4));
+        sliderReadout.textContent = `${paramPhotometry.toFixed(4)} d ${isResonance ? '(Resonance)' : ''}`;
+        metricVal1.textContent = `PHASE RMS: ${rms.toFixed(3)} mag`;
+        metricVal2.textContent = `PERIOD: ${paramPhotometry.toFixed(4)} d`;
       } else if (currentMode === 'nbody') {
-        sliderLabel.textContent = 'ORBIT ECCENTRICITY e:';
+        sliderLabel.textContent = 'ECCENTRICITY e:';
         slider.min = '0.00';
-        slider.max = '0.75';
+        slider.max = '0.65';
         slider.step = '0.01';
-        slider.value = paramNbody.toString();
-        sliderReadout.textContent = `e = ${paramNbody.toFixed(2)}`;
+        slider.value = paramNbody.toFixed(2);
+        const orbitType = paramNbody < 0.08 ? 'Circular Orbit' : (paramNbody < 0.38 ? 'Keplerian' : 'Rosetta Precession');
+        sliderReadout.textContent = `e = ${paramNbody.toFixed(2)} (${orbitType})`;
         metricVal1.textContent = 'INTEGRATOR: RK4';
-        metricVal2.textContent = 'DRIFT: +4.8°/orb [EXAGG.]';
+        metricVal2.textContent = `PERIAPSIS: ${(105 * (1 - paramNbody)).toFixed(1)} AU`;
       } else if (currentMode === 'radon') {
-        sliderLabel.textContent = 'PROJECTION ANGLE θ:';
-        slider.min = '0.0';
-        slider.max = '180.0';
-        slider.step = '0.5';
-        slider.value = paramRadon.toFixed(1);
-        sliderReadout.textContent = `θ = ${paramRadon.toFixed(1)}°`;
-        metricVal1.textContent = isRamLakFiltered ? 'FILTER: RAM-LAK RAMP |ω|' : 'FILTER: UNFILTERED (1/r)';
-        metricVal2.textContent = 'PROJECTIONS: 256 RAYS';
+        sliderLabel.textContent = 'GANTRY SWEEP θ:';
+        slider.min = '30';
+        slider.max = '180';
+        slider.step = '1';
+        slider.value = paramRadon.toFixed(0);
+        const sweepType = paramRadon >= 170 ? 'Full Nyquist Orbit' : 'Limited-Angle Inversion';
+        sliderReadout.textContent = `θ = ${paramRadon.toFixed(0)}° (${sweepType})`;
+        metricVal1.textContent = isRamLakFiltered ? 'FILTER: RAM-LAK |ω|' : 'FILTER: UNFILTERED (1/r)';
+        metricVal2.textContent = `PROJECTIONS: ${Math.round((paramRadon / 180) * 256)} RAYS`;
       } else if (currentMode === 'mc') {
-        sliderLabel.textContent = 'DECAY RATE λ:';
-        slider.min = '0.20';
-        slider.max = '2.00';
+        sliderLabel.textContent = 'ENSEMBLE N₀:';
+        slider.min = '2.00';
+        slider.max = '4.00';
         slider.step = '0.05';
-        slider.value = paramMc.toString();
-        sliderReadout.textContent = `λ = ${paramMc.toFixed(2)} s⁻¹`;
-        metricVal1.textContent = '64 NUCLEI LATTICE';
-        metricVal2.textContent = 'LIVE FIT t₁/₂ PENDING';
+        slider.value = paramMc.toFixed(2);
+        const N0 = Math.round(Math.pow(10, paramMc));
+        const rmsPct = (100 / Math.sqrt(N0)).toFixed(1);
+        sliderReadout.textContent = `N₀ = ${N0.toLocaleString()} (RMS ~ ${rmsPct}%)`;
+        metricVal1.textContent = `RMS NOISE: ±${rmsPct}%`;
+        metricVal2.textContent = `THEORY: N(t)=N₀e^(-λt)`;
       }
     }
 
@@ -774,7 +875,13 @@
       if (statusText) statusText.textContent = 'MANUAL SCRUB';
       const val = parseFloat(slider.value);
       if (currentMode === 'photometry') {
-        paramPhotometry = val;
+        // Snap cleanly to resonance at 1.4820d
+        if (Math.abs(val - 1.4820) < 0.0035) {
+          paramPhotometry = 1.4820;
+          slider.value = '1.4820';
+        } else {
+          paramPhotometry = val;
+        }
         foldProgress = 1.0; // Snap to folded view immediately on scrubber
       } else if (currentMode === 'nbody') {
         paramNbody = val;
@@ -790,12 +897,27 @@
       isUserScrubbing = false;
     });
 
+    const animElements = [
+      document.getElementById('plate-caption-text'),
+      document.getElementById('coord-grid-tag'),
+      document.getElementById('slider-readout'),
+      document.getElementById('metric-badge-1'),
+      document.getElementById('metric-badge-2')
+    ].filter(Boolean) as HTMLElement[];
+
+    animElements.forEach(el => el.classList.add('mode-anim-element'));
+
     modeBtns.forEach((btn) => {
       btn?.addEventListener('click', () => {
         const mode = btn.getAttribute('data-mode') as PlateMode;
-        if (mode) {
-          currentMode = mode;
-          syncModeUI();
+        if (mode && mode !== currentMode) {
+          // MotionSites 180ms smooth fade transition
+          animElements.forEach(el => el.classList.add('mode-anim-fade'));
+          setTimeout(() => {
+            currentMode = mode;
+            syncModeUI();
+            animElements.forEach(el => el.classList.remove('mode-anim-fade'));
+          }, 90);
           if (typeof (window as any).trackEvent === 'function') {
             (window as any).trackEvent('instrument_mode_switch', { mode });
           }
@@ -942,7 +1064,9 @@
           ctx!.stroke();
         }
 
-        const trialP = 1.4820 * paramPhotometry;
+        const trialP = paramPhotometry;
+        const detuneDelta = Math.abs(paramPhotometry - 1.4820);
+        const isNearResonance = detuneDelta < 0.002;
 
         // Points interpolate between raw time axis and folded phase axis
         rawTimes.forEach((t, idx) => {
@@ -950,8 +1074,10 @@
           const foldedXFrac = (t / trialP) % 1;
           const currentXFrac = (1 - foldProgress) * rawXFrac + foldProgress * foldedXFrac;
 
+          // Introduce physical dispersion scatter when detuned from resonance
+          const scatterNoise = isNearResonance ? 0 : Math.sin(idx * 7.91 + paramPhotometry * 40) * Math.min(0.24, detuneDelta * 2.8);
           const px = padX + currentXFrac * plotW;
-          const py = padY + ((rawMags[idx] - 14.9) / 1.0) * plotH;
+          const py = padY + ((rawMags[idx] + scatterNoise - 14.9) / 1.0) * plotH;
 
           const isPulse = (idx + Math.floor(tick * 0.15)) % 15 === 0;
           ctx!.beginPath();
@@ -961,7 +1087,7 @@
         });
 
         // Fitted Resonance Curve (reveals when folded and near resonance)
-        if (foldProgress > 0.6 && Math.abs(paramPhotometry - 1.0) < 0.06) {
+        if (foldProgress > 0.6 && Math.abs(paramPhotometry - 1.4820) < 0.008) {
           ctx!.save();
           ctx!.globalAlpha = (foldProgress - 0.6) / 0.4;
           ctx!.beginPath();

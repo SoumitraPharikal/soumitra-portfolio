@@ -226,7 +226,7 @@ a:hover {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: radial-gradient(550px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), var(--card-spotlight-tint), transparent 45%);
+  background: radial-gradient(320px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(229, 169, 60, 0.11), transparent 70%);
   opacity: 0;
   transition: opacity 300ms ease;
   pointer-events: none;
@@ -503,7 +503,7 @@ a:hover {
 .interactive-row:hover .corner-crosshair::before,
 .interactive-row:hover .corner-crosshair::after {
   transform: rotate(90deg);
-  color: var(--accent-gold);
+  color: var(--accent-primary);
 }
 
 /* Badge Pills */
@@ -540,6 +540,8 @@ a:hover {
   overflow-y: hidden !important;
   -webkit-overflow-scrolling: touch;
   max-width: 100% !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
 }
 
 .equation-plate {
@@ -608,6 +610,8 @@ a:hover {
   overflow-y: hidden !important;
   -webkit-overflow-scrolling: touch;
   max-width: 100% !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
   border-radius: var(--radius-sm);
   padding: 10px 14px;
 }
@@ -1043,4 +1047,12 @@ html[data-theme="dark"] .icon-moon {
     color: #0E1A2B !important;
     page-break-after: avoid;
   }
+}
+
+.katex-display::-webkit-scrollbar,
+.equation-plate::-webkit-scrollbar,
+.domain-math-box::-webkit-scrollbar,
+.bento-math-box::-webkit-scrollbar,
+.math-callout-plate::-webkit-scrollbar {
+  display: none !important;
 }

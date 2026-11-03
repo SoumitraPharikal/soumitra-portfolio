@@ -62,6 +62,17 @@ const pathname = Astro.url.pathname;
 
       <!-- Right Controls: Modern Slider Switch & Mobile Hamburger -->
       <div class="header-actions">
+        <!-- Subtle ⌘K Command Palette Button -->
+        <button
+          type="button"
+          id="header-cmd-k-btn"
+          class="cmd-k-pill-btn mono"
+          aria-label="Open Command Palette"
+          title="Search site & commands (⌘K or Ctrl+K)"
+        >
+          <span class="cmd-k-symbol">⌘</span>K
+        </button>
+
         <!-- Modern iOS/macOS Physical Slider Switch -->
         <button
           id="theme-toggle-btn"
@@ -230,6 +241,8 @@ const pathname = Astro.url.pathname;
     }
 
     cmdTrigger?.addEventListener('click', openCommandPalette);
+    const headerCmdBtn = document.getElementById('header-cmd-k-btn');
+    headerCmdBtn?.addEventListener('click', openCommandPalette);
 
     cmdBackdrop?.addEventListener('click', (e) => {
       if (e.target === cmdBackdrop) closeCommandPalette();
@@ -379,27 +392,74 @@ const pathname = Astro.url.pathname;
     padding: 0;
   }
 
-    .nav-pill-link.nav-btn-cv {
-    background: var(--accent-primary);
-    color: var(--text-inverse);
+  .nav-pill-link.nav-btn-cv {
+    background: rgba(229, 169, 60, 0.14);
+    color: #F2B84B;
+    border: 1px solid rgba(229, 169, 60, 0.4);
     font-weight: 600;
     padding: 5px 14px;
-    box-shadow: 0 2px 8px var(--accent-primary-tint);
     margin-left: 4px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    transition: all var(--transition-fast);
   }
   .nav-pill-link.nav-btn-cv:hover {
-    background: var(--accent-primary-hover);
-    color: var(--text-inverse);
+    background: #E5A93C;
+    border-color: #E5A93C;
+    color: #0B0F17;
     transform: translateY(-1.5px) scale(1.05);
-    box-shadow: 0 4px 14px rgba(56, 189, 248, 0.35);
+    box-shadow: 0 4px 14px rgba(229, 169, 60, 0.35);
   }
   :global(html[data-theme="light"]) .nav-pill-link.nav-btn-cv {
-    background: #1B2E6B;
-    color: #FFFFFF !important;
+    background: #14181F;
+    color: #FAFAF7 !important;
+    border: 1px solid #14181F;
   }
   :global(html[data-theme="light"]) .nav-pill-link.nav-btn-cv:hover {
-    background: #254094;
+    background: #B45309;
+    border-color: #B45309;
     color: #FFFFFF !important;
+    box-shadow: 0 4px 14px rgba(180, 83, 9, 0.25);
+  }
+
+  .cmd-k-pill-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    padding: 4px 9px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+  .cmd-k-pill-btn:hover {
+    background: var(--bg-surface-elevated);
+    border-color: var(--accent-primary);
+    color: var(--text-primary);
+    transform: translateY(-1px);
+  }
+  .cmd-k-symbol {
+    font-size: 0.82rem;
+  }
+  :global(html[data-theme="light"]) .cmd-k-pill-btn {
+    background: #FFFFFF;
+    border: 1px solid var(--border-subtle);
+    color: var(--text-muted);
+  }
+  :global(html[data-theme="light"]) .cmd-k-pill-btn:hover {
+    border-color: var(--accent-primary);
+    color: var(--text-primary);
+  }
+  @media (max-width: 768px) {
+    .cmd-k-pill-btn {
+      display: none;
+    }
   }
   .mobile-nav-divider {
     margin: 8px 0;
@@ -727,3 +787,4 @@ const pathname = Astro.url.pathname;
     }
   }
 </style>
+
