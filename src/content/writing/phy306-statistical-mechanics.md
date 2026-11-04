@@ -2,17 +2,15 @@
 title: "Statistical Mechanics (PHY306)"
 courseCode: "PHY306"
 subject: "Ensemble Theory, Quantum Statistics & Phase Transitions"
-date: "IISER Berhampur Coursework"
+date: "Spring 2027 · Semester VI"
 typesetEngine: "XeLaTeX · LuaLaTeX · tcolorbox · TikZ"
 pdfPath: "/Soumitra_Pharikal_CV.pdf"
 pageCount: 46
 topicsCovered:
-  - "Phase space dynamics, Liouville's theorem, ergodicity, and microcanonical ensemble"
-  - "Canonical ensemble: partition functions, energy fluctuations, and free energy"
-  - "Grand canonical ensemble: chemical potential, density fluctuations, and virial expansion"
-  - "Quantum statistical mechanics: density matrix formalism and indistinguishable particles"
-  - "Ideal Bose gases: Bose-Einstein condensation and Planck blackbody radiation spectrum"
-  - "Ideal Fermi gases (Sommerfeld expansion, white dwarf degeneracy) and Ising phase transitions"
+  - "Classical phase space ensembles, Liouville's theorem, ergodicity, and microcanonical entropy"
+  - "Canonical and grand canonical partition functions, energy/density fluctuations, and virial expansions"
+  - "Quantum statistical density matrices, ideal Bose gases, and Bose-Einstein condensation"
+  - "Degenerate Fermi-Dirac gases (Sommerfeld expansion, white dwarfs) and Ising phase transitions"
 featured: true
 order: 9
 ---

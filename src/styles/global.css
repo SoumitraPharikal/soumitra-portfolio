@@ -842,6 +842,12 @@ html[data-theme="dark"] .icon-moon {
 /* ==========================================================================
    13. ACETERNITY UI ANIMATED BORDER BEAMS & METEORS
    ========================================================================== */
+@property --border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
 @property --beam-angle {
   syntax: '<angle>';
   initial-value: 0deg;
@@ -849,8 +855,8 @@ html[data-theme="dark"] .icon-moon {
 }
 
 @keyframes rotate-border-beam {
-  0% { --beam-angle: 0deg; }
-  100% { --beam-angle: 360deg; }
+  0% { --border-angle: 0deg; --beam-angle: 0deg; }
+  100% { --border-angle: 360deg; --beam-angle: 360deg; }
 }
 
 .border-beam-card {
@@ -860,28 +866,30 @@ html[data-theme="dark"] .icon-moon {
 .border-beam-card::before {
   content: '';
   position: absolute;
-  inset: -1px;
+  inset: -1.5px;
   border-radius: inherit;
   padding: 1.5px;
-  background: conic-gradient(from var(--beam-angle, 0deg), transparent 70%, var(--accent-cyan), var(--accent-gold-bright), transparent 100%);
+  background: conic-gradient(
+    from var(--border-angle, 0deg),
+    transparent 0%,
+    transparent 75%,
+    #F2B84B 80%,
+    #38BDF8 86%,
+    #A78BFA 92%,
+    #D97706 97%,
+    transparent 100%
+  );
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
-  animation: rotate-border-beam 7s linear infinite;
+  animation: rotate-border-beam 8s linear infinite;
   pointer-events: none;
   z-index: 3;
 }
 
 /* Meteors Animation for Cosmic Backdrop */
 .meteor-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 0;
+  display: none !important;
 }
 
 .meteor-streak {

@@ -2,17 +2,15 @@
 title: "Architecture & Operations of Computing Systems (CDS307)"
 courseCode: "CDS307"
 subject: "Computing Architecture & System Operations"
-date: "IISER Berhampur Coursework"
+date: "Autumn 2026 · Semester V"
 typesetEngine: "XeLaTeX · LuaLaTeX · tcolorbox · TikZ"
 pdfPath: "/Soumitra_Pharikal_CV.pdf"
 pageCount: 38
 topicsCovered:
-  - "Pointers, memory layout, stack vs heap allocation, and memory management in C"
-  - "Linear structures: linked lists, circular buffers, and array-backed queues"
-  - "Hierarchical structures: binary search trees, AVL self-balancing trees, and heaps"
-  - "Graph representations: adjacency matrices vs lists and traversal algorithms"
-  - "Asymptotic complexity analysis: Big-O, Big-Omega, Big-Theta, and master recurrences"
-  - "Sorting algorithms: Quicksort partitioning, Mergesort, and Heapsort implementations"
+  - "Low-level memory hierarchy, pointer arithmetic, stack frames, and heap allocation in C"
+  - "Linear and hierarchical data structures: linked lists, ring buffers, AVL trees, and binary heaps"
+  - "Graph adjacency representations, BFS/DFS traversals, and shortest-path network algorithms"
+  - "Asymptotic complexity bounds (O, Ω, Θ), Master theorem recurrences, and comparison sorting"
 featured: true
 order: 5
 ---

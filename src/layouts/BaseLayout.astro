@@ -418,6 +418,34 @@ const previewImage = new URL('/assets/portrait.png', Astro.site || 'https://soum
           });
         }
 
+        // Dynamic Meteors Engine (Downward Falling with Leading Lower Tip)
+        interface CanvasMeteor {
+          headX: number;
+          headY: number;
+          vx: number;
+          vy: number;
+          length: number;
+          active: boolean;
+        }
+
+        const meteors: CanvasMeteor[] = [];
+        let nextMeteorTime = Date.now() + 1800;
+
+        function spawnCanvasMeteor() {
+          const angle = Math.PI * 0.32 + (Math.random() - 0.5) * 0.22; // ~58 deg downward diagonal
+          const speed = 7.5 + Math.random() * 3.5;
+          const vx = Math.cos(angle) * speed;
+          const vy = Math.sin(angle) * speed; // strictly vy > 0 (falling downwards!)
+          meteors.push({
+            headX: Math.random() * (width * 0.95),
+            headY: -40,
+            vx,
+            vy,
+            length: 85 + Math.random() * 45,
+            active: true
+          });
+        }
+
         function renderConstellation() {
           ctx!.clearRect(0, 0, width, height);
 
@@ -426,8 +454,15 @@ const previewImage = new URL('/assets/portrait.png', Astro.site || 'https://soum
           // Theme-Adaptive Colors
           const microStarColor = isDark ? '230, 234, 242' : '148, 163, 184';
           const lineColor = isDark ? '56, 189, 248' : '180, 83, 9';
+          const goldColor = isDark ? '242, 184, 75' : '217, 119, 6';
 
-          // Update & Draw Nodes
+          const mouseRadius = 210; // Capture radius for interactive cursor constellations
+          const maxTriangulationDist = 125; // Max distance for star-to-star triangulation
+
+          // Track stars currently inside cursor capture zone
+          const nearCursorNodes: { node: StarNode; dist: number }[] = [];
+
+          // 1. Update & Draw Star Nodes
           for (let i = 0; i < nodes.length; i++) {
             const n = nodes[i];
 
@@ -448,9 +483,9 @@ const previewImage = new URL('/assets/portrait.png', Astro.site || 'https://soum
                 : (isDark ? '#93C5FD' : '#0284C7');
               
               // Soft radial glow halo
-              const haloAlpha = isDark ? 0.18 : 0.12;
+              const haloAlpha = isDark ? 0.22 : 0.14;
               ctx!.beginPath();
-              ctx!.arc(n.x, n.y, 6.5, 0, Math.PI * 2);
+              ctx!.arc(n.x, n.y, 7.0, 0, Math.PI * 2);
               ctx!.fillStyle = n.navType === 'gold' 
                 ? `rgba(229, 169, 60, ${haloAlpha})` 
                 : `rgba(147, 197, 253, ${haloAlpha})`;
@@ -462,14 +497,14 @@ const previewImage = new URL('/assets/portrait.png', Astro.site || 'https://soum
               ctx!.fillStyle = starColor;
               ctx!.fill();
 
-              // 4-point cross-diffraction spikes (5px length)
+              // 4-point cross-diffraction spikes (6px length)
               ctx!.strokeStyle = starColor;
-              ctx!.lineWidth = 0.7;
+              ctx!.lineWidth = 0.8;
               ctx!.beginPath();
-              ctx!.moveTo(n.x - 5.5, n.y);
-              ctx!.lineTo(n.x + 5.5, n.y);
-              ctx!.moveTo(n.x, n.y - 5.5);
-              ctx!.lineTo(n.x, n.y + 5.5);
+              ctx!.moveTo(n.x - 6.0, n.y);
+              ctx!.lineTo(n.x + 6.0, n.y);
+              ctx!.moveTo(n.x, n.y - 6.0);
+              ctx!.lineTo(n.x, n.y + 6.0);
               ctx!.stroke();
             } else {
               // Crisp micro-star
@@ -480,36 +515,114 @@ const previewImage = new URL('/assets/portrait.png', Astro.site || 'https://soum
               ctx!.fill();
             }
 
-            // Inter-Node Constellation Lines between nearby stars (< 80px)
+            // Ambient background star-to-star lines (< 85px)
             for (let j = i + 1; j < nodes.length; j += 2) {
               const n2 = nodes[j];
               const dx = n.x - n2.x;
               const dy = n.y - n2.y;
               const dist = Math.sqrt(dx * dx + dy * dy);
 
-              if (dist < 80) {
-                const alpha = (1 - dist / 80) * (isDark ? 0.09 : 0.05);
+              if (dist < 85) {
+                const alpha = (1 - dist / 85) * (isDark ? 0.08 : 0.04);
                 ctx!.beginPath();
                 ctx!.moveTo(n.x, n.y);
                 ctx!.lineTo(n2.x, n2.y);
                 ctx!.strokeStyle = `rgba(${lineColor}, ${alpha})`;
-                ctx!.lineWidth = 0.6;
+                ctx!.lineWidth = 0.55;
                 ctx!.stroke();
               }
             }
 
-            // Interactive Cursor Connection (< 120px)
+            // Check cursor proximity (capture radius = 210px)
             const cdx = n.x - mouseX;
             const cdy = n.y - mouseY;
             const cdist = Math.sqrt(cdx * cdx + cdy * cdy);
-            if (cdist < 120) {
-              const calpha = (1 - cdist / 120) * (isDark ? 0.28 : 0.16);
+            if (cdist < mouseRadius) {
+              nearCursorNodes.push({ node: n, dist: cdist });
+
+              // Direct line to cursor
+              const calpha = (1 - cdist / mouseRadius) * (isDark ? 0.32 : 0.20);
               ctx!.beginPath();
               ctx!.moveTo(n.x, n.y);
               ctx!.lineTo(mouseX, mouseY);
-              ctx!.strokeStyle = `rgba(${lineColor}, ${calpha})`;
-              ctx!.lineWidth = 0.8;
+              ctx!.strokeStyle = (i % 2 === 0) 
+                ? `rgba(${lineColor}, ${calpha})` 
+                : `rgba(${goldColor}, ${calpha * 0.9})`;
+              ctx!.lineWidth = 0.85;
               ctx!.stroke();
+            }
+          }
+
+          // 2. Star-to-Star Triangulation Web Around Cursor (< 125px)
+          for (let p = 0; p < nearCursorNodes.length; p++) {
+            let connections = 0;
+            const nA = nearCursorNodes[p].node;
+            for (let q = p + 1; q < nearCursorNodes.length; q++) {
+              if (connections >= 5) break;
+              const nB = nearCursorNodes[q].node;
+              const dx = nA.x - nB.x;
+              const dy = nA.y - nB.y;
+              const dist = Math.sqrt(dx * dx + dy * dy);
+              if (dist < maxTriangulationDist) {
+                const alpha = (1 - dist / maxTriangulationDist) * (isDark ? 0.22 : 0.12);
+                ctx!.beginPath();
+                ctx!.moveTo(nA.x, nA.y);
+                ctx!.lineTo(nB.x, nB.y);
+                ctx!.strokeStyle = (connections % 2 === 0) 
+                  ? `rgba(${goldColor}, ${alpha})` 
+                  : `rgba(${lineColor}, ${alpha})`;
+                ctx!.lineWidth = 0.75;
+                ctx!.stroke();
+                connections++;
+              }
+            }
+          }
+
+          // 3. Fall Meteors (strictly vy > 0, leading lower tip brightest with 1.8px glowing dot)
+          if (!prefersReduced && isDark) {
+            const now = Date.now();
+            if (now > nextMeteorTime) {
+              spawnCanvasMeteor();
+              nextMeteorTime = now + 3200 + Math.random() * 2800;
+            }
+
+            for (let m = 0; m < meteors.length; m++) {
+              const met = meteors[m];
+              if (!met.active) continue;
+
+              met.headX += met.vx;
+              met.headY += met.vy;
+
+              const speed = Math.hypot(met.vx, met.vy);
+              const tailX = met.headX - (met.vx / speed) * met.length;
+              const tailY = met.headY - (met.vy / speed) * met.length;
+
+              // Linear gradient: leading lower tip (headX, headY) is brightest, trailing upper wake (tailX, tailY) fades to transparent
+              const grad = ctx!.createLinearGradient(met.headX, met.headY, tailX, tailY);
+              grad.addColorStop(0, 'rgba(255, 255, 255, 0.95)');
+              grad.addColorStop(0.12, 'rgba(242, 184, 75, 0.90)');
+              grad.addColorStop(0.40, 'rgba(56, 189, 248, 0.40)');
+              grad.addColorStop(1, 'rgba(56, 189, 248, 0)');
+
+              ctx!.beginPath();
+              ctx!.moveTo(met.headX, met.headY);
+              ctx!.lineTo(tailX, tailY);
+              ctx!.strokeStyle = grad;
+              ctx!.lineWidth = 1.8;
+              ctx!.stroke();
+
+              // Crisp 1.8px glowing head dot at the leading lower tip
+              ctx!.beginPath();
+              ctx!.arc(met.headX, met.headY, 1.8, 0, Math.PI * 2);
+              ctx!.fillStyle = '#FFFFFF';
+              ctx!.shadowColor = '#F2B84B';
+              ctx!.shadowBlur = 6;
+              ctx!.fill();
+              ctx!.shadowBlur = 0;
+
+              if (met.headY > height + 80 || met.headX > width + 80) {
+                met.active = false;
+              }
             }
           }
 

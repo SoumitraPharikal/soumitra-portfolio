@@ -2,17 +2,15 @@
 title: "Classical Mechanics (PHY305)"
 courseCode: "PHY305"
 subject: "Classical Mechanics & Variational Principles"
-date: "IISER Berhampur Coursework"
+date: "Autumn 2026 · Semester V"
 typesetEngine: "XeLaTeX · LuaLaTeX · tcolorbox · TikZ"
 pdfPath: "/Soumitra_Pharikal_CV.pdf"
 pageCount: 42
 topicsCovered:
-  - "Hamilton's principle of stationary action and variational calculus"
-  - "Euler-Lagrange equations with holonomic and non-holonomic constraints"
-  - "Hamiltonian mechanics, Legendre transforms, and phase space volume"
-  - "Poisson brackets, Lie algebra invariants, and canonical transformations"
-  - "Hamilton-Jacobi theory, action-angle variables, and Kepler integrability"
-  - "Rigid body kinematics, inertia tensor eigensystems, and Euler equations"
+  - "Hamilton's variational principle of stationary action and Euler-Lagrange equations with constraints"
+  - "Central force orbital dynamics, effective potentials, Kepler integration, and Rutherford scattering"
+  - "Rigid body kinematics, orthogonal rotation matrices, inertia tensors, and Euler's equations"
+  - "Hamiltonian phase space mechanics, Poisson bracket Lie algebra, and Hamilton-Jacobi theory"
 featured: true
 order: 4
 ---

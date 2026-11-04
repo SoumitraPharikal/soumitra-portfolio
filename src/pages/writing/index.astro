@@ -1,90 +1,80 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import katex from 'katex';
-import 'katex/dist/katex.min.css';
 
 const allWriting = await getCollection('writing');
 const sortedWriting = allWriting.sort((a, b) => a.data.order - b.data.order);
 
-// Course key formula sets for compact auto-scrolling ticker
-const rawFormulas: Record<string, string[]> = {
+// Guaranteed 4 concise syllabus bullets per course
+const courseBullets: Record<string, string[]> = {
   PHY303: [
-    'i\\hbar\\frac{\\partial\\Psi}{\\partial t} = \\left[-\\frac{\\hbar^2}{2m}\\nabla^2 + V(r)\\right]\\Psi',
-    '\\sigma_x \\sigma_p \\ge \\frac{\\hbar}{2}',
-    '[\\hat{L}_i, \\hat{L}_j] = i\\hbar \\epsilon_{ijk} \\hat{L}_k',
-    '\\hat{a}|n\\rangle = \\sqrt{n}|n-1\\rangle',
-    'E_n = -\\frac{13.6\\text{ eV}}{n^2}'
+    "Dirac bra-ket Hilbert space formalism, linear operators, and Heisenberg uncertainty relations",
+    "Exact 1D stationary states, finite potential wells, and WKB/barrier quantum tunneling",
+    "Harmonic oscillator algebraic ladder operators and Hermite polynomial eigenstates",
+    "Central potentials, SO(3)/SU(2) angular momentum algebra, and hydrogen atom wavefunctions"
   ],
   PHY309: [
-    'dU = T\\,dS - P\\,dV',
-    'F = U - TS = -k_B T \\ln Z',
-    '\\left(\\frac{\\partial S}{\\partial V}\\right)_T = \\left(\\frac{\\partial P}{\\partial T}\\right)_V',
-    'f(v) = 4\\pi\\left(\\frac{m}{2\\pi k_B T}\\right)^{3/2} v^2 \\exp\\left(-\\frac{mv^2}{2k_B T}\\right)'
+    "Laws of thermodynamics, exact Pfaffian differentials, and Carnot efficiency bounds",
+    "Thermodynamic potentials (U, H, F, G), Legendre transforms, and Maxwell relations",
+    "Real gas virial equations of state, van der Waals phase coexistence, and Joule-Thomson throttling",
+    "Maxwell-Boltzmann kinetic velocity distributions, transport phenomena, and equipartition"
   ],
   PHY301: [
-    '\\oint_C f(z)\\,dz = 2\\pi i \\sum \\mathrm{Res}(f, z_k)',
-    '\\hat{f}(k) = \\frac{1}{\\sqrt{2\\pi}} \\int_{-\\infty}^\\infty f(x) e^{-ikx}\\,dx',
-    '\\nabla^2\\Phi = \\frac{1}{h_1 h_2 h_3} \\sum_i \\frac{\\partial}{\\partial q_i}\\left[\\frac{h_1 h_2 h_3}{h_i^2}\\frac{\\partial\\Phi}{\\partial q_i}\\right]'
+    "Curvilinear coordinate vector calculus, metric tensors, and Helmholtz decomposition",
+    "Complex analyticity, Cauchy-Riemann conditions, Laurent series, and residue contour integration",
+    "Orthogonal function spaces, Fourier series/transforms, and Dirac delta distributions",
+    "Frobenius series solutions for singular ODEs, Bessel functions, and Legendre polynomials"
   ],
   PHY305: [
-    '\\delta S = \\delta \\int L(q, \\dot{q}, t)\\,dt = 0',
-    '\\dot{q}_i = \\frac{\\partial H}{\\partial p_i}, \\quad \\dot{p}_i = -\\frac{\\partial H}{\\partial q_i}',
-    '\\{f, g\\} = \\sum_i \\left(\\frac{\\partial f}{\\partial q_i}\\frac{\\partial g}{\\partial p_i} - \\frac{\\partial f}{\\partial p_i}\\frac{\\partial g}{\\partial q_i}\\right)',
-    'H\\left(q, \\frac{\\partial S}{\\partial q}, t\\right) + \\frac{\\partial S}{\\partial t} = 0'
+    "Hamilton's variational principle of stationary action and Euler-Lagrange equations with constraints",
+    "Central force orbital dynamics, effective potentials, Kepler integration, and Rutherford scattering",
+    "Rigid body kinematics, orthogonal rotation matrices, inertia tensors, and Euler's equations",
+    "Hamiltonian phase space mechanics, Poisson bracket Lie algebra, and Hamilton-Jacobi theory"
   ],
   CDS307: [
-    'T(n) = a T(n/b) + f(n)',
-    'O(n \\log n)\\text{ Partition}',
-    '\\mathrm{Height}(AVL) \\le 1.44\\log_2(n+2)',
-    '|V| - |E| + |F| = 2'
+    "Low-level memory hierarchy, pointer arithmetic, stack frames, and heap allocation in C",
+    "Linear and hierarchical data structures: linked lists, ring buffers, AVL trees, and binary heaps",
+    "Graph adjacency representations, BFS/DFS traversals, and shortest-path network algorithms",
+    "Asymptotic complexity bounds (O, Ω, Θ), Master theorem recurrences, and comparison sorting"
   ],
   CDS301: [
-    'T(n) = a T(n/b) + f(n)',
-    'O(n \\log n)\\text{ Partition}',
-    '\\mathrm{Height}(AVL) \\le 1.44\\log_2(n+2)',
-    '|V| - |E| + |F| = 2'
+    "Low-level memory hierarchy, pointer arithmetic, stack frames, and heap allocation in C",
+    "Linear and hierarchical data structures: linked lists, ring buffers, AVL trees, and binary heaps",
+    "Graph adjacency representations, BFS/DFS traversals, and shortest-path network algorithms",
+    "Asymptotic complexity bounds (O, Ω, Θ), Master theorem recurrences, and comparison sorting"
   ],
   CDS304: [
-    '|A \\cup B| = |A| + |B| - |A \\cap B|',
-    'G(x) = \\sum_{n=0}^\\infty a_n x^n',
-    '\\sum_{v \\in V} \\mathrm{deg}(v) = 2|E|',
-    'P_G(k) = P_{G-e}(k) - P_{G/e}(k)'
+    "Propositional and first-order predicate logic, structural induction, and formal proof systems",
+    "Set relations, equivalence classes, partially ordered sets (posets), Hasse diagrams, and lattices",
+    "Enumerative combinatorics, inclusion-exclusion principle, recurrence relations, and generating functions",
+    "Graph theory (Eulerian/Hamiltonian paths, planarity, coloring) and finite automata decidability"
   ],
   PHY302: [
-    "\\nabla^2 G(\\mathbf{r}, \\mathbf{r}') = -4\\pi \\delta^3(\\mathbf{r} - \\mathbf{r}')",
-    '\\frac{d}{dx}\\left[p(x)\\frac{dy}{dx}\\right] + [q(x) + \\lambda w(x)] y = 0',
-    '[J_i, J_j] = i \\epsilon_{ijk} J_k'
+    "Classification and characteristic curves of hyperbolic, parabolic, and elliptic second-order PDEs",
+    "Separation of variables and boundary-value problems in cylindrical and spherical coordinates",
+    "Sturm-Liouville self-adjoint operator theory, eigenfunction completeness, and Green's functions",
+    "Laplace/Fourier integral transforms and introductory Lie groups SO(3)/SU(2) representation theory"
   ],
   PHY304: [
-    "E_n^{(1)} = \\langle n^{(0)} | H' | n^{(0)} \\rangle",
-    '\\Gamma_{i \\to f} = \\frac{2\\pi}{\\hbar} |\\langle f | \\hat{V} | i \\rangle|^2 \\rho(E_f)',
-    'f(\\theta) = \\frac{1}{k}\\sum_{l=0}^\\infty (2l+1) e^{i\\delta_l}\\sin(\\delta_l) P_l(\\cos\\theta)'
+    "Time-independent non-degenerate and degenerate perturbation theory, Stark and Zeeman splittings",
+    "Variational Rayleigh-Ritz bounds, WKB semiclassical quantization, and connection formulas",
+    "Time-dependent perturbation theory, Dyson series, sudden/adiabatic Berry phase, and Fermi's Golden Rule",
+    "3D quantum scattering (Born approximation, partial phase shifts) and identical particle spin-statistics"
   ],
   PHY306: [
-    '\\mathcal{Z}_G = \\mathrm{Tr}\\left[e^{-\\beta(\\hat{H} - \\mu\\hat{N})}\\right]',
-    '\\langle n_k \\rangle = \\frac{1}{e^{\\beta(\\epsilon_k - \\mu)} \\mp 1}',
-    'C_V = k_B \\beta^2 \\langle (\\Delta E)^2 \\rangle'
+    "Classical phase space ensembles, Liouville's theorem, ergodicity, and microcanonical entropy",
+    "Canonical and grand canonical partition functions, energy/density fluctuations, and virial expansions",
+    "Quantum statistical density matrices, ideal Bose gases, and Bose-Einstein condensation",
+    "Degenerate Fermi-Dirac gases (Sommerfeld expansion, white dwarfs) and Ising phase transitions"
   ]
 };
 
-// Pre-render tickers as HTML strings
-const courseTickers: Record<string, string> = {};
-for (const [code, formulas] of Object.entries(rawFormulas)) {
-  const rendered = formulas.map(f => {
-    try {
-      return katex.renderToString(f, { displayMode: false, throwOnError: false });
-    } catch {
-      return f;
-    }
-  });
-  courseTickers[code] = rendered.join(' <span class="ticker-sep">·</span> ');
-}
+const sem5Codes = ['PHY303', 'PHY309', 'PHY301', 'PHY305', 'CDS307', 'CDS301'];
 ---
 
 <BaseLayout
   title="LaTeX Course Notes & Study Compendiums | Soumitra Pharikal"
-  description="Rigorous LaTeX course notes and study compendiums authored by Soumitra Pharikal covering quantum mechanics, thermal physics, mathematical methods, classical mechanics, discrete computation, and computing architectures at IISER Berhampur."
+  description="Modular study compendiums and revision lecture notes typeset in LaTeX with rigorous mathematical proofs, operator derivations, and computing architectures."
 >
   <div class="monograph-container">
     <header class="page-header reveal-up" style="--stagger-index: 1;">
@@ -99,23 +89,43 @@ for (const [code, formulas] of Object.entries(rawFormulas)) {
       <p class="academic-disclaimer mono text-tertiary">
         <em>Self-authored lecture and revision compendiums typeset in LaTeX (tcolorbox) for IISER Berhampur coursework.</em>
       </p>
+
+      <!-- Semester Filter Buttons -->
+      <div class="filter-pills-bar mono" role="tablist" aria-label="Course Semester Filters">
+        <button type="button" class="filter-pill is-active" data-filter="all">
+          <span class="active-dot" aria-hidden="true"></span>
+          All Compendiums (9)
+        </button>
+        <button type="button" class="filter-pill" data-filter="sem-5">
+          <span class="active-dot" aria-hidden="true"></span>
+          Autumn 2026 · Sem V (5)
+        </button>
+        <button type="button" class="filter-pill" data-filter="sem-6">
+          <span class="active-dot" aria-hidden="true"></span>
+          Spring 2027 · Sem VI (4)
+        </button>
+      </div>
     </header>
 
-    <!-- Compendium List: 9 Courses in Unified Academic Styling -->
+    <!-- Compendium List: 9 Courses in Restored 3-Column Layout -->
     <div class="compendiums-list" id="writing-cards-container">
       {sortedWriting.map((item, idx) => {
         const code = item.data.courseCode || '';
-        const tickerHtml = courseTickers[code] || courseTickers['PHY303'];
+        const isSem5 = sem5Codes.includes(code);
+        const semTag = isSem5 ? 'Autumn 2026 · Semester V' : 'Spring 2027 · Semester VI';
+        const bullets = courseBullets[code] || item.data.topicsCovered.slice(0, 4);
 
         return (
           <article
             class="compendium-plate hairline-box spotlight-card interactive-row corner-crosshair reveal-up"
+            data-semester={isSem5 ? 'sem-5' : 'sem-6'}
             style={`--stagger-index: ${idx + 2};`}
           >
             <div class="comp-plate-grid">
-              <!-- Col 1: Course Identification & Miniature LaTeX Page Thumbnail -->
+              <!-- Col 1: Course Identification, Unified Semester Badge & Miniature LaTeX Page Thumbnail -->
               <div class="comp-col-code">
                 <span class="mono comp-course-tag text-gold">{code || 'COMP'}</span>
+                <span class="semester-badge mono">{semTag}</span>
                 
                 <!-- Miniature Typeset A4 LaTeX Sheet Graphic (84px x 112px) -->
                 <div class="latex-page-thumbnail" aria-label={`Miniature typeset sheet for ${code}`}>
@@ -156,7 +166,7 @@ for (const [code, formulas] of Object.entries(rawFormulas)) {
                 )}
               </div>
 
-              <!-- Col 2: Title, Subject, Topics & Auto-Scrolling Formula Marquee -->
+              <!-- Col 2: Title, Subject & Strictly 4 Vertical Bullet Lines -->
               <div class="comp-col-main">
                 <h2 class="comp-title">
                   <a href={`/writing/${item.id}`} class="title-link no-underline">
@@ -165,25 +175,18 @@ for (const [code, formulas] of Object.entries(rawFormulas)) {
                 </h2>
                 <p class="comp-subject text-secondary">{item.data.subject}</p>
                 
-                <div class="comp-topics-list">
-                  {item.data.topicsCovered.map((topic) => (
-                    <span class="topic-pill mono text-secondary">• {topic}</span>
+                <!-- Vertical 4-Line Bullet List -->
+                <ul class="comp-bullets-vertical mono">
+                  {bullets.map((bullet) => (
+                    <li class="comp-bullet-line text-secondary">
+                      <span class="bullet-sym" aria-hidden="true">•</span>
+                      <span class="bullet-text">{bullet}</span>
+                    </li>
                   ))}
-                </div>
-
-                <!-- Single-Line Auto-Scrolling Formula Ticker (36px Height) -->
-                <div class="formula-ticker-bar hairline-box" aria-label="Key course governing formulas">
-                  <div class="ticker-badge mono">KEY FORMULAS</div>
-                  <div class="ticker-viewport">
-                    <div class="ticker-track">
-                      <div class="ticker-content" set:html={tickerHtml} />
-                      <div class="ticker-content" aria-hidden="true" set:html={tickerHtml} />
-                    </div>
-                  </div>
-                </div>
+                </ul>
               </div>
 
-              <!-- Col 3: Engine Specs & Primary Action -->
+              <!-- Col 3: Engine Specs & Primary Action Button -->
               <div class="comp-col-action">
                 <div class="engine-meta mono">
                   <span class="engine-badge">XeLaTeX · LuaLaTeX · tcolorbox · TikZ</span>
@@ -200,6 +203,35 @@ for (const [code, formulas] of Object.entries(rawFormulas)) {
     </div>
   </div>
 </BaseLayout>
+
+<script>
+  function initWritingFilters() {
+    const filterButtons = document.querySelectorAll('.filter-pill');
+    const cards = document.querySelectorAll('.compendium-plate');
+
+    filterButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach((b) => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+
+        const selected = btn.getAttribute('data-filter') || 'all';
+
+        cards.forEach((card) => {
+          const c = card as HTMLElement;
+          const sem = c.getAttribute('data-semester') || '';
+          if (selected === 'all' || sem === selected) {
+            c.style.display = 'block';
+          } else {
+            c.style.display = 'none';
+          }
+        });
+      });
+    });
+  }
+
+  initWritingFilters();
+  document.addEventListener('astro:page-load', initWritingFilters);
+</script>
 
 <style>
   .page-header {
@@ -228,19 +260,67 @@ for (const [code, formulas] of Object.entries(rawFormulas)) {
 
   .academic-disclaimer {
     font-size: 0.8rem;
-    margin-bottom: var(--space-6);
+    margin-bottom: var(--space-4);
+  }
+
+  /* Filter Pills Bar */
+  .filter-pills-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-2);
+  }
+
+  .filter-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    font-size: 0.78rem;
+    font-family: var(--font-mono);
+    color: var(--text-secondary);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-pill, 9999px);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .filter-pill:hover {
+    color: var(--text-primary);
+    border-color: var(--border-hover);
+    background: var(--bg-surface-sunken);
+  }
+
+  .filter-pill.is-active {
+    color: var(--text-primary);
+    background: var(--bg-surface-sunken);
+    border-color: var(--accent-primary);
+  }
+
+  .active-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--border-hover);
+    transition: background var(--transition-fast);
+  }
+
+  .filter-pill.is-active .active-dot {
+    background: var(--accent-primary);
   }
 
   /* Compendium Cards List */
   .compendiums-list {
     display: flex;
     flex-direction: column;
-    gap: var(--space-6);
+    gap: var(--space-5);
     padding-bottom: var(--space-12);
   }
 
   .compendium-plate {
-    padding: var(--space-6);
+    padding: var(--space-5) var(--space-6);
     background: var(--bg-surface);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-sm);
@@ -253,12 +333,12 @@ for (const [code, formulas] of Object.entries(rawFormulas)) {
 
   .comp-plate-grid {
     display: grid;
-    grid-template-columns: 110px 1fr 220px;
+    grid-template-columns: 140px 1fr 220px;
     gap: var(--space-6);
     align-items: flex-start;
   }
 
-  /* Col 1: Code & Miniature Page Thumbnail */
+  /* Col 1: Code, Semester Badge & Miniature Page Thumbnail */
   .comp-col-code {
     display: flex;
     flex-direction: column;
@@ -270,6 +350,18 @@ for (const [code, formulas] of Object.entries(rawFormulas)) {
     font-size: 1.05rem;
     font-weight: 700;
     letter-spacing: 0.08em;
+  }
+
+  .semester-badge {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 3px 8px;
+    background: var(--bg-surface-sunken);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    color: var(--accent-primary);
+    white-space: nowrap;
   }
 
   /* Miniature Typeset A4 LaTeX Sheet Graphic (84px x 112px) */
@@ -287,6 +379,7 @@ for (const [code, formulas] of Object.entries(rawFormulas)) {
     overflow: hidden;
     position: relative;
     user-select: none;
+    margin-top: 2px;
     transition: border-color var(--transition-fast), transform var(--transition-fast);
   }
 
@@ -416,88 +509,32 @@ for (const [code, formulas] of Object.entries(rawFormulas)) {
     color: var(--text-secondary);
   }
 
-  .comp-topics-list {
+  /* Strictly 4 Vertical Bullet Lines */
+  .comp-bullets-vertical {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-2) 0 0 0;
     display: flex;
-    flex-wrap: wrap;
-    gap: 6px 14px;
-    margin-top: 4px;
+    flex-direction: column;
+    gap: 0.35rem;
   }
 
-  .topic-pill {
-    font-size: 0.78rem;
-    color: var(--text-muted);
+  .comp-bullet-line {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 0.8rem;
+    line-height: 1.45;
   }
 
-  /* Compact Auto-Scrolling Formula Ticker (36px Height) */
-  .formula-ticker-bar {
-    height: 36px;
-    background: var(--bg-recessed);
-    border: 1px solid var(--border-subtle);
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    margin-top: var(--space-3);
-    position: relative;
-  }
-
-  .ticker-badge {
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    padding: 0 10px;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    background: var(--bg-surface-sunken);
-    border-right: 1px solid var(--border-subtle);
+  .bullet-sym {
     color: var(--accent-primary);
-    white-space: nowrap;
-    flex-shrink: 0;
-    z-index: 2;
-  }
-
-  .ticker-viewport {
-    flex: 1;
-    overflow: hidden;
-    white-space: nowrap;
-    position: relative;
-    mask-image: linear-gradient(to right, transparent, black 16px, black calc(100% - 16px), transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 16px, black calc(100% - 16px), transparent);
-  }
-
-  .ticker-track {
-    display: inline-flex;
-    align-items: center;
-    animation: formula-scroll 24s linear infinite;
-  }
-
-  .formula-ticker-bar:hover .ticker-track {
-    animation-play-state: paused;
-  }
-
-  .ticker-content {
-    display: inline-flex;
-    align-items: center;
-    padding-left: 20px;
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-  }
-
-  :global(.ticker-sep) {
-    color: var(--accent-primary);
-    padding: 0 12px;
     font-weight: bold;
-    user-select: none;
+    flex-shrink: 0;
   }
 
-  @keyframes formula-scroll {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-50%);
-    }
+  .bullet-text {
+    color: var(--text-secondary);
   }
 
   /* Col 3: Engine Specs & Action */
@@ -535,6 +572,7 @@ for (const [code, formulas] of Object.entries(rawFormulas)) {
 
     .comp-col-code {
       flex-direction: row;
+      flex-wrap: wrap;
       align-items: center;
       gap: var(--space-3);
     }

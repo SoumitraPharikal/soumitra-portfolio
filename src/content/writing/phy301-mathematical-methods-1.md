@@ -2,17 +2,15 @@
 title: "Mathematical Methods I (PHY301)"
 courseCode: "PHY301"
 subject: "Mathematical Physics & Complex Analysis"
-date: "IISER Berhampur Coursework"
+date: "Autumn 2026 · Semester V"
 typesetEngine: "XeLaTeX · LuaLaTeX · tcolorbox · TikZ"
 pdfPath: "/Soumitra_Pharikal_CV.pdf"
 pageCount: 52
 topicsCovered:
-  - "Vector calculus and general orthogonal curvilinear coordinates"
-  - "Complex analysis: Cauchy-Riemann equations and residue theorem"
-  - "Contour integration around branch cuts and essential singularities"
-  - "Fourier series expansions and continuous Fourier transforms"
-  - "Frobenius method for ordinary differential equations around regular singular points"
-  - "Special functions: Legendre polynomials, Bessel functions, and spherical harmonics"
+  - "Curvilinear coordinate vector calculus, metric tensors, and Helmholtz decomposition"
+  - "Complex analyticity, Cauchy-Riemann conditions, Laurent series, and residue contour integration"
+  - "Orthogonal function spaces, Fourier series/transforms, and Dirac delta distributions"
+  - "Frobenius series solutions for singular ODEs, Bessel functions, and Legendre polynomials"
 featured: true
 order: 3
 ---

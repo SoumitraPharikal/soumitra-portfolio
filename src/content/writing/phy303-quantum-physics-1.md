@@ -2,17 +2,15 @@
 title: "Quantum Mechanics I (PHY303)"
 courseCode: "PHY303"
 subject: "Quantum Physics & Wave Mechanics"
-date: "IISER Berhampur Coursework"
+date: "Autumn 2026 · Semester V"
 typesetEngine: "XeLaTeX · LuaLaTeX · tcolorbox · TikZ"
 pdfPath: "/Soumitra_Pharikal_CV.pdf"
 pageCount: 48
 topicsCovered:
-  - "Wave mechanics and Dirac bra-ket operator formalism"
-  - "Heisenberg uncertainty relations for non-commuting observables"
-  - "Exact 1D potentials, finite wells, and barrier tunneling"
-  - "Harmonic oscillator ladder operators and Hermite polynomials"
-  - "Central potentials, angular momentum algebra, and spherical harmonics"
-  - "Analytical hydrogen atom solutions and radial wavefunctions"
+  - "Dirac bra-ket Hilbert space formalism, linear operators, and Heisenberg uncertainty relations"
+  - "Exact 1D stationary states, finite potential wells, and WKB/barrier quantum tunneling"
+  - "Harmonic oscillator algebraic ladder operators and Hermite polynomial eigenstates"
+  - "Central potentials, SO(3)/SU(2) angular momentum algebra, and hydrogen atom wavefunctions"
 featured: true
 order: 1
 ---

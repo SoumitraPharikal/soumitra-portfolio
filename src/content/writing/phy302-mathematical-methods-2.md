@@ -2,17 +2,15 @@
 title: "Mathematical Methods II (PHY302)"
 courseCode: "PHY302"
 subject: "Partial Differential Equations, Green's Functions & Group Theory"
-date: "IISER Berhampur Coursework"
+date: "Spring 2027 · Semester VI"
 typesetEngine: "XeLaTeX · LuaLaTeX · tcolorbox · TikZ"
 pdfPath: "/Soumitra_Pharikal_CV.pdf"
 pageCount: 50
 topicsCovered:
-  - "Classification of second-order PDEs: hyperbolic, parabolic, and elliptic systems"
-  - "Separation of variables in cylindrical and spherical coordinate systems"
-  - "Sturm-Liouville operator theory, self-adjointness, and completeness of eigenfunctions"
-  - "Green's functions for Poisson, Helmholtz, and wave equations with boundary conditions"
-  - "Integral transforms (Laplace and Fourier) for initial boundary-value problems"
-  - "Introductory group theory: finite groups, Lie algebras SO(3)/SU(2), and representations"
+  - "Classification and characteristic curves of hyperbolic, parabolic, and elliptic second-order PDEs"
+  - "Separation of variables and boundary-value problems in cylindrical and spherical coordinates"
+  - "Sturm-Liouville self-adjoint operator theory, eigenfunction completeness, and Green's functions"
+  - "Laplace/Fourier integral transforms and introductory Lie groups SO(3)/SU(2) representation theory"
 featured: true
 order: 7
 ---

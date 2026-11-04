@@ -2,17 +2,15 @@
 title: "Discrete Structures and Computation (CDS304)"
 courseCode: "CDS304"
 subject: "Discrete Mathematics, Graph Theory & Automata"
-date: "IISER Berhampur Coursework"
+date: "Spring 2027 · Semester VI"
 typesetEngine: "XeLaTeX · LuaLaTeX · tcolorbox · TikZ"
 pdfPath: "/Soumitra_Pharikal_CV.pdf"
 pageCount: 44
 topicsCovered:
-  - "Propositional logic, predicate calculus, and formal proof techniques"
-  - "Set theory, equivalence relations, partial orders (posets), and lattices"
-  - "Combinatorics, inclusion-exclusion principle, and generating functions"
-  - "Graph theory: Eulerian/Hamiltonian paths, planarity, and network flows"
-  - "Trees, spanning algorithms, chromatic polynomials, and matching theory"
-  - "Finite automata, regular languages, Turing machines, and decidability"
+  - "Propositional and first-order predicate logic, structural induction, and formal proof systems"
+  - "Set relations, equivalence classes, partially ordered sets (posets), Hasse diagrams, and lattices"
+  - "Enumerative combinatorics, inclusion-exclusion principle, recurrence relations, and generating functions"
+  - "Graph theory (Eulerian/Hamiltonian paths, planarity, coloring) and finite automata decidability"
 featured: true
 order: 6
 ---

@@ -2,17 +2,15 @@
 title: "Quantum Mechanics II (PHY304)"
 courseCode: "PHY304"
 subject: "Approximation Methods, Scattering Theory & Relativistic Quantum Mechanics"
-date: "IISER Berhampur Coursework"
+date: "Spring 2027 · Semester VI"
 typesetEngine: "XeLaTeX · LuaLaTeX · tcolorbox · TikZ"
 pdfPath: "/Soumitra_Pharikal_CV.pdf"
 pageCount: 54
 topicsCovered:
-  - "Time-independent perturbation theory (non-degenerate and degenerate spectra)"
-  - "Variational principle, WKB semiclassical approximation, and connection formulas"
-  - "Time-dependent perturbation theory, Dyson series, and Fermi's Golden Rule"
-  - "Adiabatic approximation, geometric Berry phase, and sudden transitions"
-  - "Quantum scattering theory: Born approximation, partial wave expansion, and optical theorem"
-  - "Identical particles, exchange symmetry, spin-statistics, and Klein-Gordon/Dirac equations"
+  - "Time-independent non-degenerate and degenerate perturbation theory, Stark and Zeeman splittings"
+  - "Variational Rayleigh-Ritz bounds, WKB semiclassical quantization, and connection formulas"
+  - "Time-dependent perturbation theory, Dyson series, sudden/adiabatic Berry phase, and Fermi's Golden Rule"
+  - "3D quantum scattering (Born approximation, partial phase shifts) and identical particle spin-statistics"
 featured: true
 order: 8
 ---

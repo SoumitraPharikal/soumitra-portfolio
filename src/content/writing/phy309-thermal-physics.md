@@ -2,17 +2,15 @@
 title: "Thermal Physics (PHY309)"
 courseCode: "PHY309"
 subject: "Thermodynamics & Kinetic Theory"
-date: "IISER Berhampur Coursework"
+date: "Autumn 2026 · Semester V"
 typesetEngine: "XeLaTeX · LuaLaTeX · tcolorbox · TikZ"
 pdfPath: "/Soumitra_Pharikal_CV.pdf"
 pageCount: 36
 topicsCovered:
-  - "Fundamental laws of thermodynamics and exact Pfaffian differentials"
-  - "Thermodynamic potentials: U, H, F, G and Legendre transforms"
-  - "Systematic derivation of Maxwell relations via cross-derivatives"
-  - "Real gas equations of state and Joule-Thomson throttling"
-  - "Maxwell-Boltzmann velocity distribution and equipartition theorem"
-  - "Foundations of canonical and microcanonical ensembles"
+  - "Laws of thermodynamics, exact Pfaffian differentials, and Carnot efficiency bounds"
+  - "Thermodynamic potentials (U, H, F, G), Legendre transforms, and Maxwell relations"
+  - "Real gas virial equations of state, van der Waals phase coexistence, and Joule-Thomson throttling"
+  - "Maxwell-Boltzmann kinetic velocity distributions, transport phenomena, and equipartition"
 featured: true
 order: 2
 ---

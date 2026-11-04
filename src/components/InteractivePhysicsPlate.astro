@@ -76,7 +76,7 @@
   <div class="plate-caption-strip mono" id="plate-caption-strip">
     <div class="caption-left">
       <span class="caption-icon" aria-hidden="true">◈</span>
-      <span id="plate-caption-text">Mode 01: Time-Series Photometry & Phase Folding (IC 1369)</span>
+      <span id="plate-caption-text">Mode 01: IC 1369 Phase-Folded Photometry</span>
     </div>
     <div class="caption-right">
       <button
@@ -276,7 +276,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 8px;
+    gap: 0.75rem;
     padding: 6px var(--space-4);
     background: var(--bg-surface-sunken);
     border-bottom: 1px solid var(--border-subtle);
@@ -919,10 +919,10 @@
 
     // Captions mapping
     const captions: Record<PlateMode, string> = {
-      photometry: 'Mode 01: Time-Series Photometry & Phase Folding (IC 1369)',
-      nbody: 'Mode 02: Astrodynamics N-Body (RK4) & J2 Apsidal Precession',
-      radon: 'Mode 03: Gantry Angle Projection & Filtered Backprojection',
-      mc: 'Mode 04: Stochastic Kinetic Decay & 8×8 Lattice Relaxation'
+      photometry: 'Mode 01: IC 1369 Phase-Folded Photometry',
+      nbody: 'Mode 02: N-Body Symplectic Orbits',
+      radon: 'Mode 03: Radon CT Sinogram Inversion',
+      mc: 'Mode 04: Monte Carlo Decay Lattice'
     };
 
     // Aria labels for accessibility
@@ -1228,9 +1228,10 @@
       // MODE 01: TIME-SERIES PHOTOMETRY & PHASE FOLD REVEAL
       // ======================================================================
       if (currentMode === 'photometry') {
-        const padX = 50;
+        const padX = 44;
+        const padRight = 88;
         const padY = 40;
-        const plotW = width - padX * 2;
+        const plotW = width - padX - padRight;
         const plotH = height - padY * 2;
 
         // Draw Axes & Grid
@@ -1299,10 +1300,10 @@
         ctx!.stroke();
         ctx!.setLineDash([]);
 
-        // Live Synchronized Rotating Exoplanet Transit Mini-Schematic
-        const orbCx = width - 75;
-        const orbCy = 65;
-        const orbR = 24;
+        // Live Synchronized Rotating Exoplanet Transit Mini-Schematic (isolated in right margin)
+        const orbCx = width - 46;
+        const orbCy = 48;
+        const orbR = 18;
 
         ctx!.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(15, 23, 42, 0.12)';
         ctx!.lineWidth = 1;
@@ -1312,7 +1313,7 @@
 
         ctx!.fillStyle = gold;
         ctx!.beginPath();
-        ctx!.arc(orbCx, orbCy, 9, 0, Math.PI * 2);
+        ctx!.arc(orbCx, orbCy, 7, 0, Math.PI * 2);
         ctx!.fill();
 
         const transAngle = continuousPhase * Math.PI * 2;
@@ -1320,7 +1321,7 @@
         const planetY = orbCy + Math.sin(transAngle) * (orbR * 0.45);
         ctx!.fillStyle = cyan;
         ctx!.beginPath();
-        ctx!.arc(planetX, planetY, 4, 0, Math.PI * 2);
+        ctx!.arc(planetX, planetY, 3, 0, Math.PI * 2);
         ctx!.fill();
 
         // Labels
@@ -1330,8 +1331,7 @@
           ? 'PHASE φ (0.00 → 1.00) [FOLDED AT P = 1.4820 d]'
           : 'OBSERVATION EPOCH t (0 → 14.82 DAYS) [CHRONOLOGICAL]';
         ctx!.fillText(axisLabel, padX, height - 16);
-        ctx!.fillText('V MAGNITUDE [IC 1369 // V1]', width - 260, padY - 12);
-        ctx!.fillText('TRANSIT SYNC', orbCx - 28, orbCy + orbR + 14);
+        ctx!.fillText('TRANSIT SYNC', orbCx - 24, orbCy + orbR + 13);
       }
 
       // ======================================================================

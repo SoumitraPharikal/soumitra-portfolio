@@ -827,7 +827,7 @@ const eqDomainComputational = katex.renderToString(
     color: var(--accent-primary);
     font-weight: 300;
     animation: blinkCursor 1s step-start infinite;
-    margin-left: 0;
+    margin-left: 0.12em;
   }
 
   @keyframes blinkCursor {
@@ -1010,15 +1010,7 @@ const eqDomainComputational = katex.renderToString(
   /* ==========================================================================
      SECTION 02: 2x2 BENTO GRID MONOGRAPHS
      ========================================================================== */
-  .monographs-bento-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-5);
-  }
-
-  .col-bento-full {
-    grid-column: span 2;
-  }
+  /* Bento grid styling defined in 12-column system below */
 
   .bento-card {
     padding: var(--space-5);
@@ -1235,13 +1227,7 @@ const eqDomainComputational = katex.renderToString(
 
   /* Responsive Isolation */
   @media (max-width: 960px) {
-    .monographs-bento-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .col-bento-full {
-      grid-column: span 1;
-    }
+    /* Responsive bento grid handled in 12-column system below */
 
     .hero-meta-strip {
       grid-template-columns: 1fr;
@@ -1383,12 +1369,18 @@ const eqDomainComputational = katex.renderToString(
   .bento-card.col-bento-5 {
     grid-column: span 5;
   }
+  .bento-card.col-bento-full,
+  .bento-card:nth-child(5) {
+    grid-column: span 12;
+  }
   @media (max-width: 900px) {
     .monographs-bento-grid {
       grid-template-columns: 1fr;
     }
     .bento-card.col-bento-7,
-    .bento-card.col-bento-5 {
+    .bento-card.col-bento-5,
+    .bento-card.col-bento-full,
+    .bento-card:nth-child(5) {
       grid-column: span 1;
     }
   }
