@@ -41,13 +41,13 @@ The core dynamics solver models the general Newtonian $N$-body acceleration for 
 $$\ddot{\mathbf{r}}_i = - \sum_{j \neq i}^N \frac{G m_j}{\|\mathbf{r}_i - \mathbf{r}_j\|^3} (\mathbf{r}_i - \mathbf{r}_j) + \mathbf{a}_{\text{perturbation}}$$
 
 ### 3.2 Non-Spherical Oblateness Perturbation ($J_2$)
-For bodies orbiting oblate primaries (such as Earth or Mars), the second zonal harmonic $J_2$ dominates the gravitational potential expansion:
+For bodies orbiting oblate primaries (such as Earth, Mars, or giant planets), the second zonal harmonic $J_2$ dominates the gravitational potential expansion, evaluated with generic primary equatorial radius $R_{\text{eq}}$ (where $R_{\text{eq}} = R_\oplus \approx 6378.137\text{ km}$ for Earth orbital propagation benchmarks):
 
-$$\mathbf{a}_{J_2} = -\frac{3}{2} J_2 \frac{\mu R_E^2}{r^4} \left[ \left(1 - 5 \frac{z^2}{r^2}\right) \frac{\mathbf{r}}{r} + 2 \frac{z}{r} \hat{\mathbf{k}} \right]$$
+$$\mathbf{a}_{J_2} = -\frac{3}{2} J_2 \frac{\mu R_{\text{eq}}^2}{r^4} \left[ \left(1 - 5 \frac{z^2}{r^2}\right) \frac{\mathbf{r}}{r} + 2 \frac{z}{r} \hat{\mathbf{k}} \right]$$
 
 This perturbation induces secular nodal regression and argument of perigee precession:
 
-$$\dot{\Omega}_{J_2} = -\frac{3}{2} n J_2 \left(\frac{R_E}{p}\right)^2 \cos i, \quad \dot{\omega}_{J_2} = \frac{3}{4} n J_2 \left(\frac{R_E}{p}\right)^2 (5\cos^2 i - 1)$$
+$$\dot{\Omega}_{J_2} = -\frac{3}{2} n J_2 \left(\frac{R_{\text{eq}}}{p}\right)^2 \cos i, \quad \dot{\omega}_{J_2} = \frac{3}{4} n J_2 \left(\frac{R_{\text{eq}}}{p}\right)^2 (5\cos^2 i - 1)$$
 
 ### 3.3 Symplectic & Adaptive Integration
 To conserve phase space volume and Hamiltonian energy over long-duration orbital propagation, `ASTRA` implements 4th- and 6th-order Yoshida symplectic integrators preserving relative energy error to $\Delta E / E_0 < 10^{-12}$ across $10^6$ integration epochs on conservative systems. For non-conservative orbital trajectories and atmospheric drag, `ASTRA` couples adaptive 8th-order Dormand-Prince (DOP853) and SGP4 perturbation models:

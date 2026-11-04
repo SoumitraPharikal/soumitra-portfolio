@@ -83,6 +83,16 @@ const pathname = Astro.url.pathname;
 
       <!-- Right Controls: Modern Slider Switch & Mobile Hamburger -->
       <div class="header-actions">
+        <!-- Visible Contact Pill -->
+        <a
+          href="/contact"
+          class="nav-contact-pill mono"
+          aria-label="Contact Soumitra"
+          title="Contact &amp; Collaboration (/contact)"
+        >
+          Contact
+        </a>
+
         <!-- Subtle ⌘K Command Palette Button -->
         <button
           type="button"
@@ -790,19 +800,47 @@ const pathname = Astro.url.pathname;
     font-size: 0.75rem;
   }
 
-  /* Mobile Drawer Toggle */
+  .nav-contact-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 12px;
+    border-radius: var(--radius-pill);
+    font-size: 0.78rem;
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    background: var(--bg-surface-elevated);
+    border: 1px solid var(--border-subtle);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+  .nav-contact-pill:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+    background: rgba(229, 169, 60, 0.1);
+  }
+  :global(html[data-theme="light"]) .nav-contact-pill {
+    background: #FFFFFF;
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+  }
+
+  /* Mobile Drawer Toggle (44x44px accessible touch target) */
   .mobile-menu-btn {
     display: none;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     gap: 5px;
-    width: 32px;
-    height: 32px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     background: var(--bg-surface-elevated);
     border: 1px solid var(--border-subtle);
     cursor: pointer;
-    padding: 6px;
+    padding: 10px;
+    box-sizing: border-box;
+    flex-shrink: 0;
   }
 
   .hamburger-bar {
@@ -889,6 +927,28 @@ const pathname = Astro.url.pathname;
     }
     .mobile-menu-btn {
       display: flex;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .nav-contact-pill {
+      display: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .floating-dock {
+      padding: 6px 12px;
+      gap: 6px;
+    }
+    .brand-inst {
+      display: none;
+    }
+    .brand-name {
+      font-size: 0.88rem;
+    }
+    .header-actions {
+      gap: 6px;
     }
   }
 </style>

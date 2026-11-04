@@ -47,7 +47,7 @@ const eqRelativity = katex.renderToString(
       </p>
     </header>
 
-    <!-- ====================================================================
+        <!-- ====================================================================
          PART I: SUPERVISED RESEARCH INTERNSHIPS
          ==================================================================== -->
     <section class="research-partition" aria-label="Part I: Supervised Research Internships">
@@ -55,7 +55,7 @@ const eqRelativity = katex.renderToString(
         <span class="mono-badge">PART I</span>
         <h2 class="partition-title">Supervised Research Internships</h2>
         <p class="partition-desc text-secondary">
-          Rigorous research roles under formal faculty advisement, working with real astronomical observation streams and physical instrumentation models.
+          Empirical research internships conducted under formal faculty advisement, working with time-series observation data and physical optics systems.
         </p>
       </div>
 
@@ -81,6 +81,33 @@ const eqRelativity = katex.renderToString(
             <p class="research-abstract text-secondary">
               Conducted precision photometric reductions on <strong>814 time-series CCD frames</strong> of the intermediate-age Galactic open cluster <strong>IC 1369</strong>. Extracted stellar point-spread-functions (PSF) via DAOPHOT II, generated differential light curves, executed Lomb-Scargle periodograms to characterize <strong>four candidate variable stars</strong>, and constructed cluster Color-Magnitude Diagrams (CMD) with PARSEC theoretical isochrone overlays.
             </p>
+            <!-- Quantitative Summary Strip -->
+            <div class="quant-summary-strip hairline-box mono">
+              <div class="quant-stat-item">
+                <span class="stat-num text-signal">814</span>
+                <span class="stat-label">FITS Frames Reduced</span>
+              </div>
+              <div class="quant-stat-item">
+                <span class="stat-num text-primary">25</span>
+                <span class="stat-label">PSF Reference Stars</span>
+              </div>
+              <div class="quant-stat-item">
+                <span class="stat-num text-gold">4</span>
+                <span class="stat-label">Candidate Variables (FAP &lt; 10⁻⁶)</span>
+              </div>
+              <div class="quant-stat-item">
+                <span class="stat-num text-cyan">1.4820 d</span>
+                <span class="stat-label">Primary Period P₁</span>
+              </div>
+              <div class="quant-stat-item">
+                <span class="stat-num text-amber">≤ 0.014 mag</span>
+                <span class="stat-label">Photometric RMS σ_phot</span>
+              </div>
+              <div class="quant-stat-item">
+                <span class="stat-num text-primary">Z = 0.0152</span>
+                <span class="stat-label">PARSEC v1.2S Solar CMD Fit</span>
+              </div>
+            </div>
 
             <!-- 3-Part Architecture Layout -->
             <div class="research-triad-grid">
@@ -162,11 +189,93 @@ const eqRelativity = katex.renderToString(
           </div>
         </article>
 
+        <!-- Entry 03: IISER Berhampur Wavefront Optics -->
+        <article class="research-card hairline-box spotlight-card interactive-row corner-crosshair reveal-up" id="zernike" style="--stagger-index: 5;">
+          <div class="card-masthead">
+            <div class="card-tags">
+              <span class="mono research-code text-signal">RESEARCH ROLE 02</span>
+              <span class="mono research-role">SUMMER RESEARCH INTERN</span>
+            </div>
+            <span class="mono research-period text-secondary">MAY 2025 – JUL 2025</span>
+          </div>
+
+          <div class="card-body">
+            <h3 class="research-title">Optical Wavefront Sensing &amp; Modal Zernike Polynomial Aberration Decomposition</h3>
+            <div class="mentor-badge mono">
+              <span>ADVISOR: <strong>Dr. Vyas Akondi</strong></span>
+              <span>·</span>
+              <span>INSTITUTION: <strong>Department of Physical Sciences, IISER Berhampur</strong></span>
+            </div>
+
+            <p class="research-abstract text-secondary">
+              Investigated modal wavefront reconstruction in optical instrumentation and ophthalmic imaging. Developed MATLAB numerical routines to decompose arbitrary optical phase distortions into orthogonal Zernike circular polynomials <em>Z<sub>n</sub><sup>m</sup></em>(<em>ρ</em>, <em>θ</em>), analyzed modal cross-coupling when scaling pupil apertures, and simulated phase-variance correction under adaptive optics deformable mirror architectures.
+            </p>
+
+            <!-- 3-Part Architecture Layout -->
+            <div class="research-triad-grid">
+              <div class="triad-cell">
+                <span class="triad-label mono">01 // SCIENTIFIC PROBLEM</span>
+                <p class="triad-text text-secondary">
+                  Quantifying optical path phase error degradation when an entrance pupil stop undergoes continuous geometric rescaling (pupil constriction / dilation).
+                </p>
+              </div>
+              <div class="triad-cell">
+                <span class="triad-label mono">02 // COMPUTATIONAL FORMULATION</span>
+                <p class="triad-text text-secondary">
+                  Gram-Schmidt modal orthogonalization across unit disk, derivation of analytical conversion matrix T(s), and Strehl ratio estimation via Marechal approximation.
+                </p>
+              </div>
+              <div class="triad-cell">
+                <span class="triad-label mono">03 // QUANTITATIVE OUTCOMES</span>
+                <div class="outcome-chips">
+                  <span class="outcome-chip">36 Zernike Modes</span>
+                  <span class="outcome-chip">Pupil Scaling s ≤ 1.0</span>
+                  <span class="outcome-chip">Conversion Matrix T(s)</span>
+                  <span class="outcome-chip">Strehl S ≈ exp(-σ²)</span>
+                  <span class="outcome-chip">MATLAB Linear Engine</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="math-callout-plate">
+              <span class="meta-index">ANALYTICAL FORMALISM: ORTHOGONAL ZERNIKE MODAL DECOMPOSITION &amp; STREHL RATIO</span>
+              <div class="eq-wrap" set:html={eqZernike} />
+            </div>
+
+            <div class="card-footer hairline-top mono">
+              <div class="tools-cluster">
+                <span class="tool-tag">MATLAB</span>
+                <span class="tool-tag">WAVE OPTICS</span>
+                <span class="tool-tag">ADAPTIVE OPTICS</span>
+                <span class="tool-tag">ZERNIKE POLYNOMIALS</span>
+                <span class="tool-tag">FOURIER OPTICS</span>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <hr class="hairline-divider reveal-line" style="--stagger-index: 2;" />
+
+    <!-- ====================================================================
+         PART II: INTERNATIONAL RESEARCH TRAINING & MENTORED STUDIES
+         ==================================================================== -->
+    <section class="research-partition" aria-label="Part II: International Research Training & Mentored Studies">
+      <div class="partition-header reveal-up" style="--stagger-index: 2;">
+        <span class="mono-badge">PART II</span>
+        <h2 class="partition-title">International Research Training &amp; Mentored Studies</h2>
+        <p class="partition-desc text-secondary">
+          International astronomical training programs and structured theoretical investigations in modern physics and relativistic kinematics.
+        </p>
+      </div>
+
+      <div class="research-stack">
         <!-- Entry 02: UH Manoa / Intro2Astro -->
         <article class="research-card hairline-box spotlight-card interactive-row corner-crosshair reveal-up" id="uh-manoa" style="--stagger-index: 4;">
           <div class="card-masthead">
             <div class="card-tags">
-              <span class="mono research-code text-signal">RESEARCH ROLE 02</span>
+              <span class="mono research-code text-signal">INTERNATIONAL TRAINING 01</span>
               <span class="mono research-role">ASTRONOMY RESEARCH TRAINEE</span>
             </div>
             <span class="mono research-period text-secondary">JUL 2025 – AUG 2025</span>
@@ -251,66 +360,65 @@ const eqRelativity = katex.renderToString(
           </div>
         </article>
 
-        <!-- Entry 03: IISER Berhampur Wavefront Optics -->
-        <article class="research-card hairline-box spotlight-card interactive-row corner-crosshair reveal-up" id="zernike" style="--stagger-index: 5;">
+        <!-- Entry 04: Special Relativity -->
+        <article class="research-card hairline-box spotlight-card interactive-row corner-crosshair reveal-up" id="special-relativity" style="--stagger-index: 3;">
           <div class="card-masthead">
             <div class="card-tags">
-              <span class="mono research-code text-signal">RESEARCH ROLE 03</span>
-              <span class="mono research-role">SUMMER RESEARCH INTERN</span>
+              <span class="mono research-code text-signal">MENTORED STUDY 02</span>
+              <span class="mono research-role">THEORETICAL READING PROJECT</span>
             </div>
             <span class="mono research-period text-secondary">MAY 2025 – JUL 2025</span>
           </div>
 
           <div class="card-body">
-            <h3 class="research-title">Optical Wavefront Sensing &amp; Modal Zernike Polynomial Aberration Decomposition</h3>
+            <h3 class="research-title">Special Theory of Relativity, Four-Vectors &amp; Relativistic Mechanics</h3>
             <div class="mentor-badge mono">
-              <span>ADVISOR: <strong>Dr. Vyas Akondi</strong></span>
+              <span>FACULTY MENTOR: <strong>Dr. Sandeep Chatterjee</strong></span>
               <span>·</span>
               <span>INSTITUTION: <strong>Department of Physical Sciences, IISER Berhampur</strong></span>
             </div>
 
             <p class="research-abstract text-secondary">
-              Investigated modal wavefront reconstruction in optical instrumentation and ophthalmic imaging. Developed MATLAB numerical routines to decompose arbitrary optical phase distortions into orthogonal Zernike circular polynomials <em>Z<sub>n</sub><sup>m</sup></em>(<em>ρ</em>, <em>θ</em>), analyzed modal cross-coupling when scaling pupil apertures, and simulated phase-variance correction under adaptive optics deformable mirror architectures.
+              A structured analytical reading project investigating the geometric foundations of flat Minkowski spacetime (four-dimensional pseudo-Euclidean manifold with metric signature (+, -, -, -)). Derived Lorentz coordinate boosts from Einstein's postulates, analyzed the breakdown of absolute simultaneity, formulated four-velocity <em>U</em><sup>μ</sup> and four-momentum <em>P</em><sup>μ</sup> conservation laws, and explored introductory tensorial notation for relativistic electrodynamics.
             </p>
 
             <!-- 3-Part Architecture Layout -->
             <div class="research-triad-grid">
               <div class="triad-cell">
-                <span class="triad-label mono">01 // SCIENTIFIC PROBLEM</span>
+                <span class="triad-label mono">01 // THEORETICAL INQUIRY</span>
                 <p class="triad-text text-secondary">
-                  Quantifying optical path phase error degradation when an entrance pupil stop undergoes continuous geometric rescaling (pupil constriction / dilation).
+                  Constructing coordinate-invariant physics on flat pseudo-Riemannian manifolds, tracing the transition from Galilean kinematics to Lorentz group SO(1,3) symmetry.
                 </p>
               </div>
               <div class="triad-cell">
-                <span class="triad-label mono">02 // COMPUTATIONAL FORMULATION</span>
+                <span class="triad-label mono">02 // MATHEMATICAL FRAMEWORK</span>
                 <p class="triad-text text-secondary">
-                  Gram-Schmidt modal orthogonalization across unit disk, derivation of analytical conversion matrix T(s), and Strehl ratio estimation via Marechal approximation.
+                  Minkowski metric tensor η_μν = diag(+1,-1,-1,-1), four-velocity parameterization along proper time dτ, and electromagnetic field tensor F^μν = ∂^μ A^ν - ∂^ν A^μ.
                 </p>
               </div>
               <div class="triad-cell">
-                <span class="triad-label mono">03 // QUANTITATIVE OUTCOMES</span>
+                <span class="triad-label mono">03 // DERIVATION MILESTONES</span>
                 <div class="outcome-chips">
-                  <span class="outcome-chip">36 Zernike Modes</span>
-                  <span class="outcome-chip">Pupil Scaling s ≤ 1.0</span>
-                  <span class="outcome-chip">Conversion Matrix T(s)</span>
-                  <span class="outcome-chip">Strehl S ≈ exp(-σ²)</span>
-                  <span class="outcome-chip">MATLAB Linear Engine</span>
+                  <span class="outcome-chip">Minkowski Invariant ds²</span>
+                  <span class="outcome-chip">Mass-Shell P^μ P_μ = m₀²c²</span>
+                  <span class="outcome-chip">Lorentz Boost Group</span>
+                  <span class="outcome-chip">Covariant Four-Forces</span>
                 </div>
               </div>
             </div>
 
             <div class="math-callout-plate">
-              <span class="meta-index">ANALYTICAL FORMALISM: ORTHOGONAL ZERNIKE MODAL DECOMPOSITION &amp; STREHL RATIO</span>
-              <div class="eq-wrap" set:html={eqZernike} />
+              <span class="meta-index">ANALYTICAL FORMALISM: MINKOWSKI INVARIANT INTERVAL &amp; FOUR-MOMENTUM MASS SHELL</span>
+              <div class="eq-wrap" set:html={eqRelativity} />
             </div>
 
             <div class="card-footer hairline-top mono">
               <div class="tools-cluster">
-                <span class="tool-tag">MATLAB</span>
-                <span class="tool-tag">WAVE OPTICS</span>
-                <span class="tool-tag">ADAPTIVE OPTICS</span>
-                <span class="tool-tag">ZERNIKE POLYNOMIALS</span>
-                <span class="tool-tag">FOURIER OPTICS</span>
+                <span class="tool-tag">SPECIAL RELATIVITY</span>
+                <span class="tool-tag">MINKOWSKI SPACETIME</span>
+                <span class="tool-tag">FOUR-VECTORS</span>
+                <span class="tool-tag">TENSOR FORMALISM</span>
+                <span class="tool-tag">ANALYTICAL DERIVATION</span>
               </div>
             </div>
           </div>
@@ -682,4 +790,50 @@ const eqRelativity = katex.renderToString(
       gap: var(--space-3);
     }
   }
+
+  /* Quantitative Summary Strip */
+  .quant-summary-strip {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+    padding: var(--space-4);
+    background: var(--bg-surface-sunken);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    margin: var(--space-4) 0;
+  }
+
+  .quant-stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 3px;
+  }
+
+  .stat-num {
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+
+  .stat-label {
+    font-size: 0.68rem;
+    color: var(--text-tertiary);
+    line-height: 1.25;
+  }
+
+  @media (max-width: 860px) {
+    .quant-summary-strip {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .quant-summary-strip {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+  }
+
 </style>

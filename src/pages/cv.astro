@@ -553,4 +553,131 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       align-items: flex-start;
     }
   }
+
+  /* Publication-Grade Academic CV Print Stylesheet */
+  @media print {
+    :global(body) {
+      background: #FFFFFF !important;
+      color: #000000 !important;
+      font-size: 10pt !important;
+      line-height: 1.4 !important;
+    }
+
+    :global(.masthead-wrapper),
+    :global(.floating-dock),
+    :global(footer),
+    :global(.film-grain-overlay),
+    :global(.custom-cursor),
+    :global(.cosmic-backdrop),
+    :global(#scroll-progress-bar),
+    .cv-download-btn,
+    .pulse-dot,
+    .meta-index {
+      display: none !important;
+    }
+
+    .monograph-container {
+      max-width: 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+
+    .cv-header {
+      padding-top: 0 !important;
+      padding-bottom: 12pt !important;
+    }
+
+    .cv-identity-block {
+      border-bottom: 1.5pt solid #000000 !important;
+      padding-bottom: 8pt !important;
+    }
+
+    .cv-name {
+      font-size: 20pt !important;
+      color: #000000 !important;
+      font-family: var(--font-serif) !important;
+    }
+
+    .cv-subline {
+      font-size: 9pt !important;
+      color: #333333 !important;
+    }
+
+    .cv-contact-strip {
+      font-size: 8pt !important;
+      color: #333333 !important;
+    }
+
+    .cv-section-title {
+      font-size: 10.5pt !important;
+      font-weight: 700 !important;
+      color: #000000 !important;
+      border-bottom: 1pt solid #000000 !important;
+      margin-top: 10pt !important;
+      padding-bottom: 2pt !important;
+      page-break-after: avoid;
+    }
+
+    .cv-entry {
+      border: none !important;
+      background: transparent !important;
+      padding: 4pt 0 !important;
+      page-break-inside: avoid;
+    }
+
+    .cv-institution,
+    .cv-role {
+      font-size: 10.5pt !important;
+      font-weight: 600 !important;
+      color: #000000 !important;
+    }
+
+    .cv-degree,
+    .cv-inst {
+      font-size: 9pt !important;
+      color: #222222 !important;
+    }
+
+    .cv-date-col {
+      font-size: 8.5pt !important;
+      color: #333333 !important;
+    }
+
+    .cv-grade {
+      color: #000000 !important;
+      font-weight: 700 !important;
+    }
+
+    .cv-notes,
+    .cv-bullets {
+      font-size: 8.5pt !important;
+      color: #222222 !important;
+      line-height: 1.35 !important;
+    }
+
+    .cv-awards-table {
+      border: none !important;
+      background: transparent !important;
+      padding: 0 !important;
+      page-break-inside: avoid;
+    }
+
+    .award-row {
+      border-bottom: 0.5pt solid #CCCCCC !important;
+      padding: 3pt 0 !important;
+    }
+
+    .skill-block {
+      border: none !important;
+      background: transparent !important;
+      padding: 0 !important;
+      page-break-inside: avoid;
+    }
+
+    .skill-line {
+      font-size: 8.5pt !important;
+      color: #222222 !important;
+    }
+  }
+
 </style>

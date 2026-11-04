@@ -18,32 +18,47 @@ if (!item) {
   throw new Error(`[Thumbnail] Unknown thumbnail id: "${id}". Must be defined in src/data/thumbnails.ts`);
 }
 
+// Custom drop-in mapping for project thumbnails
+const customProjectThumbnails: Record<string, string> = {
+  'ic-1369-photometry-pipeline': '/thumbnails/projects/ic1369.png',
+  'monograph-01-ic1369': '/thumbnails/projects/ic1369.png',
+  'astra-rust-toolkit': '/thumbnails/projects/astra.png',
+  'ct-imaging-tumour-detection': '/thumbnails/projects/radon-ct.png',
+  'monograph-02-radon-ct': '/thumbnails/projects/radon-ct.png',
+  'zernike-wavefront-analyzer': '/thumbnails/projects/zernike.png',
+  'quantum-uncertainty-wavepackets': '/thumbnails/projects/quantum-fft.png',
+  'monte-carlo-stochastic-decay': '/thumbnails/projects/monte-carlo.png',
+};
+
+const customThumbPath = customProjectThumbnails[id];
+
 // Check on-disk existence in public/ folder
 const publicDir = path.resolve('public');
-const relPath = item.src.startsWith('/') ? item.src.slice(1) : item.src;
-const absPath = path.join(publicDir, relPath);
-const fileExists = fs.existsSync(absPath);
+let resolvedSrc = item.src;
+let fileExists = false;
 
-if (!fileExists && import.meta.env.DEV) {
-  console.info(`[Thumbnail Notice] File "${item.src}" not yet dropped into public/images/thumbnails/. Rendering verified SVG fallback for "${id}".`);
+if (customThumbPath && fs.existsSync(path.join(publicDir, customThumbPath.slice(1)))) {
+  resolvedSrc = customThumbPath;
+  fileExists = true;
+} else {
+  const relPath = item.src.startsWith('/') ? item.src.slice(1) : item.src;
+  const absPath = path.join(publicDir, relPath);
+  fileExists = fs.existsSync(absPath);
 }
 ---
 
 <div class:list={['thumbnail-wrapper', className]} style={`aspect-ratio: ${aspectRatio};`}>
   {fileExists ? (
     <picture class="thumbnail-picture">
-      {item.avifSrc && fs.existsSync(path.join(publicDir, item.avifSrc.slice(1))) && (
-        <source srcset={item.avifSrc} type="image/avif" />
-      )}
-      <source srcset={item.src} type="image/webp" />
       <img
-        src={item.src}
+        src={resolvedSrc}
         alt={item.alt}
         width={item.width}
         height={item.height}
         loading="lazy"
         decoding="async"
         class="thumbnail-img"
+        onerror="this.style.display='none'; if(this.parentElement && this.parentElement.nextElementSibling) this.parentElement.nextElementSibling.style.display='flex';"
       />
     </picture>
   ) : (

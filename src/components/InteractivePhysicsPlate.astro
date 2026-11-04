@@ -107,7 +107,7 @@
       <span class="drag-hint-icon">✥</span> 3D DRAG ENABLED
     </div>
     <div class="canvas-grid-overlay" aria-hidden="true">
-      <span class="coord-tag coord-tl mono" id="coord-grid-tag">AXES: PHASE φ ∈ [0, 1] vs. ΔMAG (CARTESIAN)</span>
+      <span class="coord-tag coord-tl mono" id="coord-grid-tag">METHOD: DAOPHOT PSF · LOMB-SCARGLE</span>
     </div>
   </div>
 
@@ -127,7 +127,7 @@
           aria-label="Instrument Parameter Scrubber"
         />
       </div>
-      <span class="fine-readout mono" id="slider-readout">1.4820 d (Resonance)</span>
+      <span class="fine-readout mono" id="slider-readout">1.4820 d (Best-Fit Period)</span>
     </div>
 
     <div class="metrics-group">
@@ -214,7 +214,16 @@
 
   @media (max-width: 480px) {
     .plate-mode-tabs {
-      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 0.35rem !important;
+    }
+    .mode-pill {
+      min-height: 38px !important;
+      padding: 0.4rem 0.5rem !important;
+    }
+    .canvas-viewport {
+      height: auto !important;
+      aspect-ratio: 16 / 10 !important;
     }
   }
 
@@ -983,7 +992,7 @@
       const coordTag = document.getElementById('coord-grid-tag');
       if (coordTag) {
         if (currentMode === 'photometry') {
-          coordTag.textContent = 'AXES: PHASE φ ∈ [0, 1] vs. ΔMAG (CARTESIAN)';
+          coordTag.textContent = 'METHOD: DAOPHOT PSF · LOMB-SCARGLE';
         } else if (currentMode === 'nbody') {
           coordTag.textContent = 'COORDINATES: KEPLERIAN ORBIT [J2 PERTURBED]';
         } else if (currentMode === 'radon') {
@@ -1004,7 +1013,7 @@
         const isResonance = Math.abs(paramPhotometry - 1.4820) < 0.002;
         const detune = Math.abs(paramPhotometry - 1.4820);
         const rms = isResonance ? 0.014 : (0.014 + Math.min(0.082, detune * 1.4));
-        sliderReadout.textContent = `${paramPhotometry.toFixed(4)} d ${isResonance ? '(Resonance)' : ''}`;
+        sliderReadout.textContent = `${paramPhotometry.toFixed(4)} d ${isResonance ? '(Best-Fit Period)' : ''}`;
         metricVal1.textContent = `PHASE RMS: ${rms.toFixed(3)} mag`;
         metricVal2.textContent = `PERIOD: ${paramPhotometry.toFixed(4)} d`;
       } else if (currentMode === 'nbody') {
@@ -1040,13 +1049,27 @@
       }
     }
 
+    slider?.addEventListener('touchstart', () => {
+      isUserScrubbing = true;
+      lastUserInteracted = Date.now();
+    }, { passive: true });
+
+    slider?.addEventListener('touchmove', () => {
+      isUserScrubbing = true;
+      lastUserInteracted = Date.now();
+    }, { passive: true });
+
+    slider?.addEventListener('touchend', () => {
+      isUserScrubbing = false;
+    }, { passive: true });
+
     slider?.addEventListener('input', () => {
       lastUserInteracted = Date.now();
       isUserScrubbing = true;
       if (statusText) statusText.textContent = 'MANUAL SCRUB';
       const val = parseFloat(slider.value);
       if (currentMode === 'photometry') {
-        // Snap cleanly to resonance at 1.4820d
+        // Snap cleanly to best-fit period at 1.4820d
         if (Math.abs(val - 1.4820) < 0.0035) {
           paramPhotometry = 1.4820;
           slider.value = '1.4820';

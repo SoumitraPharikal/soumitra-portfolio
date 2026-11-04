@@ -1,7 +1,7 @@
 ---
-title: "Physics-Informed CT Imaging & Machine Learning for Tumour Detection"
+title: "Physics-Informed Synthetic CT Reconstruction & Lesion Classification"
 codeName: "CT-RADON-ML"
-subtitle: "Analytical Radon Transforms, Filtered Back-Projection & Logistic Regression Classification"
+subtitle: "2D Slice-Wise Radon Projections, Ram-Lak Filtered Back-Projection & Hounsfield Lesion Classification"
 period: "Feb 2026 – Aug 2026"
 category: "Computational Physics & Medical Imaging"
 primaryLanguage: "Python"

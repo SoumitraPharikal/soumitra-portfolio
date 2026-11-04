@@ -1,4 +1,6 @@
 ---
+import fs from 'node:fs';
+import path from 'node:path';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
 
@@ -12,6 +14,11 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
+
+const code = entry.data.courseCode || '';
+const pdfPublicPath = `/notes/${code}.pdf`;
+const pdfAbsPath = path.resolve(`public/notes/${code}.pdf`);
+const hasLocalPdf = fs.existsSync(pdfAbsPath);
 ---
 
 <BaseLayout
@@ -69,12 +76,21 @@ const { Content } = await render(entry);
           </ul>
 
           <div class="access-notice hairline-top mono">
-            <span class="meta-index">ACCESS NOTICE</span>
+            <span class="meta-index">ACCESS & DOWNLOAD</span>
             <p class="access-text text-secondary">
-              Course note PDFs and complete LaTeX source bundles are maintained in the academic archive and shared upon institutional request.
+              Course note PDFs and complete LaTeX source bundles are maintained in the academic archive.
             </p>
-            <a href="mailto:24123@iiserbpr.ac.in?subject=Course%20Notes%20Access%20Request%20-%20" class="editorial-btn">
-              Request Full PDF ↗
+            {hasLocalPdf ? (
+              <a href={pdfPublicPath} download={`${code}_Lecture_Notes.pdf`} class="editorial-btn primary" style="width: 100%; text-align: center; justify-content: center; margin-bottom: 8px;">
+                Download Notes PDF ↓
+              </a>
+            ) : (
+              <a href={pdfPublicPath} class="editorial-btn" style="width: 100%; text-align: center; justify-content: center; margin-bottom: 8px;">
+                View PDF Document ↗
+              </a>
+            )}
+            <a href={`mailto:24123@iiserbpr.ac.in?subject=Course%20Notes%20Access%20Request%20-%20${code}`} class="editorial-link" style="font-size: 0.78rem;">
+              Request LaTeX Source Bundle ↗
             </a>
           </div>
         </div>

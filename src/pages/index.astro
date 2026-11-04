@@ -54,7 +54,7 @@ const eqDomainComputational = katex.renderToString(
 
             <h1 class="hero-headline">
               Exploring physical systems through<br />
-              <span class="typewriter-container"><span id="hero-typewriter" class="typewriter-text">computational astrophysics &amp; numerical modeling.</span><span class="typewriter-cursor" aria-hidden="true">|</span></span>
+              <span class="hero-typewriter-wrap typewriter-container"><span id="hero-typewriter" class="typewriter-text">stellar CCD photometry.</span><span class="typewriter-cursor" aria-hidden="true">|</span></span>
             </h1>
 
             <div class="hero-prose reading-measure">
@@ -136,7 +136,7 @@ const eqDomainComputational = katex.renderToString(
           </div>
           <h3 class="domain-title">Variable Star Photometry &amp; Exoplanetary Transits</h3>
           <p class="domain-desc text-secondary">
-            Time-domain stellar variability analysis, point-spread-function (PSF) crowded-field deblending, non-parametric periodogram power spectra, and Bayesian stellar isochrone fitting.
+            Time-domain stellar variability analysis, point-spread-function (PSF) crowded-field deblending, non-parametric periodogram power spectra, and PARSEC theoretical isochrone CMD fitting.
           </p>
           <div class="domain-math-box">
             <div set:html={eqDomainAstro} />
@@ -264,6 +264,7 @@ const eqDomainComputational = katex.renderToString(
             </div>
             <div class="bento-header-right">
               <div class="bento-sparkline-wrap" title="Phase-Folded Eclipsing Binary Light Curve Dip">
+                <img src="/thumbnails/projects/ic1369.png" alt="Variable Star Photometry &amp; Isochronal Age of IC 1369" class="bento-custom-thumb" loading="lazy" onerror="this.style.display='none'; if (this.nextElementSibling) this.nextElementSibling.style.display='block';" />
                 <svg class="bento-sparkline" viewBox="0 0 96 40" width="96" height="40" aria-hidden="true">
                   <path d="M 4 12 L 26 12 Q 36 12 42 28 Q 48 35 54 28 Q 60 12 70 12 L 92 12" fill="none" stroke="var(--accent-primary)" stroke-width="1.8" stroke-linecap="round" />
                   <circle cx="48" cy="33" r="2.5" fill="var(--accent-secondary)" />
@@ -315,6 +316,7 @@ const eqDomainComputational = katex.renderToString(
             </div>
             <div class="bento-header-right">
               <div class="bento-sparkline-wrap" title="Precessing Elliptical Keplerian Orbits">
+                <img src="/thumbnails/projects/astra.png" alt="ASTRA: High-Performance Rust Astrodynamics Toolkit" class="bento-custom-thumb" loading="lazy" onerror="this.style.display='none'; if (this.nextElementSibling) this.nextElementSibling.style.display='block';" />
                 <svg class="bento-sparkline" viewBox="0 0 96 40" width="96" height="40" aria-hidden="true">
                   <ellipse cx="48" cy="20" rx="36" ry="14" fill="none" stroke="var(--accent-primary)" stroke-width="1.5" transform="rotate(-15 48 20)" opacity="0.85" />
                   <ellipse cx="48" cy="20" rx="26" ry="9" fill="none" stroke="var(--accent-primary)" stroke-width="1.2" stroke-dasharray="2 3" transform="rotate(18 48 20)" opacity="0.6" />
@@ -367,6 +369,7 @@ const eqDomainComputational = katex.renderToString(
             </div>
             <div class="bento-header-right">
               <div class="bento-sparkline-wrap" title="Radon Sinogram Inversion Rays">
+                <img src="/thumbnails/projects/radon-ct.png" alt="Physics-Informed Synthetic CT Reconstruction &amp; Lesion Classification" class="bento-custom-thumb" loading="lazy" onerror="this.style.display='none'; if (this.nextElementSibling) this.nextElementSibling.style.display='block';" />
                 <svg class="bento-sparkline" viewBox="0 0 96 40" width="96" height="40" aria-hidden="true">
                   <circle cx="48" cy="20" r="14" fill="none" stroke="var(--accent-primary)" stroke-width="1.3" opacity="0.5" stroke-dasharray="3 2" />
                   <ellipse cx="48" cy="20" rx="6" ry="4" fill="var(--accent-primary)" opacity="0.3" />
@@ -381,12 +384,12 @@ const eqDomainComputational = katex.renderToString(
 
           <h3 class="bento-card-title">
             <a href="/projects/ct-imaging-tumour-detection" class="title-link no-underline">
-              Radon CT Sinogram &amp; Algebraic Tumour Reconstruction
+              Physics-Informed Synthetic CT Reconstruction &amp; Lesion Classification
             </a>
           </h3>
 
           <p class="bento-card-desc text-secondary">
-            Continuous Radon projection transforms, Filtered Back-Projection (FBP) with Ram-Lak ramp frequency filtering, 
+            Continuous Radon projection transforms, 2D slice-wise Filtered Back-Projection (FBP) with Ram-Lak ramp frequency filtering, 
             and Hounsfield Unit neoplasm segmentation on synthetic Shepp-Logan phantoms.
           </p>
 
@@ -421,6 +424,7 @@ const eqDomainComputational = katex.renderToString(
             </div>
             <div class="bento-header-right">
               <div class="bento-sparkline-wrap" title="Zernike Circular Pupil Aberration Rings">
+                <img src="/thumbnails/projects/zernike.png" alt="Zernike Polynomial Wavefront Decomposition &amp; Modal Analysis" class="bento-custom-thumb" loading="lazy" onerror="this.style.display='none'; if (this.nextElementSibling) this.nextElementSibling.style.display='block';" />
                 <svg class="bento-sparkline" viewBox="0 0 96 40" width="96" height="40" aria-hidden="true">
                   <circle cx="48" cy="20" r="16" fill="none" stroke="var(--accent-primary)" stroke-width="1.5" opacity="0.85" />
                   <circle cx="48" cy="20" r="10" fill="none" stroke="var(--accent-secondary)" stroke-width="1.2" stroke-dasharray="3 2" opacity="0.75" />
@@ -474,6 +478,7 @@ const eqDomainComputational = katex.renderToString(
             </div>
             <div class="bento-header-right">
               <div class="bento-sparkline-wrap" title="Gaussian Wave Packet Conjugate Uncertainty Invariant">
+                <img src="/thumbnails/projects/quantum-fft.png" alt="Computational Study of the Quantum Uncertainty Principle via Wave Packets &amp; Fourier Analysis" class="bento-custom-thumb" loading="lazy" onerror="this.style.display='none'; if (this.nextElementSibling) this.nextElementSibling.style.display='block';" />
                 <svg class="bento-sparkline" viewBox="0 0 96 40" width="96" height="40" aria-hidden="true">
                   <path d="M 4 20 C 24 20, 32 5, 48 5 C 64 5, 72 20, 92 20" fill="none" stroke="var(--accent-primary)" stroke-width="1.2" stroke-dasharray="2 2" opacity="0.8" />
                   <path d="M 4 20 C 24 20, 32 35, 48 35 C 64 35, 72 20, 92 20" fill="none" stroke="var(--accent-primary)" stroke-width="1.2" stroke-dasharray="2 2" opacity="0.8" />
@@ -643,11 +648,11 @@ const eqDomainComputational = katex.renderToString(
     if (!target) return;
 
     const phrases = [
-      "computational astrophysics & numerical modeling.",
-      "Rust astrodynamics & orbital simulation.",
-      "CCD photometry & variable star discovery.",
-      "optical wavefronts & Zernike decomposition.",
-      "tomographic inversion & inverse problems."
+      "stellar CCD photometry.",
+      "symplectic N-body solvers.",
+      "optical wavefront models.",
+      "tomographic inversions.",
+      "quantum wave-packet FFTs."
     ];
 
     let phraseIdx = 0;
@@ -809,9 +814,22 @@ const eqDomainComputational = katex.renderToString(
     margin: 0;
   }
 
-  .typewriter-container {
-    display: inline-block;
+  .hero-typewriter-wrap {
+    display: block;
+    height: 2.3em;
     min-height: 2.3em;
+    max-height: 2.3em;
+    line-height: 1.15;
+    overflow: hidden;
+  }
+
+  .typewriter-container {
+    display: block;
+    height: 2.3em;
+    min-height: 2.3em;
+    max-height: 2.3em;
+    line-height: 1.15;
+    overflow: hidden;
     vertical-align: top;
     white-space: normal;
   }
@@ -1391,23 +1409,36 @@ const eqDomainComputational = katex.renderToString(
     gap: 12px;
   }
   .bento-sparkline-wrap {
+    width: 96px;
+    height: 42px;
+    border-radius: 6px;
+    overflow: hidden;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 2px 6px;
+    padding: 0;
     background: rgba(229, 169, 60, 0.05);
     border: 1px solid var(--border-subtle);
-    border-radius: 4px;
     transition: all var(--transition-fast);
+    position: relative;
+    flex-shrink: 0;
   }
   .bento-card:hover .bento-sparkline-wrap {
     border-color: var(--accent-primary);
     background: rgba(229, 169, 60, 0.1);
     transform: scale(1.04);
   }
+  .bento-custom-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
   .bento-sparkline {
     display: block;
     overflow: visible;
+    width: 100%;
+    height: 100%;
   }
 
   .domain-actions-group,
