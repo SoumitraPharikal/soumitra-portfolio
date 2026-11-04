@@ -166,16 +166,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
               <span>LONGITUDE: 84.835° E</span>
             </div>
 
-            <!-- Live Google Maps Satellite View Iframe -->
-            <div class="map-graphic-box hairline-box" style="padding: 0; overflow: hidden;">
+            <!-- Live Google Maps Embedded View Iframe -->
+            <div class="map-graphic-box">
               <iframe 
-                src="https://maps.google.com/maps?q=19.200,84.835&t=k&z=15&ie=UTF8&iwloc=&output=embed" 
+                class="google-map-iframe"
+                src="https://maps.google.com/maps?q=19.2000,84.8350+(IISER+Berhampur+Permanent+Campus)&t=&z=14&ie=UTF8&iwloc=B&output=embed" 
                 width="100%" 
-                height="360" 
-                style="border:0; border-radius: 12px; filter: saturate(1.2) contrast(1.1); display: block;" 
+                height="200" 
+                style="border: 0; border-radius: 10px; display: block;" 
                 allowfullscreen="" 
                 loading="lazy" 
-                referrerpolicy="no-referrer-when-downgrade">
+                referrerpolicy="no-referrer-when-downgrade"
+                title="IISER Berhampur Permanent Campus Map">
               </iframe>
             </div>
 
@@ -184,9 +186,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 href="https://www.google.com/maps/place/19%C2%B012'00.0%22N+84%C2%B050'06.0%22E/@19.200,84.835,16z"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="editorial-btn primary"
+                class="station-map-btn mono"
               >
-                View on Google Maps ↗
+                VIEW ON GOOGLE MAPS ↗
               </a>
             </div>
           </div>
@@ -437,23 +439,54 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   .map-graphic-box {
     width: 100%;
-    height: 160px;
+    height: 200px;
     background: var(--bg-primary);
-    border-radius: var(--radius-sm);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
     overflow: hidden;
     margin-top: var(--space-2);
+    box-sizing: border-box;
   }
 
-  .map-svg {
+  .google-map-iframe {
     width: 100%;
     height: 100%;
+    border: 0;
+    border-radius: 10px;
+    display: block;
+    transition: filter var(--transition-base);
+  }
+
+  :global([data-theme="dark"]) .google-map-iframe,
+  :global(html:not([data-theme="light"])) .google-map-iframe {
+    filter: invert(90%) hue-rotate(180deg) brightness(95%) contrast(90%);
   }
 
   .station-actions {
     padding-top: var(--space-4);
+  }
+
+  .station-map-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.65rem 1.25rem;
+    border-radius: var(--radius-sm, 6px);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    border: 1px solid var(--accent-primary);
+    background: rgba(229, 169, 60, 0.12);
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+
+  .station-map-btn:hover {
+    background: var(--accent-primary);
+    color: var(--bg-primary);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(229, 169, 60, 0.35);
   }
 
   /* Toast Notification */

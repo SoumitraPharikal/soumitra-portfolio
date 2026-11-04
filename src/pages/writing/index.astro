@@ -189,7 +189,10 @@ const sem5Codes = ['PHY303', 'PHY309', 'PHY301', 'PHY305', 'CDS307', 'CDS301'];
               <!-- Col 3: Engine Specs & Primary Action Button -->
               <div class="comp-col-action">
                 <div class="engine-meta mono">
-                  <span class="engine-badge">XeLaTeX · LuaLaTeX · tcolorbox · TikZ</span>
+                  <span class="engine-badge">
+                    <span>XeLaTeX · LuaLaTeX</span>
+                    <span>tcolorbox · TikZ</span>
+                  </span>
                 </div>
 
                 <a href={`/writing/${item.id}`} class="view-notes-btn mono">
@@ -334,7 +337,7 @@ const sem5Codes = ['PHY303', 'PHY309', 'PHY301', 'PHY305', 'CDS307', 'CDS301'];
 
   .comp-plate-grid {
     display: grid;
-    grid-template-columns: 148px minmax(0, 1fr) 210px;
+    grid-template-columns: 148px minmax(0, 1fr) 200px;
     gap: 1.5rem;
     align-items: stretch;
   }
@@ -545,29 +548,42 @@ const sem5Codes = ['PHY303', 'PHY309', 'PHY301', 'PHY305', 'CDS307', 'CDS301'];
   .comp-col-action {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     text-align: center;
     height: 100%;
-    gap: var(--space-4);
+    width: 200px;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding-right: 0.25rem;
+    gap: 0.85rem;
   }
 
   .engine-meta {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
+    justify-content: center;
     width: 100%;
   }
 
   .engine-badge {
-    font-size: 0.72rem;
-    padding: 3px 8px;
-    border-radius: var(--radius-sm);
+    max-width: 175px;
+    width: 100%;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.4;
+    padding: 0.35rem 0.6rem;
+    border-radius: 8px;
+    font-size: 0.68rem;
+    box-sizing: border-box;
     background: var(--bg-surface-sunken);
     border: 1px solid var(--border-subtle);
     color: var(--text-secondary);
-    white-space: nowrap;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
   }
 
   .view-notes-btn {
