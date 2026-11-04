@@ -2,8 +2,8 @@
 title: "Classical Mechanics (PHY305)"
 courseCode: "PHY305"
 subject: "Classical Mechanics & Variational Principles"
-date: "Autumn 2026 · Active / Updated Regularly"
-typesetEngine: "XeLaTeX / KOMA-Script / TikZ"
+date: "Autumn 2026 · Semester V"
+typesetEngine: "XeLaTeX · LuaLaTeX · tcolorbox · TikZ"
 pdfPath: "/Soumitra_Pharikal_CV.pdf"
 pageCount: 42
 topicsCovered:

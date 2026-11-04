@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import InteractivePhysicsPlate from '../components/InteractivePhysicsPlate.astro';
-import ThreeSkyDome from '../components/ThreeSkyDome.astro';
 import katex from 'katex';
 
 // Pre-render KaTeX Equations in frontmatter for zero-FOUC static HTML
@@ -44,7 +43,6 @@ const eqDomainComputational = katex.renderToString(
           <ellipse cx="580" cy="340" rx="500" ry="280" stroke="currentColor" stroke-width="0.6" />
         </svg>
       </div>
-      <ThreeSkyDome />
       <div class="swiss-grid-12 hero-grid">
         <!-- Columns 1–6: Narrative & Identity -->
         <div class="col-6 hero-narrative reveal-up" style="--stagger-index: 1;">
@@ -138,8 +136,7 @@ const eqDomainComputational = katex.renderToString(
           </div>
           <h3 class="domain-title">Variable Star Photometry &amp; Exoplanetary Transits</h3>
           <p class="domain-desc text-secondary">
-            Reduction of 814 CCD time-series frames of open cluster IC 1369, DAOPHOT point-spread-function extraction, 
-            Lomb-Scargle periodograms, PARSEC isochrone CMD fitting, and TESS/Gaia exoplanet transit photometry.
+            Time-domain stellar variability analysis, point-spread-function (PSF) crowded-field deblending, non-parametric periodogram power spectra, and Bayesian stellar isochrone fitting.
           </p>
           <div class="domain-math-box">
             <div set:html={eqDomainAstro} />
@@ -155,7 +152,10 @@ const eqDomainComputational = katex.renderToString(
                 <span class="pipeline-chip mono" style="--chip-index: 4;">PARSEC</span>
               </div>
             </div>
-            <a href="/research#ic1369" class="domain-link">View Research Record →</a>
+            <div class="domain-actions-group">
+              <button type="button" class="load-in-lab-btn mono" data-sim-mode="1" title="Load IC 1369 Light Curve in Interactive Physics Lab">Load in Lab ↑</button>
+              <a href="/research#ic1369" class="domain-link">View Research Record →</a>
+            </div>
           </div>
         </div>
 
@@ -167,7 +167,7 @@ const eqDomainComputational = katex.renderToString(
           </div>
           <h3 class="domain-title">ASTRA: Orbital Propagation &amp; Symplectic Solvers</h3>
           <p class="domain-desc text-secondary">
-            Deterministic N-body orbital propagation in Rust with 4th/6th-order Yoshida symplectic integrators conserving Hamiltonian energy to ΔE/E₀ &lt; 10⁻¹², J₂ oblateness perturbations, and SGP4 propagation.
+            Hamiltonian N-body gravitational dynamics, canonical symplectic phase-space integration, zonal harmonic J₂ oblateness perturbations, and satellite TLE propagation.
           </p>
           <div class="domain-math-box">
             <div set:html={eqDomainAstrodynamics} />
@@ -178,12 +178,15 @@ const eqDomainComputational = katex.renderToString(
               <div class="pipeline-chips">
                 <span class="pipeline-chip mono" style="--chip-index: 0;">RUST</span>
                 <span class="pipeline-chip mono" style="--chip-index: 1;">SIMD</span>
-                <span class="pipeline-chip mono" style="--chip-index: 2;">YOSHIDA RK</span>
-                <span class="pipeline-chip mono" style="--chip-index: 3;">SGP4</span>
-                <span class="pipeline-chip mono" style="--chip-index: 4;">ASTRODYNAMICS</span>
+                <span class="pipeline-chip mono" style="--chip-index: 2;">YOSHIDA SYMPLECTIC</span>
+                <span class="pipeline-chip mono" style="--chip-index: 3;">DOP853</span>
+                <span class="pipeline-chip mono" style="--chip-index: 4;">SGP4</span>
               </div>
             </div>
-            <a href="/projects/astra-rust-toolkit" class="domain-link">View ASTRA Project →</a>
+            <div class="domain-actions-group">
+              <button type="button" class="load-in-lab-btn mono" data-sim-mode="2" title="Load N-Body Dynamics in Interactive Physics Lab">Load in Lab ↑</button>
+              <a href="/projects/astra-rust-toolkit" class="domain-link">View ASTRA Project →</a>
+            </div>
           </div>
         </div>
 
@@ -195,7 +198,7 @@ const eqDomainComputational = katex.renderToString(
           </div>
           <h3 class="domain-title">Tomographic Inversion &amp; Wavefront Sensing</h3>
           <p class="domain-desc text-secondary">
-            Analytical Radon transform filtered back-projection (FBP) with Ram-Lak ramp filters on synthetic Shepp-Logan phantoms, coupled with orthogonal Zernike modal decomposition for adaptive optics.
+            Ill-posed linear inverse problems, Fourier-slice tomographic sinogram reconstruction, and orthogonal Zernike polynomial wavefront aberration modeling.
           </p>
           <div class="domain-math-box">
             <div set:html={eqDomainComputational} />
@@ -211,7 +214,10 @@ const eqDomainComputational = katex.renderToString(
                 <span class="pipeline-chip mono" style="--chip-index: 4;">ZERNIKE MODES</span>
               </div>
             </div>
-            <a href="/projects/ct-imaging-tumour-detection" class="domain-link">View Inversion Project →</a>
+            <div class="domain-actions-group">
+              <button type="button" class="load-in-lab-btn mono" data-sim-mode="3" title="Load Radon Transform in Interactive Physics Lab">Load in Lab ↑</button>
+              <a href="/projects/ct-imaging-tumour-detection" class="domain-link">View Inversion Project →</a>
+            </div>
           </div>
         </div>
       </div>
@@ -238,7 +244,7 @@ const eqDomainComputational = katex.renderToString(
     <!-- ====================================================================
          SECTION 02: 2x2 BENTO GRID: 4 FEATURED TECHNICAL PROJECTS
          ==================================================================== -->
-    <section class="section-container" aria-label="Featured Technical Projects">
+    <section class="section-container" id="projects-section" aria-label="Featured Technical Projects">
       <div class="section-header-block reveal-up" style="--stagger-index: 1;">
         <span class="meta-index">§ 02 / SELECTED PROJECTS</span>
         <h2 class="section-title">Featured Research &amp; Computational Projects</h2>
@@ -249,14 +255,22 @@ const eqDomainComputational = katex.renderToString(
 
       <!-- 2x2 Bento Grid -->
       <div class="monographs-bento-grid reveal-up" style="--stagger-index: 2;">
-        <!-- Card 1: IC 1369 Photometry -->
-        <article class="bento-card hairline-box spotlight-card interactive-row corner-crosshair border-beam-card">
+        <!-- Card 1: IC 1369 Photometry (Bento 7-Col) -->
+        <article class="bento-card col-bento-7 hairline-box spotlight-card interactive-row corner-crosshair border-beam-card">
           <div class="bento-card-header">
             <div class="bento-tags mono">
               <span class="bento-num text-signal">01</span>
               <span class="bento-domain">OBSERVATIONAL ASTROPHYSICS</span>
             </div>
-            <span class="bento-period mono text-tertiary">ICSP KOLKATA · 2026</span>
+            <div class="bento-header-right">
+              <div class="bento-sparkline-wrap" title="Phase-Folded Eclipsing Binary Light Curve Dip">
+                <svg class="bento-sparkline" viewBox="0 0 96 40" width="96" height="40" aria-hidden="true">
+                  <path d="M 4 12 L 26 12 Q 36 12 42 28 Q 48 35 54 28 Q 60 12 70 12 L 92 12" fill="none" stroke="var(--accent-primary)" stroke-width="1.8" stroke-linecap="round" />
+                  <circle cx="48" cy="33" r="2.5" fill="var(--accent-secondary)" />
+                </svg>
+              </div>
+              <span class="bento-period mono text-tertiary">ICSP KOLKATA · 2026</span>
+            </div>
           </div>
 
           <h3 class="bento-card-title">
@@ -283,20 +297,33 @@ const eqDomainComputational = katex.renderToString(
               <span class="pipeline-chip mono" style="--chip-index: 2;">DAOPHOT</span>
               <span class="pipeline-chip mono" style="--chip-index: 3;">PARSEC</span>
             </div>
-            <a href="/projects/ic-1369-photometry-pipeline" class="editorial-btn">
-              View Project <span class="btn-arrow" aria-hidden="true">→</span>
-            </a>
+            <div class="bento-cta-group">
+              <button type="button" class="load-in-lab-btn mono" data-sim-mode="1" title="Load IC 1369 Light Curve in Interactive Physics Lab">Load in Lab ↑</button>
+              <a href="/projects/ic-1369-photometry-pipeline" class="editorial-btn">
+                View Project <span class="btn-arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
           </div>
         </article>
 
-        <!-- Card 2: ASTRA Rust Toolkit -->
-        <article class="bento-card hairline-box spotlight-card interactive-row corner-crosshair">
+        <!-- Card 2: ASTRA Rust Toolkit (Bento 5-Col) -->
+        <article class="bento-card col-bento-5 hairline-box spotlight-card interactive-row corner-crosshair">
           <div class="bento-card-header">
             <div class="bento-tags mono">
               <span class="bento-num text-signal">02</span>
               <span class="bento-domain">ASTRODYNAMICS &amp; SIMULATION</span>
             </div>
-            <span class="bento-period mono text-tertiary">RUST ENGINE · 2026</span>
+            <div class="bento-header-right">
+              <div class="bento-sparkline-wrap" title="Precessing Elliptical Keplerian Orbits">
+                <svg class="bento-sparkline" viewBox="0 0 96 40" width="96" height="40" aria-hidden="true">
+                  <ellipse cx="48" cy="20" rx="36" ry="14" fill="none" stroke="var(--accent-primary)" stroke-width="1.5" transform="rotate(-15 48 20)" opacity="0.85" />
+                  <ellipse cx="48" cy="20" rx="26" ry="9" fill="none" stroke="var(--accent-primary)" stroke-width="1.2" stroke-dasharray="2 3" transform="rotate(18 48 20)" opacity="0.6" />
+                  <circle cx="48" cy="20" r="2.5" fill="var(--accent-primary)" />
+                  <circle cx="20" cy="14" r="2" fill="var(--accent-secondary)" />
+                </svg>
+              </div>
+              <span class="bento-period mono text-tertiary">RUST ENGINE · 2026</span>
+            </div>
           </div>
 
           <h3 class="bento-card-title">
@@ -322,20 +349,34 @@ const eqDomainComputational = katex.renderToString(
               <span class="pipeline-chip mono" style="--chip-index: 2;">YOSHIDA</span>
               <span class="pipeline-chip mono" style="--chip-index: 3;">SGP4</span>
             </div>
-            <a href="/projects/astra-rust-toolkit" class="editorial-btn">
-              View Project <span class="btn-arrow" aria-hidden="true">→</span>
-            </a>
+            <div class="bento-cta-group">
+              <button type="button" class="load-in-lab-btn mono" data-sim-mode="2" title="Load ASTRA N-Body Dynamics in Interactive Physics Lab">Load in Lab ↑</button>
+              <a href="/projects/astra-rust-toolkit" class="editorial-btn">
+                View Project <span class="btn-arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
           </div>
         </article>
 
-        <!-- Card 3: Radon CT Tumour Detection -->
-        <article class="bento-card hairline-box spotlight-card interactive-row corner-crosshair">
+        <!-- Card 3: Radon CT Tumour Detection (Bento 5-Col) -->
+        <article class="bento-card col-bento-5 hairline-box spotlight-card interactive-row corner-crosshair">
           <div class="bento-card-header">
             <div class="bento-tags mono">
               <span class="bento-num text-signal">03</span>
               <span class="bento-domain">COMPUTATIONAL TOMOGRAPHY</span>
             </div>
-            <span class="bento-period mono text-tertiary">ALGEBRAIC INVERSION · 2025</span>
+            <div class="bento-header-right">
+              <div class="bento-sparkline-wrap" title="Radon Sinogram Inversion Rays">
+                <svg class="bento-sparkline" viewBox="0 0 96 40" width="96" height="40" aria-hidden="true">
+                  <circle cx="48" cy="20" r="14" fill="none" stroke="var(--accent-primary)" stroke-width="1.3" opacity="0.5" stroke-dasharray="3 2" />
+                  <ellipse cx="48" cy="20" rx="6" ry="4" fill="var(--accent-primary)" opacity="0.3" />
+                  <line x1="12" y1="8" x2="84" y2="32" stroke="var(--accent-secondary)" stroke-width="1.2" opacity="0.85" />
+                  <line x1="12" y1="32" x2="84" y2="8" stroke="var(--accent-primary)" stroke-width="1.2" opacity="0.85" />
+                  <line x1="48" y1="4" x2="48" y2="36" stroke="var(--accent-primary)" stroke-width="1" stroke-dasharray="2 2" opacity="0.5" />
+                </svg>
+              </div>
+              <span class="bento-period mono text-tertiary">ALGEBRAIC INVERSION · 2025</span>
+            </div>
           </div>
 
           <h3 class="bento-card-title">
@@ -350,9 +391,9 @@ const eqDomainComputational = katex.renderToString(
           </p>
 
           <div class="quant-result-strip mono">
-            <span class="quant-chip"><span class="quant-dot dot-cyan"></span>Ram-Lak FBP</span>
-            <span class="quant-chip"><span class="quant-dot dot-gold"></span>Shepp-Logan</span>
-            <span class="quant-chip"><span class="quant-dot dot-amber"></span>HU Classification</span>
+            <span class="quant-chip"><span class="quant-dot dot-cyan"></span>180° Sinogram Sweep</span>
+            <span class="quant-chip"><span class="quant-dot dot-gold"></span>Ram-Lak FBP</span>
+            <span class="quant-chip"><span class="quant-dot dot-amber"></span>HU Segmentation</span>
           </div>
 
           <div class="bento-card-footer hairline-top">
@@ -362,20 +403,33 @@ const eqDomainComputational = katex.renderToString(
               <span class="pipeline-chip mono" style="--chip-index: 2;">SKIMAGE</span>
               <span class="pipeline-chip mono" style="--chip-index: 3;">RADON FBP</span>
             </div>
-            <a href="/projects/ct-imaging-tumour-detection" class="editorial-btn">
-              View Project <span class="btn-arrow" aria-hidden="true">→</span>
-            </a>
+            <div class="bento-cta-group">
+              <button type="button" class="load-in-lab-btn mono" data-sim-mode="3" title="Load Radon Reconstruction in Interactive Physics Lab">Load in Lab ↑</button>
+              <a href="/projects/ct-imaging-tumour-detection" class="editorial-btn">
+                View Project <span class="btn-arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
           </div>
         </article>
 
-        <!-- Card 4: Zernike Wavefront Analyzer -->
-        <article class="bento-card hairline-box spotlight-card interactive-row corner-crosshair">
+        <!-- Card 4: Zernike Wavefront Analyzer (Bento 7-Col) -->
+        <article class="bento-card col-bento-7 hairline-box spotlight-card interactive-row corner-crosshair">
           <div class="bento-card-header">
             <div class="bento-tags mono">
               <span class="bento-num text-signal">04</span>
               <span class="bento-domain">ADAPTIVE OPTICS</span>
             </div>
-            <span class="bento-period mono text-tertiary">WAVEFRONT MODES · 2025</span>
+            <div class="bento-header-right">
+              <div class="bento-sparkline-wrap" title="Zernike Circular Pupil Aberration Rings">
+                <svg class="bento-sparkline" viewBox="0 0 96 40" width="96" height="40" aria-hidden="true">
+                  <circle cx="48" cy="20" r="16" fill="none" stroke="var(--accent-primary)" stroke-width="1.5" opacity="0.85" />
+                  <circle cx="48" cy="20" r="10" fill="none" stroke="var(--accent-secondary)" stroke-width="1.2" stroke-dasharray="3 2" opacity="0.75" />
+                  <circle cx="48" cy="20" r="4" fill="var(--accent-primary)" opacity="0.9" />
+                  <path d="M 32 20 Q 48 10 64 20 Q 48 30 32 20 Z" fill="none" stroke="var(--accent-primary)" stroke-width="0.9" opacity="0.6" />
+                </svg>
+              </div>
+              <span class="bento-period mono text-tertiary">WAVEFRONT MODES · 2025</span>
+            </div>
           </div>
 
           <h3 class="bento-card-title">
@@ -391,8 +445,8 @@ const eqDomainComputational = katex.renderToString(
 
           <div class="quant-result-strip mono">
             <span class="quant-chip"><span class="quant-dot dot-cyan"></span>36 Zernike Modes</span>
-            <span class="quant-chip"><span class="quant-dot dot-gold"></span>Strehl Ratio</span>
-            <span class="quant-chip"><span class="quant-dot dot-amber"></span>Dynamic Pupil</span>
+            <span class="quant-chip"><span class="quant-dot dot-gold"></span>Strehl S ≈ exp(-σ²)</span>
+            <span class="quant-chip"><span class="quant-dot dot-amber"></span>Gram-Schmidt</span>
           </div>
 
           <div class="bento-card-footer hairline-top">
@@ -402,9 +456,12 @@ const eqDomainComputational = katex.renderToString(
               <span class="pipeline-chip mono" style="--chip-index: 2;">GRAM-SCHMIDT</span>
               <span class="pipeline-chip mono" style="--chip-index: 3;">ADAPTIVE OPTICS</span>
             </div>
-            <a href="/projects/zernike-wavefront-analyzer" class="editorial-btn">
-              View Project <span class="btn-arrow" aria-hidden="true">→</span>
-            </a>
+            <div class="bento-cta-group">
+              <button type="button" class="load-in-lab-btn mono" data-sim-mode="4" title="Load Wavefront Lab in Interactive Physics Lab">Load in Lab ↑</button>
+              <a href="/projects/zernike-wavefront-analyzer" class="editorial-btn">
+                View Project <span class="btn-arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
           </div>
         </article>
       </div>
@@ -431,12 +488,12 @@ const eqDomainComputational = katex.renderToString(
     <!-- ====================================================================
          SECTION 03: ACADEMIC HIGHLIGHTS & QUICK PORTALS BENTO
          ==================================================================== -->
-    <section class="section-container" aria-label="Academic Highlights and Portals">
+    <section class="section-container" id="highlights-section" aria-label="Academic Highlights and Portals">
       <div class="section-header-block reveal-up" style="--stagger-index: 1;">
         <span class="meta-index">§ 03 / SCHOLASTIC RECOGNITION &amp; QUICK PORTALS</span>
         <h2 class="section-title">Academic Highlights &amp; Curricular Portals</h2>
         <p class="section-subtitle reading-measure text-secondary">
-          Scholastic examination merits, national olympiad qualifications, and direct navigation portals across research, theoretical compendiums, and leadership.
+          Scholastic examination merits, national olympiad qualifications, and direct navigation portals across research, course notes, and campus leadership.
         </p>
       </div>
 
@@ -514,7 +571,7 @@ const eqDomainComputational = katex.renderToString(
               <span class="portal-index mono text-gold">PORTAL // 03</span>
               <span class="portal-arrow mono">↗</span>
             </div>
-            <h3 class="portal-title">Leadership &amp; Institutional Governance</h3>
+            <h3 class="portal-title">Leadership &amp; Campus Service</h3>
             <p class="portal-desc text-secondary">
               Led Pixophiles Photography Club (Best Club Award 2026), coordinated telescope sessions in Naxatra, and serve on the Science Subcouncil.
             </p>
@@ -580,6 +637,24 @@ const eqDomainComputational = katex.renderToString(
 
   initHeroTypewriter();
   document.addEventListener('astro:page-load', initHeroTypewriter);
+
+  // Synchronized "Load in Lab ↑" Cross-Trigger Engine
+  function initLoadInLab() {
+    document.querySelectorAll('.load-in-lab-btn').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const mode = (btn as HTMLElement).dataset.simMode;
+        const modeKey = mode === '1' ? 'photometry' : mode === '2' ? 'nbody' : mode === '3' ? 'radon' : 'mc';
+        const container = document.getElementById('physics-instrument-container');
+        if (container) {
+          container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          window.dispatchEvent(new CustomEvent('load-physics-mode', { detail: { mode: modeKey } }));
+        }
+      });
+    });
+  }
+  initLoadInLab();
+  document.addEventListener('astro:page-load', initLoadInLab);
 </script>
 
 <style>
@@ -1236,6 +1311,81 @@ const eqDomainComputational = katex.renderToString(
     transform: translateY(0);
   }
 
+  /* Asymmetric 12-Column Bento Grid */
+  .monographs-bento-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+  .bento-card.col-bento-7 {
+    grid-column: span 7;
+  }
+  .bento-card.col-bento-5 {
+    grid-column: span 5;
+  }
+  @media (max-width: 900px) {
+    .monographs-bento-grid {
+      grid-template-columns: 1fr;
+    }
+    .bento-card.col-bento-7,
+    .bento-card.col-bento-5 {
+      grid-column: span 1;
+    }
+  }
+
+  .bento-header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .bento-sparkline-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 6px;
+    background: rgba(229, 169, 60, 0.05);
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    transition: all var(--transition-fast);
+  }
+  .bento-card:hover .bento-sparkline-wrap {
+    border-color: var(--accent-primary);
+    background: rgba(229, 169, 60, 0.1);
+    transform: scale(1.04);
+  }
+  .bento-sparkline {
+    display: block;
+    overflow: visible;
+  }
+
+  .domain-actions-group,
+  .bento-cta-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .load-in-lab-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    background: rgba(229, 169, 60, 0.08);
+    color: var(--accent-primary);
+    border: 1px solid rgba(229, 169, 60, 0.35);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+  .load-in-lab-btn:hover {
+    background: var(--accent-primary);
+    color: var(--bg-primary);
+    border-color: var(--accent-primary);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(229, 169, 60, 0.3);
+  }
 </style>
 
 <script>

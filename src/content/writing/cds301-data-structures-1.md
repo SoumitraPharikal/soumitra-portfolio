@@ -1,9 +1,9 @@
 ---
-title: "Programming and Data Structures I (CDS301)"
-courseCode: "CDS301"
-subject: "Data Structures & Computational Complexity"
-date: "Autumn 2026 · Active / Updated Regularly"
-typesetEngine: "pdfLaTeX / minted / Algorithm2e"
+title: "Architecture & Operations of Computing Systems (CDS307)"
+courseCode: "CDS307"
+subject: "Computing Architecture & System Operations"
+date: "Autumn 2026 · Semester V"
+typesetEngine: "XeLaTeX · LuaLaTeX · tcolorbox · TikZ"
 pdfPath: "/Soumitra_Pharikal_CV.pdf"
 pageCount: 38
 topicsCovered:

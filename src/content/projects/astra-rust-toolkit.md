@@ -2,17 +2,17 @@
 title: "ASTRA: Astrodynamics Simulation Toolkit in Rust"
 codeName: "ASTRA-RS"
 subtitle: "Deterministic N-Body Orbital Mechanics & Perturbation Engine"
-period: "Autumn 2025 – Present"
+period: "Autumn 2025 · Present"
 category: "Astrodynamics & Simulation"
 primaryLanguage: "Rust"
 techStack: ["Rust", "SIMD", "Symplectic Integrators", "SOFA", "Typestates"]
-leadMetrics: "Energy conservation error < 10^-12 over 10^6 steps"
+leadMetrics: "Relative energy error ΔE/E₀ < 10⁻¹² over 10⁶ steps (Yoshida 6th-order)"
 featured: true
 hasSimulation: true
 simulationType: "orbit"
 repoUrl: "https://github.com/SoumitraPharikal/astra-rs"
 docsUrl: "https://github.com/SoumitraPharikal/astra-rs"
-order: 4
+order: 1
 ---
 
 ## 01. Overview

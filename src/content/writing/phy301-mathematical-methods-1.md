@@ -2,8 +2,8 @@
 title: "Mathematical Methods I (PHY301)"
 courseCode: "PHY301"
 subject: "Mathematical Physics & Complex Analysis"
-date: "Autumn 2026 · Active / Updated Regularly"
-typesetEngine: "pdfLaTeX / AmsLaTeX / TikZ"
+date: "Autumn 2026 · Semester V"
+typesetEngine: "XeLaTeX · LuaLaTeX · tcolorbox · TikZ"
 pdfPath: "/Soumitra_Pharikal_CV.pdf"
 pageCount: 52
 topicsCovered:

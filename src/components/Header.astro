@@ -27,8 +27,28 @@ const pathname = Astro.url.pathname;
   <div class="monograph-container header-container">
     <div class="floating-dock hairline-box">
       <!-- Left: Monogram & Identity -->
-      <a href="/" class="brand-anchor no-underline">
-        <span class="brand-monogram">S</span>
+      <a href="/" class="brand-anchor no-underline" aria-label="Soumitra Pharikal Homepage">
+        <div class="brand-emblem-wrapper">
+          <svg class="brand-emblem-svg" viewBox="0 0 36 36" width="36" height="36" aria-hidden="true">
+            <defs>
+              <radialGradient id="emblemStarlight" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="var(--accent-primary)" stop-opacity="0.35" />
+                <stop offset="100%" stop-color="transparent" stop-opacity="0" />
+              </radialGradient>
+            </defs>
+            <circle cx="18" cy="18" r="16" fill="url(#emblemStarlight)" />
+            <circle cx="18" cy="18" r="6" fill="none" stroke="var(--accent-primary)" stroke-width="0.8" stroke-dasharray="1.5 1.5" opacity="0.65" />
+            <g class="orbital-ring-group">
+              <ellipse cx="18" cy="18" rx="14" ry="5.8" fill="none" stroke="var(--accent-primary)" stroke-width="1.4" opacity="0.9" />
+              <circle cx="4" cy="18" r="1.6" fill="var(--accent-secondary)" />
+            </g>
+            <path d="M 18 11.5 Q 18 18 11.5 18 Q 18 18 18 24.5 Q 18 18 24.5 18 Q 18 18 18 11.5 Z" fill="var(--accent-primary)" />
+            <circle cx="18" cy="18" r="1.2" fill="#FFFFFF" />
+          </svg>
+          <div class="brand-portrait-tooltip" aria-hidden="true">
+            <img src="/assets/portrait.png" alt="Soumitra Pharikal" class="brand-portrait-img" width="38" height="38" />
+          </div>
+        </div>
         <div class="brand-text">
           <span class="brand-name">Soumitra Pharikal</span>
           <span class="brand-inst mono">IISER BERHAMPUR</span>
@@ -144,10 +164,22 @@ const pathname = Astro.url.pathname;
             </a>
           ))}
           <div class="cmd-section-label mono" style="margin-top: 8px;">ACTIONS</div>
-          <button type="button" class="cmd-item cmd-theme-action" id="cmd-toggle-theme-btn">
-            <span class="cmd-item-title">Toggle Observatory / Light Mode</span>
-            <span class="cmd-item-path mono text-gold">THEME TOGGLE</span>
+          <button type="button" class="cmd-item" id="cmd-toggle-theme-btn">
+            <span class="cmd-item-title">Toggle Dark / Light Theme</span>
+            <span class="cmd-item-path mono text-gold">THEME</span>
           </button>
+          <button type="button" class="cmd-item" id="cmd-copy-email-btn">
+            <span class="cmd-item-title" id="cmd-copy-email-label">Copy Institutional Email (24123@iiserbpr.ac.in)</span>
+            <span class="cmd-item-path mono" id="cmd-copy-email-badge">COPY</span>
+          </button>
+          <a href="/cv" class="cmd-item" id="cmd-view-cv-btn">
+            <span class="cmd-item-title">Download / View Curriculum Vitae</span>
+            <span class="cmd-item-path mono">/CV</span>
+          </a>
+          <a href="https://github.com/SoumitraPharikal" target="_blank" rel="noopener noreferrer" class="cmd-item" id="cmd-github-btn">
+            <span class="cmd-item-title">Open GitHub (@SoumitraPharikal)</span>
+            <span class="cmd-item-path mono">↗</span>
+          </a>
         </div>
       </div>
     </div>
@@ -290,6 +322,45 @@ const pathname = Astro.url.pathname;
       toggle?.click();
       closeCommandPalette();
     });
+
+    const copyEmailBtn = document.getElementById('cmd-copy-email-btn');
+    const copyEmailLabel = document.getElementById('cmd-copy-email-label');
+    const copyEmailBadge = document.getElementById('cmd-copy-email-badge');
+
+    copyEmailBtn?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText('24123@iiserbpr.ac.in');
+        if (copyEmailLabel) copyEmailLabel.textContent = 'Copied to Clipboard! (24123@iiserbpr.ac.in)';
+        if (copyEmailBadge) copyEmailBadge.textContent = 'COPIED ✓';
+        setTimeout(() => {
+          if (copyEmailLabel) copyEmailLabel.textContent = 'Copy Institutional Email (24123@iiserbpr.ac.in)';
+          if (copyEmailBadge) copyEmailBadge.textContent = 'COPY';
+          closeCommandPalette();
+        }, 1100);
+      } catch (e) {
+        if (copyEmailBadge) copyEmailBadge.textContent = '24123@iiserbpr.ac.in';
+      }
+    });
+
+    // Magnetic Cursor Pull for CV button
+    const cvBtn = document.querySelector('.nav-btn-cv') as HTMLElement | null;
+    if (cvBtn && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      cvBtn.addEventListener('mousemove', (e: MouseEvent) => {
+        const rect = cvBtn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        const pullX = Math.max(-3.5, Math.min(3.5, x * 0.2));
+        const pullY = Math.max(-3.5, Math.min(3.5, y * 0.2));
+        cvBtn.style.transform = `translate(${pullX.toFixed(2)}px, ${pullY.toFixed(2)}px)`;
+      });
+      cvBtn.addEventListener('mouseleave', () => {
+        cvBtn.style.transform = 'translate(0px, 0px)';
+        cvBtn.style.transition = 'transform 0.3s cubic-bezier(0.22, 1, 0.36, 1)';
+      });
+      cvBtn.addEventListener('mouseenter', () => {
+        cvBtn.style.transition = 'none';
+      });
+    }
   }
 
   initHeaderDrawer();
@@ -334,26 +405,59 @@ const pathname = Astro.url.pathname;
     gap: 12px;
   }
 
-  .brand-monogram {
+  .brand-emblem-wrapper {
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent-primary-tint), var(--accent-gold-tint));
-    border: 1px solid var(--border-strong);
-    color: var(--accent-gold);
-    font-family: var(--font-serif);
-    font-size: 1.15rem;
-    font-weight: 500;
-    font-style: italic;
-    line-height: 1;
-    transition: transform var(--transition-base);
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
   }
 
-  .brand-anchor:hover .brand-monogram {
-    transform: rotate(12deg) scale(1.05);
+  .brand-emblem-svg {
+    width: 36px;
+    height: 36px;
+    overflow: visible;
+  }
+
+  .orbital-ring-group {
+    transform: rotate(-28deg);
+    transform-origin: 18px 18px;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .brand-anchor:hover .orbital-ring-group {
+    transform: rotate(-13deg);
+  }
+
+  .brand-portrait-tooltip {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    opacity: 0;
+    transform: translateY(-4px) scale(0.85);
+    pointer-events: none;
+    transition: opacity 0.22s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), 0 0 10px rgba(229, 169, 60, 0.35);
+    z-index: 100;
+  }
+
+  .brand-anchor:hover .brand-portrait-tooltip {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .brand-portrait-img {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1.5px solid var(--accent-primary);
+    display: block;
   }
 
   .brand-text {

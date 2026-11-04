@@ -6,12 +6,12 @@ period: "Feb 2026 – Aug 2026"
 category: "Computational Physics & Medical Imaging"
 primaryLanguage: "Python"
 techStack: ["Python", "NumPy", "SciPy", "scikit-image", "scikit-learn", "Matplotlib"]
-leadMetrics: "Full Radon inversion pipeline · Hounsfield Unit mapping · Logistic regression classification"
+leadMetrics: "[Synthetic Phantom Proof-of-Concept] · 180° Ram-Lak FBP inversion · Shepp-Logan phantom · HU segmentation"
 featured: true
 hasSimulation: false
 repoUrl: "https://github.com/SoumitraPharikal"
 docsUrl: "https://github.com/SoumitraPharikal"
-order: 2
+order: 4
 ---
 
 > **Scientific Scope Note:** This project is a synthetic proof-of-concept pipeline utilizing mathematical Shepp-Logan phantoms and simulated Radon projections to investigate the inverse physics of Computed Tomography and statistical feature extraction; it is designed for physical simulation and does not process clinical human patient datasets.

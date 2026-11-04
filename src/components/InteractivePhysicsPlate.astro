@@ -65,9 +65,9 @@
         aria-selected="false"
         tabindex="-1"
         data-mode="mc"
-        title="Mode 04: Markov-chain stochastic decay P(Δt) = 1 - exp(-λ Δt) simulated across an 8x8 discrete radioisotope lattice with live ensemble half-life fit."
+        title="Mode 04: 3D Orthogonal Zernike polynomial circular pupil wavefront aberration surface W(ρ, θ) with interactive 3D perspective rotation."
       >
-        <span class="mode-number">04</span> Monte Carlo
+        <span class="mode-number">04</span> Wavefront
       </button>
     </div>
   </div>
@@ -102,6 +102,10 @@
   <!-- Canvas Viewport (Fixed 320px Height) -->
   <div class="canvas-viewport" id="canvas-wrapper">
     <canvas id="physics-canvas" width="560" height="320" aria-label="Interactive Astrophysics and Computational Simulation Plate"></canvas>
+    <!-- 3D Drag Rotation Hint Pill -->
+    <div class="drag-3d-hint-pill mono" id="drag-3d-hint" style="display: none;" aria-hidden="true">
+      <span class="drag-hint-icon">✥</span> 3D DRAG ENABLED
+    </div>
     <div class="canvas-grid-overlay" aria-hidden="true">
       <span class="coord-tag coord-tl mono" id="coord-grid-tag">AXES: PHASE φ ∈ [0, 1] vs. ΔMAG (CARTESIAN)</span>
     </div>
@@ -660,6 +664,38 @@
     opacity: 0 !important;
     transform: translateY(3px) !important;
   }
+
+  .drag-3d-hint-pill {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 8px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    background: rgba(11, 15, 23, 0.85);
+    border: 1px solid rgba(229, 169, 60, 0.35);
+    color: var(--accent-primary);
+    border-radius: 4px;
+    pointer-events: none;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  }
+  .drag-hint-icon {
+    font-size: 0.75rem;
+    color: var(--accent-secondary);
+  }
+  .pulse-amber-border {
+    animation: pulseAmberBorder 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  @keyframes pulseAmberBorder {
+    0% { border-color: var(--accent-primary); box-shadow: 0 0 0 3px rgba(229, 169, 60, 0.4), 0 0 20px rgba(229, 169, 60, 0.3); }
+    100% { border-color: var(--border-subtle); box-shadow: none; }
+  }
+
 </style>
 
 <script>
@@ -668,6 +704,72 @@
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
+
+    const drag3dHint = document.getElementById('drag-3d-hint');
+
+    // 3D Canvas Drag Interaction
+    canvas.addEventListener('mousedown', (e: MouseEvent) => {
+      if (currentMode === 'nbody' || currentMode === 'mc') {
+        isDragging3D = true;
+        lastDragX = e.clientX;
+        lastDragY = e.clientY;
+        canvas.style.cursor = 'grabbing';
+      }
+    });
+
+    window.addEventListener('mousemove', (e: MouseEvent) => {
+      if (isDragging3D) {
+        const dx = e.clientX - lastDragX;
+        const dy = e.clientY - lastDragY;
+        yaw3D += dx * 0.012;
+        pitch3D = Math.max(0.18, Math.min(1.25, pitch3D + dy * 0.012));
+        lastDragX = e.clientX;
+        lastDragY = e.clientY;
+      }
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (isDragging3D) {
+        isDragging3D = false;
+        if (canvas) canvas.style.cursor = (currentMode === 'nbody' || currentMode === 'mc') ? 'grab' : 'default';
+      }
+    });
+
+    canvas.addEventListener('touchstart', (e: TouchEvent) => {
+      if ((currentMode === 'nbody' || currentMode === 'mc') && e.touches.length === 1) {
+        isDragging3D = true;
+        lastDragX = e.touches[0].clientX;
+        lastDragY = e.touches[0].clientY;
+      }
+    }, { passive: true });
+
+    window.addEventListener('touchmove', (e: TouchEvent) => {
+      if (isDragging3D && e.touches.length === 1) {
+        const dx = e.touches[0].clientX - lastDragX;
+        const dy = e.touches[0].clientY - lastDragY;
+        yaw3D += dx * 0.012;
+        pitch3D = Math.max(0.18, Math.min(1.25, pitch3D + dy * 0.012));
+        lastDragX = e.touches[0].clientX;
+        lastDragY = e.touches[0].clientY;
+      }
+    }, { passive: true });
+
+    window.addEventListener('touchend', () => {
+      isDragging3D = false;
+    });
+
+    // Cross-trigger listener for "Load in Lab ↑"
+    window.addEventListener('load-physics-mode', (e: any) => {
+      const targetMode = e.detail?.mode;
+      if (!targetMode) return;
+      const targetBtn = document.getElementById(`btn-mode-${targetMode}`);
+      targetBtn?.click();
+      const containerEl = document.getElementById('physics-instrument-container');
+      if (containerEl) {
+        containerEl.classList.add('pulse-amber-border');
+        setTimeout(() => containerEl.classList.remove('pulse-amber-border'), 1600);
+      }
+    });
 
     // Check reduced motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -698,6 +800,36 @@
     type PlateMode = 'photometry' | 'nbody' | 'radon' | 'mc';
     let currentMode: PlateMode = 'photometry';
     let animationId: number = 0;
+
+    // Interactive 3D Perspective Rotation State (Draggable Pitch & Yaw)
+    let pitch3D = 0.58;
+    let yaw3D = -0.45;
+    let isDragging3D = false;
+    let lastDragX = 0;
+    let lastDragY = 0;
+
+    function project3D(x: number, y: number, z: number, cx: number, cy: number, scale = 1.0) {
+      const cosZ = Math.cos(yaw3D);
+      const sinZ = Math.sin(yaw3D);
+      const x1 = x * cosZ - y * sinZ;
+      const y1 = x * sinZ + y * cosZ;
+      const z1 = z;
+
+      const cosX = Math.cos(pitch3D);
+      const sinX = Math.sin(pitch3D);
+      const y2 = y1 * cosX - z1 * sinX;
+      const z2 = y1 * sinX + z1 * cosX;
+      const x2 = x1;
+
+      const cameraDist = 480;
+      const fov = cameraDist / (cameraDist + z2);
+      return {
+        x: cx + x2 * fov * scale,
+        y: cy + y2 * fov * scale,
+        depth: z2,
+        fov
+      };
+    }
 
     let width = 560;
     let height = 320;
@@ -797,6 +929,13 @@
         btn.setAttribute('tabindex', isActive ? '0' : '-1');
       });
 
+      if (drag3dHint) {
+        drag3dHint.style.display = (currentMode === 'nbody' || currentMode === 'mc') ? 'inline-flex' : 'none';
+      }
+      if (canvas) {
+        canvas.style.cursor = (currentMode === 'nbody' || currentMode === 'mc') ? 'grab' : 'default';
+      }
+
       if (captionText) captionText.textContent = captions[currentMode];
       if (canvas) canvas.setAttribute('aria-label', ariaLabels[currentMode]);
 
@@ -817,7 +956,7 @@
         } else if (currentMode === 'radon') {
           coordTag.textContent = 'PROJECTION: RADON TRANSLATION s vs ANGLE θ';
         } else if (currentMode === 'mc') {
-          coordTag.textContent = 'LATTICE: 8x8 DISCRETE RADIOISOTOPE ENSEMBLE';
+          coordTag.textContent = 'OPTICAL PUPIL: 36 ZERNIKE MODES [3D PERSPECTIVE]';
         }
       }
 
@@ -856,16 +995,15 @@
         metricVal1.textContent = isRamLakFiltered ? 'FILTER: RAM-LAK |ω|' : 'FILTER: UNFILTERED (1/r)';
         metricVal2.textContent = `PROJECTIONS: ${Math.round((paramRadon / 180) * 256)} RAYS`;
       } else if (currentMode === 'mc') {
-        sliderLabel.textContent = 'ENSEMBLE N₀:';
-        slider.min = '2.00';
-        slider.max = '4.00';
-        slider.step = '0.05';
+        sliderLabel.textContent = 'ABERRATION σ:';
+        slider.min = '0.05';
+        slider.max = '1.0';
+        slider.step = '0.02';
         slider.value = paramMc.toFixed(2);
-        const N0 = Math.round(Math.pow(10, paramMc));
-        const rmsPct = (100 / Math.sqrt(N0)).toFixed(1);
-        sliderReadout.textContent = `N₀ = ${N0.toLocaleString()} (RMS ~ ${rmsPct}%)`;
-        metricVal1.textContent = `RMS NOISE: ±${rmsPct}%`;
-        metricVal2.textContent = `THEORY: N(t)=N₀e^(-λt)`;
+        sliderReadout.textContent = `σ = ${paramMc.toFixed(2)} rad`;
+        const strehl = Math.exp(-Math.pow(paramMc, 2));
+        metricVal1.textContent = `36 ZERNIKE MODES`;
+        metricVal2.textContent = `STREHL S: ${strehl.toFixed(3)}`;
       }
     }
 
@@ -1153,90 +1291,107 @@
       }
 
       // ======================================================================
-      // MODE 02: ASTRODYNAMICS N-BODY (RK4) & J2 APSIDAL PRECESSION
+      // MODE 02: ASTRODYNAMICS N-BODY (RK4) & 3D GRAVITATIONAL POTENTIAL WELL
       // ======================================================================
       else if (currentMode === 'nbody') {
         const cx = width / 2;
-        const cy = height / 2;
+        const cy = height / 2 + 10;
 
-        // Background Coordinate Rings
-        ctx!.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.06)' : 'rgba(15, 23, 42, 0.06)';
+        // Render 3D Sunken Gravitational Potential Well Mesh Φ(r)
         ctx!.lineWidth = 1;
-        ctx!.beginPath();
-        ctx!.arc(cx, cy, 60, 0, Math.PI * 2);
-        ctx!.arc(cx, cy, 110, 0, Math.PI * 2);
-        ctx!.stroke();
+        const ringRadii = [25, 45, 68, 95, 125, 160];
+        ringRadii.forEach((r, idx) => {
+          const depthZ = -55 / (1 + r * 0.022);
+          ctx!.beginPath();
+          for (let step = 0; step <= 36; step++) {
+            const th = (step / 36) * Math.PI * 2;
+            const px = r * Math.cos(th);
+            const py = r * Math.sin(th);
+            const pt = project3D(px, py, depthZ, cx, cy);
+            if (step === 0) ctx!.moveTo(pt.x, pt.y);
+            else ctx!.lineTo(pt.x, pt.y);
+          }
+          ctx!.strokeStyle = `rgba(56, 189, 248, ${0.08 + idx * 0.035})`;
+          ctx!.stroke();
+        });
 
-        // Central Primary Star
-        const radialPulse = Math.sin(tick * 0.05) * 2 + 16;
-        const grad = ctx!.createRadialGradient(cx, cy, 2, cx, cy, radialPulse * 2.5);
-        grad.addColorStop(0, gold);
-        grad.addColorStop(0.5, 'rgba(245, 158, 11, 0.35)');
-        grad.addColorStop(1, 'transparent');
-        ctx!.fillStyle = grad;
+        // Radial Funnel Spokes
+        for (let s = 0; s < 12; s++) {
+          const th = (s / 12) * Math.PI * 2;
+          ctx!.beginPath();
+          ringRadii.forEach((r, idx) => {
+            const depthZ = -55 / (1 + r * 0.022);
+            const px = r * Math.cos(th);
+            const py = r * Math.sin(th);
+            const pt = project3D(px, py, depthZ, cx, cy);
+            if (idx === 0) ctx!.moveTo(pt.x, pt.y);
+            else ctx!.lineTo(pt.x, pt.y);
+          });
+          ctx!.strokeStyle = 'rgba(229, 169, 60, 0.14)';
+          ctx!.stroke();
+        }
+
+        // Central Primary Star at Barycenter Well Bottom
+        const wellCenter = project3D(0, 0, -55, cx, cy);
+        const centralGrad = ctx!.createRadialGradient(wellCenter.x, wellCenter.y, 2, wellCenter.x, wellCenter.y, 28);
+        centralGrad.addColorStop(0, gold);
+        centralGrad.addColorStop(0.5, 'rgba(245, 158, 11, 0.35)');
+        centralGrad.addColorStop(1, 'transparent');
+        ctx!.fillStyle = centralGrad;
         ctx!.beginPath();
-        ctx!.arc(cx, cy, radialPulse * 2.5, 0, Math.PI * 2);
+        ctx!.arc(wellCenter.x, wellCenter.y, 28, 0, Math.PI * 2);
         ctx!.fill();
 
         ctx!.fillStyle = '#FFF7ED';
         ctx!.beginPath();
-        ctx!.arc(cx, cy, 6, 0, Math.PI * 2);
+        ctx!.arc(wellCenter.x, wellCenter.y, 5, 0, Math.PI * 2);
         ctx!.fill();
 
-        // Keplerian Mechanics with Exaggerated J2 Precession (RK4 Integrated)
-        const semiMajor = 105;
+        // 3D Orbiting Trajectory (Keplerian + J2 Precession)
+        const semiMajor = 110;
         const e = paramNbody;
         orbitAngle += 0.035;
-        // Exaggerated precession step: ~4.8 deg per revolution for vivid pedagogical visualization
         precessionOffset += 0.0055;
 
         const r = (semiMajor * (1 - e * e)) / (1 + e * Math.cos(orbitAngle));
         const currentTh = orbitAngle + precessionOffset;
-        const satX = cx + r * Math.cos(currentTh);
-        const satY = cy + r * Math.sin(currentTh);
+        const orbX = r * Math.cos(currentTh);
+        const orbY = r * Math.sin(currentTh);
+        const orbZ = -55 / (1 + r * 0.022) + 3;
 
-        orbitRibbon.push({ x: satX, y: satY });
+        const currentPt = project3D(orbX, orbY, orbZ, cx, cy);
+        orbitRibbon.push({ x: currentPt.x, y: currentPt.y });
         if (orbitRibbon.length > 140) orbitRibbon.shift();
 
-        // Draw Rosette Precession Trajectory Ribbon
+        // Draw Rosette Ribbon
         for (let i = 1; i < orbitRibbon.length; i++) {
           const alpha = (i / orbitRibbon.length) * 0.85;
           ctx!.beginPath();
           ctx!.moveTo(orbitRibbon[i - 1].x, orbitRibbon[i - 1].y);
           ctx!.lineTo(orbitRibbon[i].x, orbitRibbon[i].y);
           ctx!.strokeStyle = `rgba(56, 189, 248, ${alpha})`;
-          ctx!.lineWidth = (i / orbitRibbon.length) * 2.5 + 0.5;
+          ctx!.lineWidth = (i / orbitRibbon.length) * 2.2 + 0.5;
           ctx!.stroke();
         }
-
-        // Velocity Vector Arrow
-        const velTanX = -Math.sin(currentTh) * 18;
-        const velTanY = Math.cos(currentTh) * 18;
-        ctx!.strokeStyle = 'rgba(245, 158, 11, 0.8)';
-        ctx!.lineWidth = 1.2;
-        ctx!.beginPath();
-        ctx!.moveTo(satX, satY);
-        ctx!.lineTo(satX + velTanX, satY + velTanY);
-        ctx!.stroke();
 
         // Satellite Probe
         ctx!.fillStyle = '#FFFFFF';
         ctx!.beginPath();
-        ctx!.arc(satX, satY, 4, 0, Math.PI * 2);
+        ctx!.arc(currentPt.x, currentPt.y, 3.8, 0, Math.PI * 2);
         ctx!.fill();
 
         ctx!.strokeStyle = cyan;
-        ctx!.lineWidth = 1.5;
+        ctx!.lineWidth = 1.4;
         ctx!.beginPath();
-        ctx!.arc(satX, satY, 8, 0, Math.PI * 2);
+        ctx!.arc(currentPt.x, currentPt.y, 7.5, 0, Math.PI * 2);
         ctx!.stroke();
 
-        // Orbit Metrics Label
+        // Labels
         ctx!.fillStyle = slate;
         ctx!.font = '9px "JetBrains Mono", monospace';
         ctx!.fillText(`APOAPSIS: ${(semiMajor * (1 + e)).toFixed(1)} AU`, 20, 30);
         ctx!.fillText(`PERIAPSIS: ${(semiMajor * (1 - e)).toFixed(1)} AU`, 20, 46);
-        ctx!.fillText('RUNGE-KUTTA 4TH-ORDER (RK4) · J2 OBLATENESS', width - 290, height - 20);
+        ctx!.fillText('3D POTENTIAL WELL Φ(r) · DRAG TO ROTATE', width - 260, height - 20);
       }
 
       // ======================================================================

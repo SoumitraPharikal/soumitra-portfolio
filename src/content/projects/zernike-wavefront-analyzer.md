@@ -6,13 +6,13 @@ period: "Summer 2025"
 category: "Computational Optics"
 primaryLanguage: "MATLAB"
 techStack: ["MATLAB", "Numerical Linear Algebra", "Fourier Optics", "Wavefront Reconstruction"]
-leadMetrics: "Modal cross-coupling verified analytically up to radial order n = 10"
+leadMetrics: "36 Zernike Modes · Strehl S ≈ exp(-σ²) · Modal cross-coupling up to n = 10"
 featured: true
 hasSimulation: true
 simulationType: "zernike"
 repoUrl: "https://github.com/SoumitraPharikal"
 docsUrl: "https://github.com/SoumitraPharikal"
-order: 5
+order: 3
 ---
 
 ## 01. Overview

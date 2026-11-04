@@ -2,8 +2,8 @@
 title: "Quantum Mechanics I (PHY303)"
 courseCode: "PHY303"
 subject: "Quantum Physics & Wave Mechanics"
-date: "Autumn 2026 · Active / Updated Regularly"
-typesetEngine: "pdfLaTeX / revtex4-2 / TikZ"
+date: "Autumn 2026 · Semester V"
+typesetEngine: "XeLaTeX · LuaLaTeX · tcolorbox · TikZ"
 pdfPath: "/Soumitra_Pharikal_CV.pdf"
 pageCount: 48
 topicsCovered:

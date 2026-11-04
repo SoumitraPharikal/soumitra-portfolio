@@ -6,12 +6,12 @@ period: "Jun 2025 – Jul 2025"
 category: "Computational Physics & Stochastic Modeling"
 primaryLanguage: "Python"
 techStack: ["Python", "NumPy", "SciPy", "Matplotlib", "Statistical Physics"]
-leadMetrics: "Discrete population sampling N0 in [10, 10^4] · RMS fluctuation scaling ~ 1/sqrt(N0)"
+leadMetrics: "Ensemble sampling N₀ ∈ [10, 10⁴] · Fractional RMS σ_N / N₀ ∝ 1/√N₀"
 featured: true
 hasSimulation: false
 repoUrl: "https://github.com/SoumitraPharikal"
 docsUrl: "https://github.com/SoumitraPharikal"
-order: 3
+order: 5
 ---
 
 ## 01. Overview

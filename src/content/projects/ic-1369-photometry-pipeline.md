@@ -6,12 +6,12 @@ period: "Jun 2026 – Aug 2026"
 category: "Observational Astrophysics"
 primaryLanguage: "Python"
 techStack: ["Python", "Astropy", "photutils", "DAOPHOT", "IRAF", "DS9", "PARSEC Isochrones"]
-leadMetrics: "814 CCD frames reduced · 4 candidate variable stars isolated · Period FAP < 10^-6"
+leadMetrics: "Period FAP < 10⁻⁶ · σ_phot ≤ 0.014 mag"
 featured: true
 hasSimulation: false
 repoUrl: "https://github.com/SoumitraPharikal"
 docsUrl: "https://github.com/SoumitraPharikal"
-order: 1
+order: 2
 ---
 
 ## 01. Overview
@@ -47,7 +47,7 @@ where phase offset $\tau$ satisfies $\tan(2\omega\tau) = \frac{\sum_i \sin(2\ome
 $$\text{FAP}(z) = 1 - (1 - e^{-z})^{N_{\text{eff}}}$$
 
 ### 3.3 Color-Magnitude Diagram (CMD) & PARSEC Isochrone Fitting
-Standard $V$ band magnitudes and $(B-V)$ color indices are matched to Padova/PARSEC stellar evolution models parameterized by age $\tau$, metallicity $Z$, distance modulus $(m-M)_0$, and color excess $E(B-V)$:
+Standard $V$ band magnitudes and $(B-V)$ color indices are matched to Padova/PARSEC stellar evolution models parameterized by age $\tau$, metallicity $Z$, distance modulus $(m-M)_0$, and color excess <em>E</em>(<em>B</em> − <em>V</em>):
 
 $$V - M_V = 5 \log_{10}(d) - 5 + R_V E(B-V)$$
 

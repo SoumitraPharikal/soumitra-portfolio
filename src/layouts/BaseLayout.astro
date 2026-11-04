@@ -296,8 +296,9 @@ const previewImage = new URL('/assets/portrait.png', Astro.site || 'https://soum
         }, { once: true });
       }
 
-      // 2. 3D Card Tilt Engine (Strictly Capped at 6 Degrees)
+      // 2. Physics-Damped 3D Card Tilt Engine (Strictly Capped at ±2.8 Degrees)
       function init3DCardTilt() {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
         const cards = document.querySelectorAll('.spotlight-card:not(.no-tilt), .exhibit-card:not(.no-tilt), .project-card:not(.no-tilt)');
         if (!cards.length) return;
 
@@ -312,21 +313,24 @@ const previewImage = new URL('/assets/portrait.png', Astro.site || 'https://soum
             card.style.setProperty('--mouse-x', `${x}px`);
             card.style.setProperty('--mouse-y', `${y}px`);
 
-            // Normalize coordinate (-0.5 to 0.5)
-            const normX = x / rect.width - 0.5;
-            const normY = y / rect.height - 0.5;
-            const tiltX = -normY * 6; // Max 6 deg
-            const tiltY = normX * 6;
+            const rotateX = ((y - rect.height / 2) / (rect.height / 2)) * -2.8;
+            const rotateY = ((x - rect.width / 2) / (rect.width / 2)) * 2.8;
 
-            card.style.transform = `perspective(1000px) rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg) translateY(-2px)`;
+            card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-2px)`;
           }
 
           function handleLeave() {
             card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
+            card.style.transition = 'transform 0.35s cubic-bezier(0.22, 1, 0.36, 1)';
+          }
+
+          function handleEnter() {
+            card.style.transition = 'none';
           }
 
           card.addEventListener('mousemove', handleMove, { passive: true });
           card.addEventListener('mouseleave', handleLeave, { passive: true });
+          card.addEventListener('mouseenter', handleEnter, { passive: true });
         });
       }
 
@@ -555,8 +559,9 @@ const previewImage = new URL('/assets/portrait.png', Astro.site || 'https://soum
             progressBar.style.width = `${percent}%`;
           }
 
-          // Active Section Detector
+          // Active Section Detector & Dynamic Section Title
           let activeSection = '§ 00';
+          let activeSectionName = 'Hero Overview';
           const sections = document.querySelectorAll('section[aria-label], section.section-container');
           sections.forEach((sec) => {
             const rect = sec.getBoundingClientRect();
@@ -566,6 +571,10 @@ const previewImage = new URL('/assets/portrait.png', Astro.site || 'https://soum
                 const match = secHeader.textContent.match(/§\s*\d+/);
                 if (match) activeSection = match[0];
               }
+              const secTitle = sec.querySelector('.section-title');
+              if (secTitle && secTitle.textContent) {
+                activeSectionName = secTitle.textContent.trim();
+              }
             }
           });
 
@@ -573,6 +582,7 @@ const previewImage = new URL('/assets/portrait.png', Astro.site || 'https://soum
             if (scrollY > 140) {
               badge.classList.add('active');
               badgeText.textContent = `${activeSection} // ${percent}%`;
+              badge.setAttribute('title', `Active: ${activeSectionName} (Click to jump to next section)`);
             } else {
               badge.classList.remove('active');
             }
@@ -582,6 +592,29 @@ const previewImage = new URL('/assets/portrait.png', Astro.site || 'https://soum
         window.removeEventListener('scroll', updateScrollTelemetry);
         window.addEventListener('scroll', updateScrollTelemetry, { passive: true });
         updateScrollTelemetry();
+
+        // Click to Cycle Between Sections: Hero -> § 01 -> § 02 -> § 03 -> Top
+        if (badge) {
+          badge.style.cursor = 'pointer';
+          badge.onclick = () => {
+            const targets = ['#domains-section', '#projects-section', '#highlights-section'];
+            let jumped = false;
+            for (const selector of targets) {
+              const el = document.querySelector(selector);
+              if (el) {
+                const rect = el.getBoundingClientRect();
+                if (rect.top > 80) {
+                  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  jumped = true;
+                  break;
+                }
+              }
+            }
+            if (!jumped) {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+          };
+        }
       }
 
       initScrollSystems();

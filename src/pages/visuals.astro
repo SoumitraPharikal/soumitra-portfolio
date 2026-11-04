@@ -3,6 +3,40 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 const exhibitions = [
   {
+    id: 'deep-sky-astrophotography',
+    title: 'Deep-Sky Astrophotography: Galactic Core & Nocturnal Star Trails',
+    category: 'Astrophotography',
+    year: '2024 – 2026',
+    format: 'Naxatra Telescopic Imaging Expeditions',
+    desc: 'Equatorial tracking and multi-frame stacking of the Sagittarius and Cygnus arm starfields (via Sky-Watcher Adventurer mount), high-magnification lunar crater astrometry via 8-inch manual Dobsonian reflector, and nocturnal 3-hour circumpolar star trail reductions.',
+    specs: {
+      camera: 'Canon EOS 80D (Astro-Modified)',
+      lens: '8\" Dobsonian f/6 & 18-55mm IS STM',
+      iso: '6400',
+      exposure: '45x60s (Stacking)',
+      aperture: 'f/3.5 – f/6.0',
+      location: 'Southern Odisha Dark-Sky Plateau'
+    },
+    accentColor: '#00F0FF'
+  },
+  {
+    id: 'optomechanical-diffraction',
+    title: 'Optomechanical Diffraction: Coherent Laser Interference',
+    category: 'Optomechanical Physics',
+    year: '2025',
+    format: 'Wave Optics Laboratory Archive',
+    desc: 'Monochromatic imaging of He-Ne 632.8 nm laser diffraction patterns, circular aperture Airy disc intensity rings, and Michelson interferometric fringe phase shifts used to evaluate optical wavefront distortion.',
+    specs: {
+      camera: 'CMOS Monochrome Scientific Sensor',
+      lens: 'Microscope Objective 10x 0.25 NA',
+      iso: 'N/A (Raw Photon Counts)',
+      exposure: '1/2000s',
+      aperture: '150 µm Pinhole',
+      location: 'Optics Laboratory, Dept of Physical Sciences'
+    },
+    accentColor: '#A855F7'
+  },
+  {
     id: 'project-pandora',
     title: 'Project Pandora: Thematic Architectural Noir',
     category: 'Architectural & Geometry',
@@ -69,40 +103,6 @@ const exhibitions = [
       location: 'Gopalpur-on-Sea [19.261° N, 84.908° E]'
     },
     accentColor: '#10B981'
-  },
-  {
-    id: 'deep-sky-astrophotography',
-    title: 'Deep-Sky Astrophotography: Galactic Core & Nocturnal Star Trails',
-    category: 'Astrophotography',
-    year: '2024 – 2026',
-    format: 'Naxatra Telescopic Imaging Expeditions',
-    desc: 'Equatorial tracking and multi-frame stacking of the Sagittarius and Cygnus arm starfields (via Sky-Watcher Adventurer mount), high-magnification lunar crater astrometry via 8-inch manual Dobsonian reflector, and nocturnal 3-hour circumpolar star trail reductions.',
-    specs: {
-      camera: 'Canon EOS 80D (Astro-Modified)',
-      lens: '8" Dobsonian f/6 & 18-55mm IS STM',
-      iso: '6400',
-      exposure: '45x60s (Stacking)',
-      aperture: 'f/3.5 – f/6.0',
-      location: 'Southern Odisha Dark-Sky Plateau'
-    },
-    accentColor: '#00F0FF'
-  },
-  {
-    id: 'optomechanical-diffraction',
-    title: 'Optomechanical Diffraction: Coherent Laser Interference',
-    category: 'Optomechanical Physics',
-    year: '2025',
-    format: 'Wave Optics Laboratory Archive',
-    desc: 'Monochromatic imaging of He-Ne 632.8 nm laser diffraction patterns, circular aperture Airy disc intensity rings, and Michelson interferometric fringe phase shifts used to evaluate optical wavefront distortion.',
-    specs: {
-      camera: 'CMOS Monochrome Scientific Sensor',
-      lens: 'Microscope Objective 10x 0.25 NA',
-      iso: 'N/A (Raw Photon Counts)',
-      exposure: '1/2000s',
-      aperture: '150 µm Pinhole',
-      location: 'Optics Laboratory, Dept of Physical Sciences'
-    },
-    accentColor: '#A855F7'
   }
 ];
 
@@ -337,31 +337,38 @@ const categories = [
               <span class="exhibit-format mono text-secondary">{exhibit.format}</span>
               <p class="exhibit-desc text-secondary">{exhibit.desc}</p>
 
-              <!-- Technical Monospace EXIF Metadata Plate -->
-              <div class="exif-plate hairline-top mono">
-                <div class="exif-row">
-                  <span class="exif-label text-tertiary">OPTICAL SETUP:</span>
-                  <span class="exif-val text-primary">{exhibit.specs.camera} · {exhibit.specs.lens}</span>
-                </div>
-                <div class="exif-grid-3">
-                  <div>
-                    <span class="exif-label text-tertiary">ISO:</span>
-                    <span class="exif-val">{exhibit.specs.iso}</span>
+              <!-- Technical Monospace EXIF Collapsible Drawer -->
+              <details class="exif-drawer hairline-top">
+                <summary class="exif-summary mono">
+                  <span class="summary-title">OPTICAL SETUP &amp; EXIF METADATA</span>
+                  <span class="summary-pill">{exhibit.specs.camera.split(' ')[0]} · {exhibit.specs.exposure}</span>
+                  <span class="summary-icon" aria-hidden="true">+</span>
+                </summary>
+                <div class="exif-plate mono">
+                  <div class="exif-row">
+                    <span class="exif-label text-tertiary">OPTICAL SETUP:</span>
+                    <span class="exif-val text-primary">{exhibit.specs.camera} · {exhibit.specs.lens}</span>
                   </div>
-                  <div>
-                    <span class="exif-label text-tertiary">EXPOSURE:</span>
-                    <span class="exif-val">{exhibit.specs.exposure}</span>
+                  <div class="exif-grid-3">
+                    <div>
+                      <span class="exif-label text-tertiary">ISO:</span>
+                      <span class="exif-val">{exhibit.specs.iso}</span>
+                    </div>
+                    <div>
+                      <span class="exif-label text-tertiary">EXPOSURE:</span>
+                      <span class="exif-val">{exhibit.specs.exposure}</span>
+                    </div>
+                    <div>
+                      <span class="exif-label text-tertiary">APERTURE:</span>
+                      <span class="exif-val">{exhibit.specs.aperture}</span>
+                    </div>
                   </div>
-                  <div>
-                    <span class="exif-label text-tertiary">APERTURE:</span>
-                    <span class="exif-val">{exhibit.specs.aperture}</span>
+                  <div class="exif-row">
+                    <span class="exif-label text-tertiary">LOCATION:</span>
+                    <span class="exif-val text-accent">{exhibit.specs.location}</span>
                   </div>
                 </div>
-                <div class="exif-row">
-                  <span class="exif-label text-tertiary">LOCATION:</span>
-                  <span class="exif-val text-accent">{exhibit.specs.location}</span>
-                </div>
-              </div>
+              </details>
             </div>
           </article>
         ))}
@@ -743,4 +750,48 @@ const categories = [
       grid-column: span 12;
     }
   }
+
+  .exif-drawer {
+    margin-top: var(--space-4);
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .exif-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-2) 0;
+    cursor: pointer;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    user-select: none;
+    transition: color var(--transition-fast);
+  }
+
+  .exif-summary:hover {
+    color: var(--text-primary);
+  }
+
+  .exif-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .summary-pill {
+    font-size: 0.68rem;
+    padding: 2px 6px;
+    background: var(--bg-surface-sunken);
+    border: 1px solid var(--border-subtle);
+    border-radius: 2px;
+    color: var(--text-muted);
+  }
+
+  .summary-icon {
+    font-size: 0.9rem;
+    transition: transform var(--transition-fast);
+  }
+
+  .exif-drawer[open] .summary-icon {
+    transform: rotate(45deg);
+  }
+
 </style>

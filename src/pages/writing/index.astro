@@ -1,14 +1,83 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import katex from 'katex';
+import 'katex/dist/katex.min.css';
 
 const allWriting = await getCollection('writing');
 const sortedWriting = allWriting.sort((a, b) => a.data.order - b.data.order);
+
+// Pre-render KaTeX governing formulas for each course
+const courseEquations: Record<string, { label: string; html: string }> = {
+  PHY303: {
+    label: "Schrödinger Time-Evolution & Hamiltonian Operator",
+    html: katex.renderToString(
+      'U(t, t_0) = \exp\left(-\frac{i}{\\hbar}\\hat{H}(t - t_0)\\right), \quad i\\hbar\\frac{\\partial}{\\partial t}|\\psi(t)\\rangle = \\hat{H}|\\psi(t)\\rangle',
+      { displayMode: true, throwOnError: false }
+    )
+  },
+  PHY309: {
+    label: "Helmholtz Free Energy Legendre Transform & Maxwell Relation",
+    html: katex.renderToString(
+      'dF = -S\\,dT - P\\,dV + \\mu\\,dN, \quad \\left(\\frac{\\partial S}{\\partial V}\\right)_T = \\left(\\frac{\\partial P}{\\partial T}\\right)_V',
+      { displayMode: true, throwOnError: false }
+    )
+  },
+  PHY301: {
+    label: "Cauchy Residue Theorem & Laurent Pole Evaluation",
+    html: katex.renderToString(
+      '\\oint_\\gamma f(z)\\,dz = 2\\pi i \\sum_{k=1}^n \\mathrm{Res}(f, z_k), \quad \\mathrm{Res}(f, c) = \\lim_{z\\to c} (z - c) f(z)',
+      { displayMode: true, throwOnError: false }
+    )
+  },
+  PHY305: {
+    label: "Hamilton-Jacobi Characteristic Equation & Canonical Momentum",
+    html: katex.renderToString(
+      'H\\left(q, \\frac{\\partial S}{\\partial q}, t\\right) + \\frac{\\partial S}{\\partial t} = 0, \quad p_i = \\frac{\\partial S}{\\partial q_i}',
+      { displayMode: true, throwOnError: false }
+    )
+  },
+  CDS307: {
+    label: "Amdahl's Speedup Law & Processor CPI Performance Model",
+    html: katex.renderToString(
+      'T_{\\mathrm{exec}} = \\mathrm{IC} \\times \\mathrm{CPI} \\times \\tau_{\\mathrm{clk}}, \quad S_{\\mathrm{Amdahl}} = \\frac{1}{(1 - f) + \\frac{f}{p}}',
+      { displayMode: true, throwOnError: false }
+    )
+  },
+  CDS304: {
+    label: "Generating Functions & Chromatic Graph Polynomial",
+    html: katex.renderToString(
+      'G(x) = \\sum_{n=0}^\\infty a_n x^n = \\frac{P(x)}{Q(x)}, \quad \\chi(G; k) = \\sum_{F \\subseteq E} (-1)^{|F|} k^{c(F)}',
+      { displayMode: true, throwOnError: false }
+    )
+  },
+  PHY302: {
+    label: "Sturm-Liouville Self-Adjoint Differential Operator & Green's Function",
+    html: katex.renderToString(
+      "\\mathcal{L} u(x) = -\\frac{d}{dx}\\left[p(x)\\frac{du}{dx}\\right] + q(x)u = \\lambda w(x)u, \\quad \\nabla^2 G(\\mathbf{r}, \\mathbf{r}') = \\delta(\\mathbf{r} - \\mathbf{r}')",
+      { displayMode: true, throwOnError: false }
+    )
+  },
+  PHY304: {
+    label: "Fermi's Golden Rule & Born Wave Scattering Amplitude",
+    html: katex.renderToString(
+      "\\Gamma_{i \\to f} = \\frac{2\\pi}{\\hbar} \\left| \\langle f | \\hat{V} | i \\rangle \\right|^2 \\rho(E_f), \\quad f(\\theta) = -\\frac{m}{2\\pi \\hbar^2} \\int e^{-i\\mathbf{q}\\cdot\\mathbf{r}'} V(\\mathbf{r}') d^3\\mathbf{r}'",
+      { displayMode: true, throwOnError: false }
+    )
+  },
+  PHY306: {
+    label: "Grand Canonical Partition Trace & Quantum Bose/Fermi Occupations",
+    html: katex.renderToString(
+      '\\mathcal{Z} = \\mathrm{Tr}\\left[e^{-\\beta(\\hat{H} - \\mu\\hat{N})}\\right], \quad \\langle n_k \\rangle = \\frac{1}{e^{\\beta(\\epsilon_k - \\mu)} \\pm 1}',
+      { displayMode: true, throwOnError: false }
+    )
+  }
+};
 ---
 
 <BaseLayout
   title="LaTeX Course Notes & Study Compendiums | Soumitra Pharikal"
-  description="Rigorous LaTeX course notes and study compendiums authored by Soumitra Pharikal covering quantum mechanics, thermal physics, mathematical methods, classical mechanics, and computing architectures."
+  description="Rigorous LaTeX course notes and study compendiums authored by Soumitra Pharikal covering quantum mechanics, thermal physics, mathematical methods, classical mechanics, discrete computation, and computing architectures at IISER Berhampur."
 >
   <div class="monograph-container">
     <header class="page-header reveal-up" style="--stagger-index: 1;">
@@ -18,64 +87,188 @@ const sortedWriting = allWriting.sort((a, b) => a.data.order - b.data.order);
       </div>
       <h1 class="page-title">LaTeX Course Notes &amp; Study Compendiums</h1>
       <p class="page-subtitle reading-measure text-secondary">
-        Comprehensive academic course notes authored in modular LaTeX, unifying rigorous mathematical derivations, operator algebra, tensor kinematics, and computing architectures. Active for 5th semester and updated regularly.
+        Comprehensive academic study compendiums and lecture notes authored in modular LaTeX, unifying rigorous mathematical derivations, operator algebra, tensor kinematics, and computing architectures.
       </p>
+      <p class="academic-disclaimer mono text-tertiary">
+        <em>Self-authored lecture and revision compendiums typeset in LaTeX (tcolorbox) for IISER Berhampur coursework.</em>
+      </p>
+
+      <!-- Semester Filter Tabs -->
+      <div class="writing-filter-tabs" role="tablist" aria-label="Filter course compendiums by semester">
+        <button
+          type="button"
+          class="filter-tab-pill is-active mono"
+          data-filter="all"
+          role="tab"
+          aria-selected="true"
+        >
+          All Compendiums <span class="tab-count">(9)</span>
+        </button>
+        <button
+          type="button"
+          class="filter-tab-pill mono"
+          data-filter="autumn"
+          role="tab"
+          aria-selected="false"
+        >
+          Autumn 2026 · Sem V <span class="tab-count">(5)</span>
+        </button>
+        <button
+          type="button"
+          class="filter-tab-pill mono"
+          data-filter="spring"
+          role="tab"
+          aria-selected="false"
+        >
+          Spring 2027 · Sem VI <span class="tab-count">(4)</span>
+        </button>
+      </div>
     </header>
 
     <!-- Compendium List -->
-    <div class="compendiums-list">
-      {sortedWriting.map((item, idx) => (
-        <article
-          class="compendium-plate hairline-box spotlight-card interactive-row corner-crosshair reveal-up"
-          style={`--stagger-index: ${idx + 2};`}
-        >
-          <div class="comp-plate-grid">
-            <!-- Col 1: Course Identification -->
-            <div class="comp-col-code">
-              <span class="mono comp-course-tag text-gold">{item.data.courseCode || 'COMP'}</span>
-              <span class="mono comp-date text-tertiary">{item.data.date}</span>
-            </div>
+    <div class="compendiums-list" id="writing-cards-container">
+      {sortedWriting.map((item, idx) => {
+        const isSpring = item.data.date.includes('Spring 2027');
+        const semKey = isSpring ? 'spring' : 'autumn';
+        const code = item.data.courseCode || '';
+        const eqData = courseEquations[code];
 
-            <!-- Col 2: Title, Subject & Topics -->
-            <div class="comp-col-main">
-              <h2 class="comp-title">
-                <a href={`/writing/${item.id}`} class="title-link no-underline">
-                  {item.data.title}
+        return (
+          <article
+            class:list={[
+              'compendium-plate hairline-box spotlight-card interactive-row corner-crosshair reveal-up',
+              { 'spring-card': isSpring }
+            ]}
+            data-semester={semKey}
+            style={`--stagger-index: ${idx + 2};`}
+          >
+            <div class="comp-plate-grid">
+              <!-- Col 1: Course Identification -->
+              <div class="comp-col-code">
+                <span class="mono comp-course-tag text-gold">{code || 'COMP'}</span>
+                <span class:list={['mono comp-date', isSpring ? 'badge-spring' : 'badge-autumn']}>
+                  {item.data.date}
+                </span>
+              </div>
+
+              <!-- Col 2: Title, Subject, Topics & Interactive Syllabus Drawer -->
+              <div class="comp-col-main">
+                <h2 class="comp-title">
+                  <a href={`/writing/${item.id}`} class="title-link no-underline">
+                    {item.data.title}
+                  </a>
+                </h2>
+                <p class="comp-subject text-secondary">{item.data.subject}</p>
+                
+                <div class="comp-topics-list">
+                  {item.data.topicsCovered.map((topic) => (
+                    <span class="topic-pill mono text-secondary">• {topic}</span>
+                  ))}
+                </div>
+
+                <!-- Interactive Syllabus & Formula Preview Drawer -->
+                <details class="syllabus-preview-drawer hairline-box">
+                  <summary class="drawer-summary mono">
+                    <span class="drawer-title">
+                      <span class="drawer-icon" aria-hidden="true">◈</span>
+                      Interactive Syllabus &amp; Key Equation
+                    </span>
+                    <span class="drawer-indicator mono" aria-hidden="true">[EXPAND]</span>
+                  </summary>
+                  <div class="drawer-content">
+                    {eqData && (
+                      <div class="drawer-eq-box">
+                        <span class="drawer-eq-label mono text-tertiary">{eqData.label}:</span>
+                        <div class="katex-display-wrap" set:html={eqData.html} />
+                      </div>
+                    )}
+                    <div class="drawer-stack-meta mono">
+                      <span class="drawer-stack-label text-tertiary">TYPESETTING STACK:</span>
+                      <span class="drawer-stack-val">XeLaTeX · LuaLaTeX · tcolorbox · TikZ</span>
+                    </div>
+                  </div>
+                </details>
+              </div>
+
+              <!-- Col 3: Engine Specs & Action -->
+              <div class="comp-col-action">
+                <div class="engine-meta mono">
+                  <span class="engine-badge">XeLaTeX · LuaLaTeX · tcolorbox · TikZ</span>
+                  {item.data.pageCount && (
+                    <span class="page-count text-tertiary">{item.data.pageCount} PAGES</span>
+                  )}
+                </div>
+
+                <a href={`/writing/${item.id}`} class="editorial-btn">
+                  View Syllabus &amp; Notes <span class="btn-arrow" aria-hidden="true">→</span>
                 </a>
-              </h2>
-              <p class="comp-subject text-secondary">{item.data.subject}</p>
-              
-              <div class="comp-topics-list">
-                {item.data.topicsCovered.map((topic) => (
-                  <span class="topic-pill mono text-secondary">• {topic}</span>
-                ))}
               </div>
             </div>
-
-            <!-- Col 3: Engine Specs & Action -->
-            <div class="comp-col-action">
-              <div class="engine-meta mono">
-                <span class="engine-badge">{item.data.typesetEngine}</span>
-                {item.data.pageCount && (
-                  <span class="page-count text-tertiary">{item.data.pageCount} PAGES</span>
-                )}
-              </div>
-
-              <a href={`/writing/${item.id}`} class="editorial-btn">
-                View Notes / PDF <span class="btn-arrow" aria-hidden="true">→</span>
-              </a>
-            </div>
-          </div>
-        </article>
-      ))}
+          </article>
+        );
+      })}
     </div>
   </div>
 </BaseLayout>
 
+<script>
+  function initWritingFilters() {
+    const filterTabs = document.querySelectorAll<HTMLButtonElement>('.filter-tab-pill');
+    const cards = document.querySelectorAll<HTMLElement>('.compendium-plate');
+    if (!filterTabs.length || !cards.length) return;
+
+    filterTabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const filter = tab.dataset.filter || 'all';
+
+        // Update active tab state
+        filterTabs.forEach((t) => {
+          const isActive = t === tab;
+          t.classList.toggle('is-active', isActive);
+          t.setAttribute('aria-selected', String(isActive));
+        });
+
+        // Filter cards with smooth 200ms opacity transition
+        cards.forEach((card) => {
+          const sem = card.dataset.semester;
+          const match = filter === 'all' || sem === filter;
+
+          if (match) {
+            card.style.display = 'block';
+            setTimeout(() => {
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0)';
+            }, 10);
+          } else {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(4px)';
+            setTimeout(() => {
+              card.style.display = 'none';
+            }, 200);
+          }
+        });
+      });
+    });
+
+    // Toggle [EXPAND] / [COLLAPSE] label on summary click
+    document.querySelectorAll<HTMLDetailsElement>('.syllabus-preview-drawer').forEach((drawer) => {
+      drawer.addEventListener('toggle', () => {
+        const indicator = drawer.querySelector('.drawer-indicator');
+        if (indicator) {
+          indicator.textContent = drawer.open ? '[COLLAPSE]' : '[EXPAND]';
+        }
+      });
+    });
+  }
+
+  initWritingFilters();
+  document.addEventListener('astro:page-load', initWritingFilters);
+</script>
+
 <style>
   .page-header {
     padding-top: var(--space-6);
-    padding-bottom: var(--space-8);
+    padding-bottom: var(--space-6);
   }
 
   .page-meta-strip {
@@ -97,6 +290,57 @@ const sortedWriting = allWriting.sort((a, b) => a.data.order - b.data.order);
     margin: 0;
   }
 
+  .academic-disclaimer {
+    margin-top: var(--space-3);
+    margin-bottom: var(--space-4);
+    font-size: 0.8125rem;
+    letter-spacing: 0.02em;
+  }
+
+  /* Semester Filter Tabs */
+  .writing-filter-tabs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: var(--space-5);
+    flex-wrap: wrap;
+  }
+
+  .filter-tab-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    background: var(--bg-surface-sunken);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .filter-tab-pill:hover {
+    border-color: var(--accent-primary);
+    color: var(--text-primary);
+    transform: translateY(-1px);
+  }
+
+  .filter-tab-pill.is-active {
+    background: rgba(229, 169, 60, 0.12);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+    font-weight: 600;
+    box-shadow: 0 0 10px rgba(229, 169, 60, 0.2);
+  }
+
+  .tab-count {
+    opacity: 0.7;
+    font-size: 0.7rem;
+  }
+
   .compendiums-list {
     display: flex;
     flex-direction: column;
@@ -106,11 +350,12 @@ const sortedWriting = allWriting.sort((a, b) => a.data.order - b.data.order);
 
   .compendium-plate {
     padding: var(--space-6);
+    transition: opacity 200ms ease, transform 200ms ease;
   }
 
   .comp-plate-grid {
     display: grid;
-    grid-template-columns: 140px 1fr 200px;
+    grid-template-columns: 150px 1fr 220px;
     gap: var(--space-5);
     align-items: start;
   }
@@ -118,7 +363,7 @@ const sortedWriting = allWriting.sort((a, b) => a.data.order - b.data.order);
   .comp-col-code {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
   }
 
   .comp-course-tag {
@@ -128,7 +373,30 @@ const sortedWriting = allWriting.sort((a, b) => a.data.order - b.data.order);
   }
 
   .comp-date {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
+    padding: 3px 6px;
+    border-radius: 3px;
+    display: inline-block;
+    width: fit-content;
+  }
+
+  .badge-autumn {
+    background: var(--bg-surface-sunken);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-tertiary);
+  }
+
+  /* Celestial Blue/Cyan Tint for Spring 2027 */
+  .badge-spring {
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    color: #38BDF8;
+    font-weight: 600;
+  }
+  :global(html[data-theme="light"]) .badge-spring {
+    background: rgba(2, 132, 199, 0.1);
+    border-color: rgba(2, 132, 199, 0.3);
+    color: #0284C7;
   }
 
   .comp-col-main {
@@ -163,11 +431,98 @@ const sortedWriting = allWriting.sort((a, b) => a.data.order - b.data.order);
     flex-direction: column;
     gap: 4px;
     margin-top: var(--space-2);
+    margin-bottom: var(--space-3);
   }
 
   .topic-pill {
     font-size: 0.75rem;
     line-height: 1.5;
+  }
+
+  /* Syllabus Preview Drawer */
+  .syllabus-preview-drawer {
+    margin-top: var(--space-2);
+    border-radius: 4px;
+    background: rgba(11, 15, 23, 0.4);
+    border: 1px solid var(--border-subtle);
+    overflow: hidden;
+    transition: border-color var(--transition-fast);
+  }
+
+  :global(html[data-theme="light"]) .syllabus-preview-drawer {
+    background: rgba(240, 240, 235, 0.5);
+  }
+
+  .syllabus-preview-drawer[open] {
+    border-color: var(--border-strong);
+  }
+
+  .drawer-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 12px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    background: var(--bg-surface-sunken);
+    user-select: none;
+    transition: color var(--transition-fast);
+  }
+
+  .drawer-summary:hover {
+    color: var(--accent-primary);
+  }
+
+  .drawer-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+  }
+
+  .drawer-icon {
+    color: var(--accent-primary);
+  }
+
+  .drawer-indicator {
+    font-size: 0.68rem;
+    color: var(--text-tertiary);
+  }
+
+  .drawer-content {
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .drawer-eq-box {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: var(--bg-recessed);
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    padding: 8px 12px;
+    overflow-x: auto;
+  }
+
+  .drawer-eq-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+  }
+
+  .drawer-stack-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.72rem;
+  }
+
+  .drawer-stack-val {
+    color: var(--accent-primary);
+    font-weight: 500;
   }
 
   .comp-col-action {
@@ -185,16 +540,17 @@ const sortedWriting = allWriting.sort((a, b) => a.data.order - b.data.order);
   }
 
   .engine-badge {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     padding: 3px 8px;
     border-radius: var(--radius-sm);
     background: var(--bg-surface-sunken);
     border: 1px solid var(--border-subtle);
     color: var(--text-secondary);
+    white-space: nowrap;
   }
 
   .page-count {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     letter-spacing: 0.05em;
   }
 

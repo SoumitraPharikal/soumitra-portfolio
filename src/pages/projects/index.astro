@@ -8,10 +8,10 @@ const sortedProjects = allProjects.sort((a, b) => a.data.order - b.data.order);
 
 const categories = [
   'All',
-  'Observational Astrophysics',
   'Astrodynamics & Simulation',
-  'Computational Physics',
-  'Computational Optics'
+  'Observational Astrophysics',
+  'Computational Optics',
+  'Computational Physics'
 ];
 
 const categoryCounts = categories.reduce((acc, cat) => {
@@ -93,12 +93,9 @@ const categoryCounts = categories.reduce((acc, cat) => {
 
             <div class="project-footer hairline-top">
               <div class="tech-pills">
-                {project.data.techStack.slice(0, 4).map((tech) => (
+                {project.data.techStack.map((tech) => (
                   <span class="mono tech-pill">{tech}</span>
                 ))}
-                {project.data.techStack.length > 4 && (
-                  <span class="mono tech-pill-more">+{project.data.techStack.length - 4}</span>
-                )}
               </div>
               <a href={`/projects/${project.id}`} class="view-project-btn mono">
                 View Project <span class="arrow" aria-hidden="true">→</span>
@@ -125,8 +122,9 @@ const categoryCounts = categories.reduce((acc, cat) => {
 
         cards.forEach((card) => {
           const c = card as HTMLElement;
-          const category = c.getAttribute('data-category');
-          if (selected === 'All' || category === selected) {
+          const category = c.getAttribute('data-category') || '';
+          const matches = selected === 'All' || category === selected || category.includes(selected);
+          if (matches) {
             c.style.display = 'flex';
             c.style.opacity = '0';
             c.style.transform = 'translateY(6px)';

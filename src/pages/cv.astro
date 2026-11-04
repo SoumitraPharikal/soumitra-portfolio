@@ -210,8 +210,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <div class="cv-entries-list">
           <div class="cv-entry hairline-box spotlight-card">
             <div class="cv-entry-head">
+              <h3 class="cv-role">ASTRA: High-Performance Rust Astrodynamics Toolkit</h3>
+              <span class="cv-period mono text-secondary">AUTUMN 2025 · PRESENT</span>
+            </div>
+            <p class="cv-notes text-secondary">
+              Implemented memory-safe orbital mechanics propagation using 4th/6th-order Yoshida symplectic integrators preserving Hamiltonian energy to ΔE/E₀ &lt; 10⁻¹² over 10⁶ epochs on conservative systems, alongside adaptive 8th-order Dormand-Prince (DOP853) and SGP4 perturbation models.
+            </p>
+          </div>
+
+          <div class="cv-entry hairline-box spotlight-card">
+            <div class="cv-entry-head">
               <h3 class="cv-role">Physics-Informed CT Imaging &amp; ML Inverse Reconstruction</h3>
-              <span class="cv-period mono text-secondary">FEB 2026 – AUG 2026</span>
+              <span class="cv-period mono text-secondary">FEB 2026 · AUG 2026</span>
             </div>
             <p class="cv-notes text-secondary">
               Engineered forward Radon projection and Filtered Back-Projection (FBP) reconstruction of Shepp-Logan phantoms. Classified normal tissue vs. hyper-attenuating tumours in Hounsfield Units via logistic regression models.
@@ -221,20 +231,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <div class="cv-entry hairline-box spotlight-card">
             <div class="cv-entry-head">
               <h3 class="cv-role">Stochastic Simulation of Radioactive Decay via Monte Carlo</h3>
-              <span class="cv-period mono text-secondary">JUN 2025 – JUL 2025</span>
+              <span class="cv-period mono text-secondary">JUN 2025 · JUL 2025</span>
             </div>
             <p class="cv-notes text-secondary">
-              Formulated radioactive decay as a discrete stochastic Markov chain across initial populations N₀ ∈ [10, 10⁴]. Demonstrated breakdown of deterministic continuous kinetics at small numbers and verified σ_RMS ∝ 1/√N₀.
-            </p>
-          </div>
-
-          <div class="cv-entry hairline-box spotlight-card">
-            <div class="cv-entry-head">
-              <h3 class="cv-role">ASTRA: High-Performance Rust Astrodynamics Toolkit</h3>
-              <span class="cv-period mono text-secondary">AUTUMN 2025 – PRESENT</span>
-            </div>
-            <p class="cv-notes text-secondary">
-              Implemented memory-safe orbital mechanics propagation using 4th/6th-order Yoshida symplectic integrators preserving Hamiltonian energy to ΔE/E₀ &lt; 10⁻¹² over 10⁶ epochs on conservative systems, alongside adaptive 8th-order Dormand-Prince (DOP853) and SGP4 perturbation models.
+              Formulated radioactive decay as a discrete stochastic Markov chain across initial populations N₀ ∈ [10, 10⁴]. Demonstrated breakdown of deterministic continuous kinetics at small numbers and verified fractional RMS σ_N / N₀ ∝ 1/√N₀.
             </p>
           </div>
         </div>
@@ -248,7 +248,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <span class="meta-index">PROGRAMMING &amp; COMPUTING</span>
             <p class="skill-line mono"><strong>Languages:</strong> Python, Rust, C/C++, MATLAB, Bash</p>
             <p class="skill-line mono"><strong>Scientific Stack:</strong> Astropy, photutils, NumPy, SciPy, Matplotlib, Pandas, scikit-learn, IRAF/DAOPHOT, DS9</p>
-            <p class="skill-line mono"><strong>Typesetting:</strong> LaTeX (pdfLaTeX, XeLaTeX, TikZ, PGFPlots)</p>
+            <p class="skill-line mono"><strong>Typesetting:</strong> LaTeX (9 modular course compendiums for PHY &amp; CDS: XeLaTeX, LuaLaTeX, TikZ, PGFPlots)</p>
           </div>
 
           <div class="col-6 skill-block hairline-box spotlight-card">
@@ -268,13 +268,26 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <div class="cv-entry hairline-box spotlight-card">
             <div class="cv-entry-head">
               <div>
+                <h3 class="cv-role">Active Member: Science Subcouncil</h3>
+                <p class="cv-inst">IISER Berhampur</p>
+              </div>
+              <span class="cv-period mono text-secondary">2025 · PRESENT</span>
+            </div>
+            <p class="cv-notes text-secondary">
+              Representing undergraduate physical sciences, organizing technical workshops, and supporting institute academic initiatives.
+            </p>
+          </div>
+
+          <div class="cv-entry hairline-box spotlight-card">
+            <div class="cv-entry-head">
+              <div>
                 <h3 class="cv-role">Club Coordinator: Pixophiles (Photography &amp; Media Club)</h3>
                 <p class="cv-inst">IISER Berhampur</p>
               </div>
-              <span class="cv-period mono text-secondary">JAN 2025 – 2026</span>
+              <span class="cv-period mono text-secondary">JAN 2025 · 2026</span>
             </div>
             <p class="cv-notes text-secondary">
-              Executive head of official campus visual documentation. Curated 4 institutional photography exhibitions and directed technical workshops on camera exposure physics.
+              Executive head of official campus photography and media club. Curated 11 campus events and 4 flagship exhibitions, managing budget and workshops for 200+ students.
             </p>
           </div>
 
@@ -284,10 +297,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <h3 class="cv-role">Core Member: Naxatra (Astronomy Club)</h3>
                 <p class="cv-inst">IISER Berhampur</p>
               </div>
-              <span class="cv-period mono text-secondary">APR 2025 – PRESENT</span>
+              <span class="cv-period mono text-secondary">2024 · PRESENT</span>
             </div>
             <p class="cv-notes text-secondary">
-              Coordinated nocturnal astronomical telescope observations, public transit viewings, and astrophotography sessions.
+              Coordinated nocturnal astronomical telescope observations (8-inch Dobsonian), public transit viewings, and astrophotography sessions.
             </p>
           </div>
 
