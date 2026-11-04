@@ -2,7 +2,7 @@
 title: "Mathematical Methods I (PHY301)"
 courseCode: "PHY301"
 subject: "Mathematical Physics & Complex Analysis"
-date: "Autumn 2026 · Semester V"
+date: "IISER Berhampur Coursework"
 typesetEngine: "XeLaTeX · LuaLaTeX · tcolorbox · TikZ"
 pdfPath: "/Soumitra_Pharikal_CV.pdf"
 pageCount: 52

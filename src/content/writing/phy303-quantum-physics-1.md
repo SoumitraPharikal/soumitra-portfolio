@@ -2,7 +2,7 @@
 title: "Quantum Mechanics I (PHY303)"
 courseCode: "PHY303"
 subject: "Quantum Physics & Wave Mechanics"
-date: "Autumn 2026 · Semester V"
+date: "IISER Berhampur Coursework"
 typesetEngine: "XeLaTeX · LuaLaTeX · tcolorbox · TikZ"
 pdfPath: "/Soumitra_Pharikal_CV.pdf"
 pageCount: 48

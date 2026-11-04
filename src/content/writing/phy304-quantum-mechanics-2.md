@@ -2,7 +2,7 @@
 title: "Quantum Mechanics II (PHY304)"
 courseCode: "PHY304"
 subject: "Approximation Methods, Scattering Theory & Relativistic Quantum Mechanics"
-date: "Spring 2027 · Semester VI"
+date: "IISER Berhampur Coursework"
 typesetEngine: "XeLaTeX · LuaLaTeX · tcolorbox · TikZ"
 pdfPath: "/Soumitra_Pharikal_CV.pdf"
 pageCount: 54
@@ -19,7 +19,7 @@ order: 8
 
 ## Course Overview
 
-A rigorous LaTeX compendium for `PHY304: Approximation Methods, Scattering Theory & Relativistic Quantum Mechanics` authored for Semester VI coursework in the Department of Physical Sciences / Computational & Data Sciences at IISER Berhampur. Typeset in **XeLaTeX · LuaLaTeX · tcolorbox · TikZ**.
+A rigorous LaTeX compendium for `PHY304: Approximation Methods, Scattering Theory & Relativistic Quantum Mechanics` authored for CourseworkI coursework in the Department of Physical Sciences / Computational & Data Sciences at IISER Berhampur. Typeset in **XeLaTeX · LuaLaTeX · tcolorbox · TikZ**.
 
 ## Representative Mathematical Formulation
 

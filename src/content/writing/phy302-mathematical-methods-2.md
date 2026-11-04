@@ -2,7 +2,7 @@
 title: "Mathematical Methods II (PHY302)"
 courseCode: "PHY302"
 subject: "Partial Differential Equations, Green's Functions & Group Theory"
-date: "Spring 2027 · Semester VI"
+date: "IISER Berhampur Coursework"
 typesetEngine: "XeLaTeX · LuaLaTeX · tcolorbox · TikZ"
 pdfPath: "/Soumitra_Pharikal_CV.pdf"
 pageCount: 50
@@ -19,7 +19,7 @@ order: 7
 
 ## Course Overview
 
-A rigorous LaTeX compendium for `PHY302: Partial Differential Equations, Green's Functions & Group Theory` authored for Semester VI coursework in the Department of Physical Sciences / Computational & Data Sciences at IISER Berhampur. Typeset in **XeLaTeX · LuaLaTeX · tcolorbox · TikZ**.
+A rigorous LaTeX compendium for `PHY302: Partial Differential Equations, Green's Functions & Group Theory` authored for CourseworkI coursework in the Department of Physical Sciences / Computational & Data Sciences at IISER Berhampur. Typeset in **XeLaTeX · LuaLaTeX · tcolorbox · TikZ**.
 
 ## Representative Mathematical Formulation
 

@@ -2,7 +2,7 @@
 title: "Statistical Mechanics (PHY306)"
 courseCode: "PHY306"
 subject: "Ensemble Theory, Quantum Statistics & Phase Transitions"
-date: "Spring 2027 · Semester VI"
+date: "IISER Berhampur Coursework"
 typesetEngine: "XeLaTeX · LuaLaTeX · tcolorbox · TikZ"
 pdfPath: "/Soumitra_Pharikal_CV.pdf"
 pageCount: 46
@@ -19,7 +19,7 @@ order: 9
 
 ## Course Overview
 
-A rigorous LaTeX compendium for `PHY306: Ensemble Theory, Quantum Statistics & Phase Transitions` authored for Semester VI coursework in the Department of Physical Sciences / Computational & Data Sciences at IISER Berhampur. Typeset in **XeLaTeX · LuaLaTeX · tcolorbox · TikZ**.
+A rigorous LaTeX compendium for `PHY306: Ensemble Theory, Quantum Statistics & Phase Transitions` authored for CourseworkI coursework in the Department of Physical Sciences / Computational & Data Sciences at IISER Berhampur. Typeset in **XeLaTeX · LuaLaTeX · tcolorbox · TikZ**.
 
 ## Representative Mathematical Formulation
 

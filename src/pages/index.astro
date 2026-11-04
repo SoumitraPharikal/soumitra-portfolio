@@ -249,7 +249,7 @@ const eqDomainComputational = katex.renderToString(
         <span class="meta-index">§ 02 / SELECTED PROJECTS</span>
         <h2 class="section-title">Featured Research &amp; Computational Projects</h2>
         <p class="section-subtitle reading-measure text-secondary">
-          Four flagship scientific computing and observational astrophysics projects with complete physical models, numerical algorithms, and reproducible pipelines.
+          Five flagship scientific computing and observational astrophysics projects with complete physical models, numerical algorithms, and reproducible pipelines.
         </p>
       </div>
 
@@ -459,6 +459,58 @@ const eqDomainComputational = katex.renderToString(
             <div class="bento-cta-group">
               <button type="button" class="load-in-lab-btn mono" data-sim-mode="4" title="Load Wavefront Lab in Interactive Physics Lab">Load in Lab ↑</button>
               <a href="/projects/zernike-wavefront-analyzer" class="editorial-btn">
+                View Project <span class="btn-arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 5: Quantum Uncertainty & Wave Packets (Bento Full-Width) -->
+        <article class="bento-card col-bento-full hairline-box spotlight-card interactive-row corner-crosshair">
+          <div class="bento-card-header">
+            <div class="bento-tags mono">
+              <span class="bento-num text-signal">05</span>
+              <span class="bento-domain">QUANTUM MECHANICS &amp; SPECTRAL METHODS</span>
+            </div>
+            <div class="bento-header-right">
+              <div class="bento-sparkline-wrap" title="Gaussian Wave Packet Conjugate Uncertainty Invariant">
+                <svg class="bento-sparkline" viewBox="0 0 96 40" width="96" height="40" aria-hidden="true">
+                  <path d="M 4 20 C 24 20, 32 5, 48 5 C 64 5, 72 20, 92 20" fill="none" stroke="var(--accent-primary)" stroke-width="1.2" stroke-dasharray="2 2" opacity="0.8" />
+                  <path d="M 4 20 C 24 20, 32 35, 48 35 C 64 35, 72 20, 92 20" fill="none" stroke="var(--accent-primary)" stroke-width="1.2" stroke-dasharray="2 2" opacity="0.8" />
+                  <path d="M 12 20 Q 24 20, 30 14 T 38 26 T 44 8 T 48 32 T 52 8 T 58 26 T 66 14 Q 72 20, 84 20" fill="none" stroke="var(--accent-secondary)" stroke-width="1.6" stroke-linecap="round" />
+                  <circle cx="48" cy="8" r="2" fill="var(--accent-primary)" />
+                  <circle cx="48" cy="32" r="2" fill="var(--accent-primary)" />
+                </svg>
+              </div>
+              <span class="bento-period mono text-tertiary">JUL 2025 · PRESENT</span>
+            </div>
+          </div>
+
+          <h3 class="bento-card-title">
+            <a href="/projects/quantum-uncertainty-wavepackets" class="title-link no-underline">
+              Computational Study of the Quantum Uncertainty Principle via Wave Packets &amp; Fourier Analysis
+            </a>
+          </h3>
+
+          <p class="bento-card-desc text-secondary">
+            Continuous Gaussian wave packet duality, discrete and continuous Fast Fourier Transform (FFT) spectral mapping, and rigorous numerical verification of the Robertson-Schrödinger conjugate variance bound Δx·Δp ≥ ℏ/2 across varying packet widths.
+          </p>
+
+          <div class="quant-result-strip mono">
+            <span class="quant-chip"><span class="quant-dot dot-cyan"></span>Δx·Δp ≥ ℏ/2 Verified</span>
+            <span class="quant-chip"><span class="quant-dot dot-gold"></span>FFT Conjugate Duality</span>
+            <span class="quant-chip"><span class="quant-dot dot-amber"></span>Gaussian Simulator</span>
+          </div>
+
+          <div class="bento-card-footer hairline-top">
+            <div class="pipeline-chips">
+              <span class="pipeline-chip mono" style="--chip-index: 0;">PYTHON</span>
+              <span class="pipeline-chip mono" style="--chip-index: 1;">NUMPY</span>
+              <span class="pipeline-chip mono" style="--chip-index: 2;">SCIPY FFT</span>
+              <span class="pipeline-chip mono" style="--chip-index: 3;">SPECTRAL METHODS</span>
+            </div>
+            <div class="bento-cta-group">
+              <a href="/projects/quantum-uncertainty-wavepackets" class="editorial-btn">
                 View Project <span class="btn-arrow" aria-hidden="true">→</span>
               </a>
             </div>
@@ -964,6 +1016,10 @@ const eqDomainComputational = katex.renderToString(
     gap: var(--space-5);
   }
 
+  .col-bento-full {
+    grid-column: span 2;
+  }
+
   .bento-card {
     padding: var(--space-5);
     display: flex;
@@ -1181,6 +1237,10 @@ const eqDomainComputational = katex.renderToString(
   @media (max-width: 960px) {
     .monographs-bento-grid {
       grid-template-columns: 1fr;
+    }
+
+    .col-bento-full {
+      grid-column: span 1;
     }
 
     .hero-meta-strip {

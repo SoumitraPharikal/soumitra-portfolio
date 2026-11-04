@@ -2,7 +2,7 @@
 title: "Classical Mechanics (PHY305)"
 courseCode: "PHY305"
 subject: "Classical Mechanics & Variational Principles"
-date: "Autumn 2026 · Semester V"
+date: "IISER Berhampur Coursework"
 typesetEngine: "XeLaTeX · LuaLaTeX · tcolorbox · TikZ"
 pdfPath: "/Soumitra_Pharikal_CV.pdf"
 pageCount: 42

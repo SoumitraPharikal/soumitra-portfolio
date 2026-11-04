@@ -375,35 +375,57 @@ const previewImage = new URL('/assets/portrait.png', Astro.site || 'https://soum
           }
         }, { passive: true });
 
-        // 65 Interactive Constellation Nodes
-        const nodes = Array.from({ length: 65 }, () => ({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          vx: (Math.random() - 0.5) * 0.45,
-          vy: (Math.random() - 0.5) * 0.45,
-          radius: Math.random() * 1.6 + 0.8,
-          alpha: Math.random() * 0.6 + 0.25,
-        }));
+        // Multi-Layered Celestial Starfield: 160 Micro-Stars + 18 Navigational Stars
+        interface StarNode {
+          x: number;
+          y: number;
+          vx: number;
+          vy: number;
+          radius: number;
+          alpha: number;
+          isNavStar: boolean;
+          navType?: 'gold' | 'blue';
+          spikeAngle?: number;
+        }
 
-        let heroActive = false;
-        const heroPlate = document.getElementById('physics-instrument-container');
-        let heroObserver: IntersectionObserver | null = null;
-        if (heroPlate && 'IntersectionObserver' in window) {
-          heroObserver = new IntersectionObserver((entries) => {
-            heroActive = entries.some(e => e.isIntersecting);
-            if (!heroActive && !prefersReduced && !animationFrameId) {
-              animationFrameId = requestAnimationFrame(renderConstellation);
-            }
-          }, { threshold: 0.05 });
-          heroObserver.observe(heroPlate);
+        const nodes: StarNode[] = [];
+
+        // Layer 1: ~160 crisp micro-stars (0.8px to 1.8px) with astronomical opacity distribution
+        for (let i = 0; i < 160; i++) {
+          nodes.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: (Math.random() - 0.5) * 0.22,
+            vy: (Math.random() - 0.5) * 0.22,
+            radius: Math.random() * 1.0 + 0.8,
+            alpha: Math.random() * 0.5 + 0.15,
+            isNavStar: false
+          });
+        }
+
+        // Layer 2: ~18 brighter navigational reference stars (2.2px) with diffraction spikes
+        for (let i = 0; i < 18; i++) {
+          nodes.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: (Math.random() - 0.5) * 0.14,
+            vy: (Math.random() - 0.5) * 0.14,
+            radius: 2.2,
+            alpha: Math.random() * 0.3 + 0.7,
+            isNavStar: true,
+            navType: i % 2 === 0 ? 'gold' : 'blue',
+            spikeAngle: Math.random() * Math.PI
+          });
         }
 
         function renderConstellation() {
           ctx!.clearRect(0, 0, width, height);
 
           const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
-          const nodeColor = isDark ? '243, 241, 236' : '30, 58, 138';
-          const lineColor = isDark ? '56, 189, 248' : '30, 58, 138';
+          
+          // Theme-Adaptive Colors
+          const microStarColor = isDark ? '230, 234, 242' : '148, 163, 184';
+          const lineColor = isDark ? '56, 189, 248' : '180, 83, 9';
 
           // Update & Draw Nodes
           for (let i = 0; i < nodes.length; i++) {
@@ -419,46 +441,79 @@ const previewImage = new URL('/assets/portrait.png', Astro.site || 'https://soum
               else if (n.y > height) n.y = 0;
             }
 
-            // Draw Node Dot
-            ctx!.beginPath();
-            ctx!.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
-            ctx!.fillStyle = `rgba(${nodeColor}, ${n.alpha})`;
-            ctx!.fill();
+            if (n.isNavStar) {
+              // Navigational Star with Soft Halo & Subtle 4-Point Cross Spikes
+              const starColor = n.navType === 'gold' 
+                ? (isDark ? '#E5A93C' : '#B45309') 
+                : (isDark ? '#93C5FD' : '#0284C7');
+              
+              // Soft radial glow halo
+              const haloAlpha = isDark ? 0.18 : 0.12;
+              ctx!.beginPath();
+              ctx!.arc(n.x, n.y, 6.5, 0, Math.PI * 2);
+              ctx!.fillStyle = n.navType === 'gold' 
+                ? `rgba(229, 169, 60, ${haloAlpha})` 
+                : `rgba(147, 197, 253, ${haloAlpha})`;
+              ctx!.fill();
 
-            // Inter-Node Constellation Lines (< 95px)
-            for (let j = i + 1; j < nodes.length; j++) {
+              // Central star nucleus
+              ctx!.beginPath();
+              ctx!.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
+              ctx!.fillStyle = starColor;
+              ctx!.fill();
+
+              // 4-point cross-diffraction spikes (5px length)
+              ctx!.strokeStyle = starColor;
+              ctx!.lineWidth = 0.7;
+              ctx!.beginPath();
+              ctx!.moveTo(n.x - 5.5, n.y);
+              ctx!.lineTo(n.x + 5.5, n.y);
+              ctx!.moveTo(n.x, n.y - 5.5);
+              ctx!.lineTo(n.x, n.y + 5.5);
+              ctx!.stroke();
+            } else {
+              // Crisp micro-star
+              const curAlpha = isDark ? n.alpha : n.alpha * 0.55;
+              ctx!.beginPath();
+              ctx!.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
+              ctx!.fillStyle = `rgba(${microStarColor}, ${curAlpha})`;
+              ctx!.fill();
+            }
+
+            // Inter-Node Constellation Lines between nearby stars (< 80px)
+            for (let j = i + 1; j < nodes.length; j += 2) {
               const n2 = nodes[j];
               const dx = n.x - n2.x;
               const dy = n.y - n2.y;
               const dist = Math.sqrt(dx * dx + dy * dy);
 
-              if (dist < 95) {
-                const alpha = (1 - dist / 95) * (isDark ? 0.14 : 0.08);
+              if (dist < 80) {
+                const alpha = (1 - dist / 80) * (isDark ? 0.09 : 0.05);
                 ctx!.beginPath();
                 ctx!.moveTo(n.x, n.y);
                 ctx!.lineTo(n2.x, n2.y);
                 ctx!.strokeStyle = `rgba(${lineColor}, ${alpha})`;
-                ctx!.lineWidth = 0.7;
+                ctx!.lineWidth = 0.6;
                 ctx!.stroke();
               }
             }
 
-            // Interactive Cursor Connection (< 140px)
+            // Interactive Cursor Connection (< 120px)
             const cdx = n.x - mouseX;
             const cdy = n.y - mouseY;
             const cdist = Math.sqrt(cdx * cdx + cdy * cdy);
-            if (cdist < 140) {
-              const calpha = (1 - cdist / 140) * (isDark ? 0.35 : 0.2);
+            if (cdist < 120) {
+              const calpha = (1 - cdist / 120) * (isDark ? 0.28 : 0.16);
               ctx!.beginPath();
               ctx!.moveTo(n.x, n.y);
               ctx!.lineTo(mouseX, mouseY);
               ctx!.strokeStyle = `rgba(${lineColor}, ${calpha})`;
-              ctx!.lineWidth = 1;
+              ctx!.lineWidth = 0.8;
               ctx!.stroke();
             }
           }
 
-          if (!prefersReduced && !heroActive) {
+          if (!prefersReduced) {
             animationFrameId = requestAnimationFrame(renderConstellation);
           } else {
             animationFrameId = 0;
@@ -470,7 +525,7 @@ const previewImage = new URL('/assets/portrait.png', Astro.site || 'https://soum
         document.addEventListener('astro:before-swap', () => {
           cancelAnimationFrame(animationFrameId);
           window.removeEventListener('resize', resize);
-          heroObserver?.disconnect();
+          // heroObserver clean
         }, { once: true });
       }
 

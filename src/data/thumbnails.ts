@@ -119,6 +119,26 @@ export const thumbnailManifest: Record<string, ThumbnailItem> = {
       <line x1="240" y1="45" x2="240" y2="225" stroke="#A855F7" stroke-width="1.2" opacity="0.7" />
     </svg>`
   },
+  'quantum-uncertainty-wavepackets': {
+    id: 'quantum-uncertainty-wavepackets',
+    src: '/images/thumbnails/quantum-uncertainty-wavepackets.webp',
+    alt: 'Gaussian Wave Packet Duality, Fourier Spectral Transform, and Quantum Uncertainty Bound',
+    width: 480,
+    height: 270,
+    fallbackSvg: `<svg viewBox="0 0 480 270" class="teaser-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100%" height="100%" fill="var(--bg-surface-sunken)"/>
+      <line x1="30" y1="135" x2="450" y2="135" stroke="var(--border-strong)" stroke-width="1.2" opacity="0.5"/>
+      <path d="M 40 135 C 140 135, 170 45, 240 45 C 310 45, 340 135, 440 135" fill="none" stroke="var(--accent-primary)" stroke-width="1.8" stroke-dasharray="4 3" opacity="0.85"/>
+      <path d="M 40 135 C 140 135, 170 225, 240 225 C 310 225, 340 135, 440 135" fill="none" stroke="var(--accent-primary)" stroke-width="1.8" stroke-dasharray="4 3" opacity="0.85"/>
+      <path d="M 50 135 Q 90 135, 120 135 T 150 120 T 175 160 T 200 85 T 220 185 T 240 52 T 260 218 T 280 85 T 305 160 T 330 120 T 360 135 T 430 135" fill="none" stroke="#38BDF8" stroke-width="2.2" stroke-linecap="round"/>
+      <circle cx="240" cy="52" r="3.5" fill="var(--accent-primary)"/>
+      <circle cx="240" cy="218" r="3.5" fill="var(--accent-primary)"/>
+      <line x1="190" y1="238" x2="290" y2="238" stroke="var(--accent-primary)" stroke-width="1.2" opacity="0.8"/>
+      <line x1="190" y1="233" x2="190" y2="243" stroke="var(--accent-primary)" stroke-width="1.2" opacity="0.8"/>
+      <line x1="290" y1="233" x2="290" y2="243" stroke="var(--accent-primary)" stroke-width="1.2" opacity="0.8"/>
+      <text x="240" y="254" fill="var(--accent-primary)" font-family="monospace" font-size="11" text-anchor="middle" font-weight="bold">Δx · Δp ≥ ℏ/2</text>
+    </svg>`
+  },
   'astra-rust-toolkit': {
     id: 'astra-rust-toolkit',
     src: '/images/thumbnails/astra-rust-toolkit.webp',

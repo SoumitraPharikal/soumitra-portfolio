@@ -2,7 +2,7 @@
 title: "Architecture & Operations of Computing Systems (CDS307)"
 courseCode: "CDS307"
 subject: "Computing Architecture & System Operations"
-date: "Autumn 2026 · Semester V"
+date: "IISER Berhampur Coursework"
 typesetEngine: "XeLaTeX · LuaLaTeX · tcolorbox · TikZ"
 pdfPath: "/Soumitra_Pharikal_CV.pdf"
 pageCount: 38
