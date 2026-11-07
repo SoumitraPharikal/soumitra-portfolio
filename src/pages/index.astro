@@ -59,7 +59,7 @@ const eqDomainComputational = katex.renderToString(
 
             <div class="hero-prose reading-measure">
               <p class="lead">
-                Hi, I'm Soumitra, a third-year BS-MS student at IISER Berhampur majoring in Physics with a minor in Computational and Data Sciences. I develop Rust-based astrodynamics and orbital propagation toolkits (ASTRA), build observational CCD photometry pipelines for variable star discovery, and model optical wavefront aberrations and inverse problems.
+                Hi, I'm Soumitra, a third-year BS-MS student at IISER Berhampur majoring in Physics with a minor in Computational and Data Sciences. I develop Rust-based astrodynamics toolkits (ASTRA), model Kerr black hole geodesics and gravitational-wave parameters, and build observational CCD photometry pipelines.
               </p>
             </div>
 
@@ -249,7 +249,7 @@ const eqDomainComputational = katex.renderToString(
         <span class="meta-index">§ 02 / SELECTED PROJECTS</span>
         <h2 class="section-title">Featured Research &amp; Computational Projects</h2>
         <p class="section-subtitle reading-measure text-secondary">
-          Five flagship scientific computing and observational astrophysics projects with complete physical models, numerical algorithms, and reproducible pipelines.
+          Flagship scientific computing, numerical relativity, and observational astrophysics projects with complete physical models, numerical algorithms, and reproducible pipelines.
         </p>
       </div>
 
@@ -522,6 +522,12 @@ const eqDomainComputational = katex.renderToString(
           </div>
         </article>
       </div>
+
+      <div class="projects-archive-portal mono reveal-up" style="--stagger-index: 3; text-align: center; margin-top: var(--space-6);">
+        <a href="/projects" class="editorial-btn primary" style="display: inline-flex;">
+          Explore All Computational &amp; Relativity Projects in Archive →
+        </a>
+      </div>
     </section>
 
     <div class="haikei-wave-divider reveal-line" style="--stagger-index: 1;" aria-hidden="true">
@@ -649,10 +655,9 @@ const eqDomainComputational = katex.renderToString(
 
     const phrases = [
       "stellar CCD photometry.",
-      "symplectic N-body solvers.",
-      "optical wavefront models.",
-      "tomographic inversions.",
-      "quantum wave-packet FFTs."
+      "Kerr black hole geodesics.",
+      "gravitational-wave inference.",
+      "Rust-based astrodynamics."
     ];
 
     let phraseIdx = 0;

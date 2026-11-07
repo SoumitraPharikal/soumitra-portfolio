@@ -16,9 +16,9 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 
 const code = entry.data.courseCode || '';
-const pdfPublicPath = `/notes/${code}.pdf`;
-const pdfAbsPath = path.resolve(`public/notes/${code}.pdf`);
-const hasLocalPdf = fs.existsSync(pdfAbsPath);
+const pdfPublicPath = entry.data.pdfPath || `/notes/${code}.pdf`;
+const pdfAbsPath = path.resolve(`public${pdfPublicPath}`);
+const hasLocalPdf = fs.existsSync(pdfAbsPath) || fs.existsSync(path.resolve(`public/notes/${code}.pdf`));
 ---
 
 <BaseLayout

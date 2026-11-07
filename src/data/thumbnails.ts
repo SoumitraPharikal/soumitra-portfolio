@@ -155,6 +155,50 @@ export const thumbnailManifest: Record<string, ThumbnailItem> = {
     </svg>`
   },
 
+  'kerr-black-hole-geodesics': {
+    id: 'kerr-black-hole-geodesics',
+    src: '/images/thumbnails/kerr-black-hole-geodesics.webp',
+    alt: 'Kerr Spacetime Geodesic Ray Tracing, Photon Orbits and Carter Invariant',
+    width: 480,
+    height: 270,
+    fallbackSvg: `<svg viewBox="0 0 480 270" class="teaser-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100%" height="100%" fill="var(--bg-surface-sunken)"/>
+      <!-- Static Limit Ergosphere -->
+      <ellipse cx="240" cy="135" rx="90" ry="70" fill="none" stroke="var(--accent-amber)" stroke-width="1.4" stroke-dasharray="4 3" opacity="0.85"/>
+      <!-- Event Horizon -->
+      <circle cx="240" cy="135" r="42" fill="var(--bg-recessed, #070A10)" stroke="var(--border-strong)" stroke-width="1.8"/>
+      <!-- Photon Sphere / Critical Orbit -->
+      <circle cx="240" cy="135" r="58" fill="none" stroke="var(--accent-primary)" stroke-width="1.2" stroke-dasharray="2 2" opacity="0.6"/>
+      <!-- Prograde Frame-Dragged Geodesic -->
+      <path d="M 40 185 C 150 185, 200 170, 225 155 C 245 142, 255 120, 240 100 C 220 75, 180 110, 205 150 C 225 180, 310 195, 440 210" fill="none" stroke="#38BDF8" stroke-width="2.2" stroke-linecap="round"/>
+      <!-- Deflected Ray -->
+      <path d="M 40 85 C 140 85, 185 92, 230 82 C 270 72, 350 45, 440 30" fill="none" stroke="var(--accent-signal)" stroke-width="1.6" stroke-linecap="round" opacity="0.85"/>
+      <circle cx="240" cy="135" r="3" fill="var(--accent-amber)"/>
+      <text x="240" y="252" fill="var(--accent-primary)" font-family="monospace" font-size="10" text-anchor="middle" font-weight="bold">r+ = M + √(M² - a²) · Q = const</text>
+    </svg>`
+  },
+  'gravitational-wave-parameter-estimation': {
+    id: 'gravitational-wave-parameter-estimation',
+    src: '/images/thumbnails/gravitational-wave-parameter-estimation.webp',
+    alt: 'Gravitational Wave Chirp Waveform, Welch PSD and Matched Filter Peak',
+    width: 480,
+    height: 270,
+    fallbackSvg: `<svg viewBox="0 0 480 270" class="teaser-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100%" height="100%" fill="var(--bg-surface-sunken)"/>
+      <!-- Time axis zero line -->
+      <line x1="30" y1="135" x2="450" y2="135" stroke="var(--border-strong)" stroke-width="1" opacity="0.4"/>
+      <!-- Simulated detector noise band -->
+      <path d="M 30 135 Q 45 130, 60 137 T 90 133 T 120 136 T 150 132 T 180 138 T 210 133 T 240 137 T 270 132 T 300 138 T 330 132 T 360 137 T 390 133 T 420 136 T 450 135" fill="none" stroke="var(--text-secondary)" stroke-width="0.8" opacity="0.35"/>
+      <!-- Inspiral Chirp Waveform -->
+      <path d="M 40 135 Q 70 145, 100 135 T 160 135 T 220 135 T 270 120 T 310 155 T 345 105 T 375 170 T 398 85 T 412 190 T 420 70 T 425 150 T 428 135 L 450 135" fill="none" stroke="#38BDF8" stroke-width="2.2" stroke-linecap="round"/>
+      <!-- Matched filter SNR peak indicator -->
+      <line x1="420" y1="35" x2="420" y2="215" stroke="var(--accent-signal)" stroke-width="1.2" stroke-dasharray="3 3"/>
+      <circle cx="420" cy="70" r="4" fill="var(--accent-signal)"/>
+      <text x="420" y="26" fill="var(--accent-signal)" font-family="monospace" font-size="10" text-anchor="middle" font-weight="bold">MAX SNR ρ</text>
+      <text x="210" y="252" fill="var(--accent-primary)" font-family="monospace" font-size="10" text-anchor="middle" font-weight="bold">⟨d|h⟩ = 4ℜ ∫ [d̃(f)h̃*(f)/Sn(f)] df</text>
+    </svg>`
+  },
+
   // Creative & Visual Archive
   'sketch-gallery': {
     id: 'sketch-gallery',

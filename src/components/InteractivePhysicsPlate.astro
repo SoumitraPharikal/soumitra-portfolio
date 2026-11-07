@@ -17,6 +17,10 @@
         <span class="status-ping"></span>
         <span id="status-text">REAL-TIME ENGINE</span>
       </div>
+      <div class="nr-dev-pill mono" title="Numerical Relativity (Kerr Geodesics & Gravitational-Wave Inference) simulation modules currently in active development">
+        <span class="nr-dev-ping"></span>
+        <span>NR / GW: IN DEV</span>
+      </div>
     </div>
 
     <!-- 4 Clean Short Mode Pills with Verified Physics Tooltips -->
@@ -201,6 +205,28 @@
     height: 6px;
     border-radius: 50%;
     background: #E5A93C;
+    display: inline-block;
+  }
+
+  .nr-dev-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 8px;
+    background: #070A10;
+    border: 1px solid rgba(56, 189, 248, 0.28);
+    border-radius: var(--radius-pill);
+    font-size: 0.72rem;
+    color: #38BDF8;
+    letter-spacing: 0.05em;
+  }
+
+  .nr-dev-ping {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #38BDF8;
+    box-shadow: 0 0 6px rgba(56, 189, 248, 0.8);
     display: inline-block;
   }
 
