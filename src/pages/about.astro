@@ -28,11 +28,11 @@ const rabbitHoles = [
   }
 ];
 
-// Exact Curricular Progression: enrollment (Sep 3, 2024) to graduation (May 31, 2029)
+// Exact Curricular Progression: enrollment (Sep 3, 2024) to graduation (May 1, 2029)
 const startDate = new Date('2024-09-03T00:00:00+05:30').getTime();
-const endDate = new Date('2029-05-31T23:59:59+05:30').getTime();
+const endDate = new Date('2029-05-01T23:59:59+05:30').getTime();
 const now = Date.now();
-const degreeProgressPercent = Math.min(100, Math.max(0, ((now - startDate) / (endDate - startDate)) * 100)).toFixed(3);
+const degreeProgressPercent = Math.min(100, Math.max(0, ((now - startDate) / (endDate - startDate)) * 100)).toFixed(7);
 
 const toolkits = [
   {
@@ -147,7 +147,7 @@ const toolkits = [
               <div class="progress-bar-track" role="progressbar" aria-valuenow={degreeProgressPercent} aria-valuemin="0" aria-valuemax="100">
                 <div class="progress-bar-fill" id="degree-progress-fill" style={`width: ${degreeProgressPercent}%; background: var(--accent-primary);`}></div>
               </div>
-              <span class="progress-dates mono text-tertiary">SEP 3, 2024 (ENROLLMENT) → MAY 31, 2029 (GRADUATION)</span>
+              <span class="progress-dates mono text-tertiary">SEP 3, 2024 (ENROLLMENT) → MAY 1, 2029 (GRADUATION)</span>
             </div>
 
             <!-- Vertical Timeline with 3 Connected Nodes -->
@@ -455,17 +455,54 @@ const toolkits = [
 </BaseLayout>
 
 <script>
-  function updateDegreeProgress() {
+  let degreeInterval: number | null = null;
+
+  function initDegreeTicker() {
+    if (degreeInterval !== null) {
+      window.clearInterval(degreeInterval);
+      degreeInterval = null;
+    }
+
     const start = new Date('2024-09-03T00:00:00+05:30').getTime();
-    const end = new Date('2029-05-31T23:59:59+05:30').getTime();
-    const pct = Math.min(100, Math.max(0, ((Date.now() - start) / (end - start)) * 100)).toFixed(3);
+    const end = new Date('2029-05-01T23:59:59+05:30').getTime();
     const label = document.getElementById('degree-percent-label');
     const fill = document.getElementById('degree-progress-fill');
-    if (label) label.textContent = `${pct}% Completed`;
-    if (fill) fill.style.width = `${pct}%`;
+    const track = label?.closest('.progress-block')?.querySelector('.progress-bar-track');
+
+    if (!label) return;
+
+    function tick() {
+      const now = Date.now();
+      const progressVal = Math.min(100, Math.max(0, ((now - start) / (end - start)) * 100));
+      const pctStr = progressVal.toFixed(7);
+      if (label) {
+        label.innerText = `${pctStr}% Completed`;
+      }
+      if (track) {
+        track.setAttribute('aria-valuenow', pctStr);
+      }
+    }
+
+    tick();
+    if (fill) {
+      const currentPct = Math.min(100, Math.max(0, ((Date.now() - start) / (end - start)) * 100)).toFixed(7);
+      fill.style.width = `${currentPct}%`;
+    }
+
+    degreeInterval = window.setInterval(tick, 50);
   }
-  updateDegreeProgress();
-  document.addEventListener('astro:page-load', updateDegreeProgress);
+
+  document.addEventListener('astro:page-load', initDegreeTicker);
+  document.addEventListener('astro:before-swap', () => {
+    if (degreeInterval !== null) {
+      window.clearInterval(degreeInterval);
+      degreeInterval = null;
+    }
+  });
+
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initDegreeTicker();
+  }
 </script>
 
 <style>
@@ -629,6 +666,7 @@ const toolkits = [
     font-weight: 700;
     color: #34D399;
     letter-spacing: 0.05em;
+    font-variant-numeric: tabular-nums;
   }
 
   :global(html[data-theme="light"]) .progress-percent {
