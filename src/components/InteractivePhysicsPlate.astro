@@ -2,7 +2,7 @@
 // src/components/InteractivePhysicsPlate.astro
 // Self-contained 60 FPS HTML5 Canvas Scientific Instrument:
 // Mode 01: Time-Series Photometry & Exoplanet Transit Mini-Schematic (IC 1369)
-// Mode 02: Astrodynamics N-Body (RK4) Orbit & J2 Precession Ribbon
+// Mode 02: Kerr Black Hole Spacetime Geodesic & Relativistic Curvature Well
 // Mode 03: Autonomous Radon CT Gantry Sweep & Sinogram Reconstructions (Ram-Lak vs Unfiltered)
 // Mode 04: Continuous Monte Carlo Stochastic Decay & 8x8 Lattice Fit
 ---
@@ -16,10 +16,6 @@
       <div class="status-indicator-pill mono" id="status-indicator">
         <span class="status-ping"></span>
         <span id="status-text">REAL-TIME ENGINE</span>
-      </div>
-      <div class="nr-dev-pill mono" title="Numerical Relativity (Kerr Geodesics & Gravitational-Wave Inference) simulation modules currently in active development">
-        <span class="nr-dev-ping"></span>
-        <span>NR / GW: IN DEV</span>
       </div>
     </div>
 
@@ -45,9 +41,9 @@
         aria-selected="false"
         tabindex="-1"
         data-mode="nbody"
-        title="Mode 02: Runge-Kutta 4th-order (RK4) orbital propagation incorporating Earth oblateness J2 = 1.08263e-3 perturbation."
+        title="Mode 02: Kerr black hole spacetime curvature & relativistic rosette orbital dynamics with interactive 3D drag perspective."
       >
-        <span class="mode-number">02</span> N-Body
+        <span class="mode-number">02</span> Kerr Orbit
       </button>
       <button
         type="button"
@@ -205,28 +201,6 @@
     height: 6px;
     border-radius: 50%;
     background: #E5A93C;
-    display: inline-block;
-  }
-
-  .nr-dev-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 3px 8px;
-    background: #070A10;
-    border: 1px solid rgba(56, 189, 248, 0.28);
-    border-radius: var(--radius-pill);
-    font-size: 0.72rem;
-    color: #38BDF8;
-    letter-spacing: 0.05em;
-  }
-
-  .nr-dev-ping {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: #38BDF8;
-    box-shadow: 0 0 6px rgba(56, 189, 248, 0.8);
     display: inline-block;
   }
 
@@ -955,7 +929,7 @@
     // Captions mapping
     const captions: Record<PlateMode, string> = {
       photometry: 'Mode 01: IC 1369 Phase-Folded Photometry',
-      nbody: 'Mode 02: N-Body Symplectic Orbits',
+      nbody: 'Mode 02: Kerr Spacetime Geodesic & Curvature Orbit',
       radon: 'Mode 03: Radon CT Sinogram Inversion',
       mc: 'Mode 04: Monte Carlo Decay Lattice'
     };
@@ -963,7 +937,7 @@
     // Aria labels for accessibility
     const ariaLabels: Record<PlateMode, string> = {
       photometry: 'Aperture photometry simulation showing light curve phase-folded onto 1.4820 days period with photon transit schematic.',
-      nbody: 'Runge-Kutta 4th-Order (RK4) orbital simulation displaying exaggerated J2 Earth oblateness apsidal precession ribbon.',
+      nbody: 'Interactive Kerr black hole spacetime curvature simulation with 3D draggable potential well and frame-dragged rosette orbital trajectory.',
       radon: 'Radon transform tomography simulation sweeping projection rays through Shepp-Logan phantom into sinogram with Ram-Lak ramp filtering.',
       mc: 'Monte Carlo stochastic decay simulation across an 8x8 radioisotope lattice with live non-linear exponential half-life fitting.'
     };
@@ -1020,7 +994,7 @@
         if (currentMode === 'photometry') {
           coordTag.textContent = 'METHOD: DAOPHOT PSF · LOMB-SCARGLE';
         } else if (currentMode === 'nbody') {
-          coordTag.textContent = 'COORDINATES: KEPLERIAN ORBIT [J2 PERTURBED]';
+          coordTag.textContent = 'METRIC: KERR SPACETIME · BOYER-LINDQUIST';
         } else if (currentMode === 'radon') {
           coordTag.textContent = 'PROJECTION: RADON TRANSLATION s vs ANGLE θ';
         } else if (currentMode === 'mc') {
@@ -1043,15 +1017,15 @@
         metricVal1.textContent = `PHASE RMS: ${rms.toFixed(3)} mag`;
         metricVal2.textContent = `PERIOD: ${paramPhotometry.toFixed(4)} d`;
       } else if (currentMode === 'nbody') {
-        sliderLabel.textContent = 'ECCENTRICITY e:';
+        sliderLabel.textContent = 'ORBIT ECCENTRICITY e:';
         slider.min = '0.00';
         slider.max = '0.65';
         slider.step = '0.01';
         slider.value = paramNbody.toFixed(2);
-        const orbitType = paramNbody < 0.08 ? 'Circular Orbit' : (paramNbody < 0.38 ? 'Keplerian' : 'Rosetta Precession');
+        const orbitType = paramNbody < 0.08 ? 'Circular Photon Orbit' : (paramNbody < 0.38 ? 'Bound Relativistic' : 'Rosetta Precession');
         sliderReadout.textContent = `e = ${paramNbody.toFixed(2)} (${orbitType})`;
-        metricVal1.textContent = 'INTEGRATOR: RK4';
-        metricVal2.textContent = `PERIAPSIS: ${(105 * (1 - paramNbody)).toFixed(1)} AU`;
+        metricVal1.textContent = 'INTEGRATOR: HAMILTONIAN RK4';
+        metricVal2.textContent = `PERIAPSIS: ${(105 * (1 - paramNbody)).toFixed(1)} M`;
       } else if (currentMode === 'radon') {
         sliderLabel.textContent = 'GANTRY SWEEP θ:';
         slider.min = '30';

@@ -14,8 +14,8 @@ const eqDomainAstrodynamics = katex.renderToString(
   { displayMode: true, throwOnError: false }
 );
 
-const eqDomainComputational = katex.renderToString(
-  '\\mathcal{R}f(s,\\theta) = \\int_{\\mathbb{R}^2} f(\\mathbf{r})\\,\\delta(\\mathbf{r}\\cdot\\hat{\\mathbf{n}}_\\theta - s)\\,d^2\\mathbf{r}',
+const eqDomainRelativity = katex.renderToString(
+  '\\langle d | h \\rangle = 4\\,\\mathrm{Re}\\int_{f_{\\text{low}}}^{f_{\\text{high}}} \\frac{\\tilde{d}(f)\\tilde{h}^*(f)}{S_n(f)}\\,df, \\quad \\mathcal{H} = \\frac{1}{2}g^{\\mu\\nu}p_\\mu p_\\nu',
   { displayMode: true, throwOnError: false }
 );
 
@@ -190,33 +190,33 @@ const eqDomainComputational = katex.renderToString(
           </div>
         </div>
 
-        <!-- 03 // COMPUTATIONAL PHYSICS & OPTICS -->
+        <!-- 03 // NUMERICAL RELATIVITY & GW INFERENCE -->
         <div class="col-4 domain-card hairline-box spotlight-card interactive-row corner-crosshair reveal-up" style="--stagger-index: 4;">
           <div class="domain-header">
-            <span class="domain-code mono">03 // INVERSE PHYSICS</span>
-            <span class="domain-period mono">TOMOGRAPHY &amp; WAVEFRONTS</span>
+            <span class="domain-code mono">03 // NUMERICAL RELATIVITY</span>
+            <span class="domain-period mono">GRAVITATIONAL PHYSICS</span>
           </div>
-          <h3 class="domain-title">Tomographic Inversion &amp; Wavefront Sensing</h3>
+          <h3 class="domain-title">Numerical Relativity &amp; GW Inference</h3>
           <p class="domain-desc text-secondary">
-            Ill-posed linear inverse problems, Fourier-slice tomographic sinogram reconstruction, and orthogonal Zernike polynomial wavefront aberration modeling.
+            Kerr metric canonical geodesic integration, continuous-to-discrete Fourier scaling, matched-filtering, and Bayesian parameter estimation.
           </p>
           <div class="domain-math-box">
-            <div set:html={eqDomainComputational} />
+            <div set:html={eqDomainRelativity} />
           </div>
           <div class="domain-footer hairline-top">
             <div class="pipeline-chips-wrap">
               <span class="meta-index pipeline-label">PIPELINE:</span>
               <div class="pipeline-chips">
-                <span class="pipeline-chip mono" style="--chip-index: 0;">NUMPY</span>
+                <span class="pipeline-chip mono" style="--chip-index: 0;">PYTHON</span>
                 <span class="pipeline-chip mono" style="--chip-index: 1;">SCIPY</span>
-                <span class="pipeline-chip mono" style="--chip-index: 2;">SKIMAGE</span>
-                <span class="pipeline-chip mono" style="--chip-index: 3;">MATLAB</span>
-                <span class="pipeline-chip mono" style="--chip-index: 4;">ZERNIKE MODES</span>
+                <span class="pipeline-chip mono" style="--chip-index: 2;">PYCBC</span>
+                <span class="pipeline-chip mono" style="--chip-index: 3;">BILBY</span>
+                <span class="pipeline-chip mono" style="--chip-index: 4;">HAMILTONIAN</span>
               </div>
             </div>
             <div class="domain-actions-group">
-              <button type="button" class="load-in-lab-btn mono" data-sim-mode="3" title="Load Radon Transform in Interactive Physics Lab">Load in Lab ↑</button>
-              <a href="/projects/ct-imaging-tumour-detection" class="domain-link">View Inversion Project →</a>
+              <button type="button" class="load-in-lab-btn mono" data-sim-mode="2" title="Load Kerr Geodesic Dynamics in Interactive Physics Lab">Load in Lab ↑</button>
+              <a href="/projects/kerr-black-hole-geodesics" class="domain-link">View Relativity Project →</a>
             </div>
           </div>
         </div>
@@ -415,54 +415,56 @@ const eqDomainComputational = katex.renderToString(
           </div>
         </article>
 
-        <!-- Card 4: Zernike Wavefront Analyzer (Bento 7-Col) -->
+        <!-- Card 4: Kerr Geodesic Integration (Bento 7-Col) -->
         <article class="bento-card col-bento-7 hairline-box spotlight-card interactive-row corner-crosshair">
           <div class="bento-card-header">
             <div class="bento-tags mono">
               <span class="bento-num text-signal">04</span>
-              <span class="bento-domain">ADAPTIVE OPTICS</span>
+              <span class="bento-domain">NUMERICAL RELATIVITY</span>
             </div>
             <div class="bento-header-right">
-              <div class="bento-sparkline-wrap" title="Zernike Circular Pupil Aberration Rings">
-                <img src="/thumbnails/projects/zernike.png" alt="Zernike Polynomial Wavefront Decomposition &amp; Modal Analysis" class="bento-custom-thumb" loading="lazy" onerror="this.style.display='none'; if (this.nextElementSibling) this.nextElementSibling.style.display='block';" />
+              <div class="bento-sparkline-wrap" title="Kerr Black Hole Ergosphere and Photon Frame-Dragging Trajectory">
+                <img src="/thumbnails/projects/kerr.png" alt="Kerr Geodesic Integration and Numerical Orbital Dynamics" class="bento-custom-thumb" loading="lazy" onerror="this.style.display='none'; if (this.nextElementSibling) this.nextElementSibling.style.display='block';" />
                 <svg class="bento-sparkline" viewBox="0 0 96 40" width="96" height="40" aria-hidden="true">
-                  <circle cx="48" cy="20" r="16" fill="none" stroke="var(--accent-primary)" stroke-width="1.5" opacity="0.85" />
-                  <circle cx="48" cy="20" r="10" fill="none" stroke="var(--accent-secondary)" stroke-width="1.2" stroke-dasharray="3 2" opacity="0.75" />
-                  <circle cx="48" cy="20" r="4" fill="var(--accent-primary)" opacity="0.9" />
-                  <path d="M 32 20 Q 48 10 64 20 Q 48 30 32 20 Z" fill="none" stroke="var(--accent-primary)" stroke-width="0.9" opacity="0.6" />
+                  <!-- Ergosphere & Horizon -->
+                  <ellipse cx="48" cy="20" rx="22" ry="15" fill="none" stroke="var(--accent-primary)" stroke-width="1.2" stroke-dasharray="2 2" opacity="0.7" />
+                  <circle cx="48" cy="20" r="8" fill="var(--bg-recessed, #070A10)" stroke="var(--border-strong)" stroke-width="1.2" />
+                  <!-- Frame-dragged geodesic curve -->
+                  <path d="M 8 32 C 30 32, 42 28, 46 24 C 50 18, 52 12, 48 8 C 44 4, 38 12, 44 22 C 48 28, 65 32, 88 34" fill="none" stroke="#38BDF8" stroke-width="1.6" stroke-linecap="round" />
+                  <circle cx="48" cy="20" r="1.5" fill="var(--accent-amber)" />
                 </svg>
               </div>
-              <span class="bento-period mono text-tertiary">WAVEFRONT MODES · 2025</span>
+              <span class="bento-period mono text-tertiary">KERR SPHEROID · NOV 2026</span>
             </div>
           </div>
 
           <h3 class="bento-card-title">
-            <a href="/projects/zernike-wavefront-analyzer" class="title-link no-underline">
-              Zernike Polynomial Wavefront Decomposition &amp; Modal Analysis
+            <a href="/projects/kerr-black-hole-geodesics" class="title-link no-underline">
+              Kerr Geodesic Integration and Numerical Orbital Dynamics
             </a>
           </h3>
 
           <p class="bento-card-desc text-secondary">
-            Orthogonal circular pupil expansion of optical wavefront aberrations up to 36 modes, 
-            dynamic pupil scaling matrices, and Strehl ratio approximations in MATLAB.
+            Hamiltonian ray tracing in Boyer–Lindquist coordinates, exact contravariant metric derivatives, Carter constant conservation, and 100-digit decimal benchmarks for circular photon orbits.
           </p>
 
           <div class="quant-result-strip mono">
-            <span class="quant-chip"><span class="quant-dot dot-cyan"></span>36 Zernike Modes</span>
-            <span class="quant-chip"><span class="quant-dot dot-gold"></span>Strehl S ≈ exp(-σ²)</span>
-            <span class="quant-chip"><span class="quant-dot dot-amber"></span>Gram-Schmidt</span>
+            <span class="quant-chip"><span class="quant-dot dot-cyan"></span>ΔQ/Q₀ &lt; 10⁻¹⁴</span>
+            <span class="quant-chip"><span class="quant-dot dot-gold"></span>Halley 100-Digit Benchmark</span>
+            <span class="quant-chip"><span class="quant-dot dot-amber"></span>|b_ph| &lt; 67 ε_mach</span>
           </div>
 
           <div class="bento-card-footer hairline-top">
             <div class="pipeline-chips">
-              <span class="pipeline-chip mono" style="--chip-index: 0;">MATLAB</span>
-              <span class="pipeline-chip mono" style="--chip-index: 1;">ZERNIKE</span>
-              <span class="pipeline-chip mono" style="--chip-index: 2;">GRAM-SCHMIDT</span>
-              <span class="pipeline-chip mono" style="--chip-index: 3;">ADAPTIVE OPTICS</span>
+              <span class="pipeline-chip mono" style="--chip-index: 0;">PYTHON</span>
+              <span class="pipeline-chip mono" style="--chip-index: 1;">SCIPY</span>
+              <span class="pipeline-chip mono" style="--chip-index: 2;">HAMILTONIAN</span>
+              <span class="pipeline-chip mono" style="--chip-index: 3;">CARTER CONSTANT</span>
+              <span class="pipeline-chip mono" style="--chip-index: 4;">HALLEY METHOD</span>
             </div>
             <div class="bento-cta-group">
-              <button type="button" class="load-in-lab-btn mono" data-sim-mode="4" title="Load Wavefront Lab in Interactive Physics Lab">Load in Lab ↑</button>
-              <a href="/projects/zernike-wavefront-analyzer" class="editorial-btn">
+              <button type="button" class="load-in-lab-btn mono" data-sim-mode="2" title="Load Kerr Geodesic Simulation in Interactive Physics Lab">Load in Lab ↑</button>
+              <a href="/projects/kerr-black-hole-geodesics" class="editorial-btn">
                 View Project <span class="btn-arrow" aria-hidden="true">→</span>
               </a>
             </div>
