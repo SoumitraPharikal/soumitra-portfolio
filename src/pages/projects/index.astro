@@ -252,12 +252,13 @@ const categoryCounts = categories.reduce((acc, cat) => {
 
   .projects-bento-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-6);
     padding-bottom: var(--space-12);
   }
 
   .project-card {
+    min-width: 0;
     padding: var(--space-6);
     display: flex;
     flex-direction: column;

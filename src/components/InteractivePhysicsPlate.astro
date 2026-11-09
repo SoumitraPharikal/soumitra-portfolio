@@ -214,7 +214,7 @@
 
   @media (max-width: 480px) {
     .plate-mode-tabs {
-      grid-template-columns: repeat(2, 1fr) !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
       gap: 0.35rem !important;
     }
     .mode-pill {
@@ -328,11 +328,7 @@
     box-shadow: 0 0 8px rgba(56, 189, 248, 0.25);
   }
 
-  :global(html[data-theme="light"]) .mini-control-btn {
-    background: #111826 !important;
-    border: 1px solid #1E293B !important;
-    color: #E5A93C !important;
-  }
+
 
   .caption-icon {
     color: var(--accent-amber);
@@ -356,6 +352,8 @@
     width: 100%;
     height: 100%;
     display: block;
+    max-width: 100%;
+    flex-shrink: 0;
   }
 
   .canvas-grid-overlay {
@@ -390,8 +388,8 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    flex: 1;
-    min-width: 260px;
+    flex: 1 1 auto;
+    min-width: 0;
   }
 
   .fine-label {
@@ -402,7 +400,8 @@
   }
 
   .tactile-range-wrapper {
-    flex: 1;
+    flex: 1 1 auto;
+    min-width: 0;
     display: flex;
     align-items: center;
   }
@@ -618,6 +617,8 @@
 
   :global(html[data-theme="light"]) .drag-3d-hint-pill {
     background: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
     border: 1px solid rgba(217, 119, 6, 0.4) !important;
     color: #D97706 !important;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
@@ -654,7 +655,8 @@
 
   /* Cult-UI Tactile Slider */
   .tactile-range-wrapper {
-    flex: 1;
+    flex: 1 1 auto;
+    min-width: 0;
     display: flex;
     align-items: center;
   }
@@ -662,6 +664,7 @@
     -webkit-appearance: none;
     appearance: none;
     width: 100%;
+    min-width: 0;
     height: 4px;
     background: rgba(255, 255, 255, 0.14);
     border-radius: 999px;
@@ -719,6 +722,8 @@
     font-weight: 600;
     letter-spacing: 0.05em;
     background: rgba(11, 15, 23, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(229, 169, 60, 0.35);
     color: var(--accent-primary);
     border-radius: 4px;

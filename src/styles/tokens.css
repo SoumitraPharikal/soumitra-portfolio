@@ -4,7 +4,10 @@
    ========================================================================== */
 
 :root,
+:root[data-theme="dark"],
+html[data-theme="dark"],
 [data-theme="dark"] {
+  color-scheme: dark;
   /* Restrained, High-Contrast Observatory Palette (Dark Mode) */
   --bg-primary: #0B0F17;       /* Deep obsidian navy, not pure #000 */
   --bg-surface: #111826;       /* Elevated card surface */
@@ -130,7 +133,10 @@
 /* ==========================================================================
    WARM ARCHIVAL PAPER (LIGHT MODE)
    ========================================================================== */
+:root[data-theme="light"],
+html[data-theme="light"],
 [data-theme="light"] {
+  color-scheme: light;
   --bg-primary: #FAFAF7;       /* Warm archival paper ivory */
   --bg-surface: #FFFFFF;       /* Clean card surface */
   --bg-recessed: #F1F3F5;      /* Equation & code blocks */
@@ -179,4 +185,55 @@
   --glass-shadow: 0 4px 20px -2px rgba(20, 24, 31, 0.06), 0 0 0 1px var(--border-subtle);
   --card-spotlight-tint: rgba(180, 83, 9, 0.04);
   --contour-color: rgba(20, 24, 31, 0.03);
+}
+
+
+/* ==========================================================================
+   MACOS & SAFARI PREFERS-COLOR-SCHEME OVERRIDE GUARD
+   Explicitly enforces light mode CSS variables when data-theme="light" is active,
+   preventing macOS system-level dark preference from bleeding through.
+   ========================================================================== */
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="light"],
+  html[data-theme="light"],
+  [data-theme="light"] {
+    color-scheme: light !important;
+    --bg-primary: #FAFAF7 !important;
+    --bg-surface: #FFFFFF !important;
+    --bg-recessed: #F1F3F5 !important;
+    --border-subtle: #E2E8F0 !important;
+    --border-hover: #CBD5E1 !important;
+    --text-primary: #14181F !important;
+    --text-secondary: #334155 !important;
+    --text-muted: #5B6472 !important;
+    --accent-primary: #B45309 !important;
+    --accent-secondary: #0284C7 !important;
+    --bg-elevated: #F8F9FA !important;
+    --bg-surface-elevated: #F8F9FA !important;
+    --bg-surface-sunken: #F1F3F5 !important;
+    --text-tertiary: #5B6472 !important;
+    --text-inverse: #FAFAF7 !important;
+    --border-strong: #CBD5E1 !important;
+    --border-specular: rgba(255, 255, 255, 0.95) !important;
+    --border-focus: #B45309 !important;
+    --accent-primary-hover: #92400E !important;
+    --accent-primary-tint: rgba(180, 83, 9, 0.08) !important;
+    --accent-gold: #B45309 !important;
+    --accent-gold-hover: #92400E !important;
+    --accent-gold-tint: rgba(180, 83, 9, 0.08) !important;
+    --accent-amber: #B45309 !important;
+    --accent-amber-hover: #92400E !important;
+    --accent-amber-tint: rgba(180, 83, 9, 0.08) !important;
+    --accent-cyan: #0284C7 !important;
+    --accent-cyan-bright: #0284C7 !important;
+    --accent-success: #047857 !important;
+    --accent-success-hover: #065F46 !important;
+    --accent-success-tint: rgba(4, 120, 87, 0.08) !important;
+    --accent-signal: #C2410C !important;
+    --accent-signal-hover: #9A3412 !important;
+    --accent-signal-tint: rgba(194, 65, 12, 0.08) !important;
+    --glass-shadow: 0 4px 20px -2px rgba(20, 24, 31, 0.06), 0 0 0 1px var(--border-subtle) !important;
+    --card-spotlight-tint: rgba(180, 83, 9, 0.04) !important;
+    --contour-color: rgba(20, 24, 31, 0.03) !important;
+  }
 }
